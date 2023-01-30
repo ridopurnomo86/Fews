@@ -1,11 +1,14 @@
 <template>
   <div class="w-6/12 flex flex-col justify-center px-10 container mx-auto">
     <div class="mb-10">
-      <p class="font-bold text-2xl mb-2">Welcome back.</p>
-      <p class="font-medium text-sm text-gray-600">Log in into your account.</p>
+      <p class="font-bold text-2xl mb-2">Create your Fews Account.</p>
       <p class="font-medium text-sm text-gray-600">
-        Dont't have a Fews account?
-        <NuxtLink href="/signup" class="text-blue-600 text-bold"
+        You will use it to manage your order and complete your registration
+        later.
+      </p>
+      <p class="font-medium text-sm text-gray-600">
+        Already have a Fews.
+        <NuxtLink href="/signin" class="text-blue-600 text-bold"
           >Sign Up.
         </NuxtLink>
       </p>
@@ -41,7 +44,9 @@
             type="password"
             placeholder="******************"
           />
-          <span class="absolute inset-y-0 right-0 mr-2 flex items-center pl-2">
+          <span
+            class="absolute inset-y-0 bottom-4 right-0 mr-2 flex items-center pl-2"
+          >
             <div class="focus:outline-none focus:shadow-outline">
               <Icon
                 name="ant-design:eye-outlined"
@@ -50,13 +55,17 @@
               />
             </div>
           </span>
+          <p class="text-gray-600 text-xs">
+            Your password must be at least 8 Character in length and may not
+            contain spaces.
+          </p>
         </div>
         <div class="flex items-center justify-between">
           <button
             class="bg-transparent border-gray-600 border hover:bg-black hover:text-white text-black font-bold transition py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >
-            Sign in.
+            Create a account
           </button>
         </div>
       </form>

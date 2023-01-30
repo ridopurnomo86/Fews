@@ -9,11 +9,13 @@
   </div>
 
   <!-- Children -->
-  <div>
+  <div class="min-h-screen">
     <slot />
   </div>
+
+  <Footer />
 </template>
 
 <script setup>
-import "~~/assets/css/tailwind.css";
+import Footer from "~~/components/Footer/index.vue";
 </script>

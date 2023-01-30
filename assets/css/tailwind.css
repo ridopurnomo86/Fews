@@ -7,6 +7,17 @@
 
 * {
     font-family: 'Montserrat', sans-serif; 
+    box-sizing: border-box;
 }
 
+body {
+  min-height: 100vh;
+}
+
+
+@media (min-width: 320px) {
+    .container {
+      max-width: 1200px;  
+    }
+  }
 
