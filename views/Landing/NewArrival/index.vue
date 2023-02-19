@@ -2,9 +2,15 @@
   <div class="w-full overflow-hidden">
     <div class="flex w-full items-end justify-between mb-8">
       <div class="section">
-        <p class="font-bold text-2xl mb-4">New Arrivals</p>
-        <p class="font-medium text-base text-gray-600">
+        <p class="font-bold text-2xl mb-2">
+          New <span class="text-indigo-800">Arrivals.</span>
+        </p>
+        <p class="font-medium text-sm text-gray-600">
           Explore new-in products and future bestsellers.
+        </p>
+        <p class="font-medium text-sm text-gray-600 max-w-md">
+          Find your bag from our various collections. Here bag are endless and
+          profit is also endless.
         </p>
       </div>
       <div class="additional">
@@ -16,7 +22,7 @@
       </div>
     </div>
     <Swiper
-      style="min-width: 1200px"
+      style="min-width: 1200px !important"
       :modules="[SwiperAutoplay, SwiperFreeMode]"
       :loop="true"
       :free-mode="true"

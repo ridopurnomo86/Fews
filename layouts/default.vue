@@ -5,7 +5,8 @@
     <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </Head>
   <div>
-    <Navbar />
+    <Navbar :on-click-side-bard="handleSideBar" />
+    <Sidebar :is-show-sidebar="showSidebar" />
   </div>
 
   <!-- Children -->
@@ -16,6 +17,19 @@
   <Footer />
 </template>
 
-<script setup>
-import Footer from "~~/components/Footer/index.vue";
+<script lang="ts">
+import { ref } from "vue";
+
+export default defineComponent({
+  name: "Layouts",
+  setup() {
+    const showSidebar = ref<boolean>(false);
+
+    const handleSideBar = () => {
+      showSidebar.value = !showSidebar.value;
+    };
+
+    return { showSidebar, handleSideBar };
+  },
+});
 </script>

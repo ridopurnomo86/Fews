@@ -15,24 +15,24 @@
           </li>
         </ul>
         <ul class="flex items-center">
-          <li>
-            <Icon
-              name="ant-design:shopping-cart-outlined"
-              size="20px"
-              class="mr-4 cursor-pointer"
-            />
-          </li>
-          <li v-if="!props.isAuthenticated">
+          <li v-if="!props.isAuthenticated" class="hidden md:block">
             <NuxtLink to="/signin">
-              <p class="text-md font-medium mr-4">Sign In</p>
+              <p class="text-base font-medium mr-4">Sign In</p>
             </NuxtLink>
           </li>
+          <div v-for="item in NAVBAR_LINK" :key="item.id">
+            <NuxtLink :href="item.link" class="hidden md:block">
+              <Icon :name="item.icon" size="20px" class="mr-4 cursor-pointer" />
+            </NuxtLink>
+          </div>
           <li>
-            <Icon
-              name="ant-design:align-right-outlined"
-              size="20px"
-              class="mr-4 cursor-pointer"
-            />
+            <button @click="onClickSideBard">
+              <Icon
+                name="ant-design:align-right-outlined"
+                size="20px"
+                class="mr-4 cursor-pointer block md:hidden"
+              />
+            </button>
           </li>
         </ul>
       </nav>
@@ -41,7 +41,12 @@
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(defineProps<{ isAuthenticated?: boolean }>(), {
-  isAuthenticated: false,
-});
+import NAVBAR_LINK from "./data";
+
+const props = withDefaults(
+  defineProps<{ isAuthenticated?: boolean; onClickSideBard: () => void }>(),
+  {
+    isAuthenticated: false,
+  }
+);
 </script>

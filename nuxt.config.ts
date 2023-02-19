@@ -4,8 +4,9 @@ export default defineNuxtConfig({
     'nuxt-icon', 
     '@nuxtjs/tailwindcss',
     '@morev/vue-transitions/nuxt', 
-    '@nuxt/image-edge', 
-    'nuxt-swiper'
+    'nuxt-swiper',
+    '@nuxt/image-edge',
+    '@nuxtjs/device',
   ],
   typescript: {
     strict: true
@@ -17,7 +18,12 @@ export default defineNuxtConfig({
     injectPosition: 0,
     viewer: true,
   },
-  image : {},
+  image : {
+    domains: ['source.unsplash.com']
+  },
+  device: {
+    refreshOnResize: true
+  },
   swiper: {
     // Swiper options
     //----------------------
