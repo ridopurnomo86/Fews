@@ -26,7 +26,7 @@
             </NuxtLink>
           </div>
           <li>
-            <button @click="onClickSideBard">
+            <button type="button" @click="onClickSideBard">
               <Icon
                 name="ant-design:align-right-outlined"
                 size="20px"
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import NAVBAR_LINK from "./data";
+import NAVBAR_LINK from './data';
 
 const props = withDefaults(
   defineProps<{ isAuthenticated?: boolean; onClickSideBard: () => void }>(),

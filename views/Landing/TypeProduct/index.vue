@@ -1,17 +1,12 @@
 <template>
   <div class="mb-20">
     <div class="info-section flex flex-col items-center justify-center mb-8">
-      <p class="font-bold text-2xl mb-2">
-        Our <span class="text-indigo-800">Collections.</span>
-      </p>
+      <p class="font-bold text-2xl mb-2">Our <span class="text-indigo-800">Collections.</span></p>
       <p class="font-medium text-center text-sm text-gray-600 max-w-md">
-        Fashion is in the sky, in the street, fashion has to do with ideas, the
-        way we live, what is happening. Style is something each of us already
-        has, all we need to do is find it.
+        Fashion is in the sky, in the street, fashion has to do with ideas, the way we live, what is
+        happening. Style is something each of us already has, all we need to do is find it.
       </p>
-      <p class="font-medium text-sm text-gray-600 max-w-md mt-4">
-        Check our new collections.
-      </p>
+      <p class="font-medium text-sm text-gray-600 max-w-md mt-4">Check our new collections.</p>
     </div>
     <div class="flex flex-wrap items-center justify-center gap-8">
       <NuxtLink href="/shop/men">
@@ -38,9 +33,7 @@
             alt="women-category-image"
           />
           <div class="absolute z-10 bottom-0 mb-4 pl-4">
-            <p class="font-bold text-base text-gray-900 mb-1">
-              Shop All Women.
-            </p>
+            <p class="font-bold text-base text-gray-900 mb-1">Shop All Women.</p>
           </div>
         </div>
       </NuxtLink>

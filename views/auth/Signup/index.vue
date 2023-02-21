@@ -9,7 +9,7 @@
   </TransitionFade>
 </template>
 
-<script setup>
-import Form from "./Form/index.vue";
-import Background from "./Background/index.vue";
+<script setup lang="ts">
+import Form from './Form/index.vue';
+import Background from './Background/index.vue';
 </script>

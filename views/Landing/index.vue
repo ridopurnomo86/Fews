@@ -11,9 +11,9 @@
   </TransitionFade>
 </template>
 
-<script setup>
-import Hero from "./Hero/index.vue";
-import TypeProduct from "./TypeProduct/index.vue";
-import NewArrival from "./NewArrival/index.vue";
-import Benefit from "./Benefit/index.vue";
+<script setup lang="ts">
+import Hero from './Hero/index.vue';
+import TypeProduct from './TypeProduct/index.vue';
+import NewArrival from './NewArrival/index.vue';
+import Benefit from './Benefit/index.vue';
 </script>

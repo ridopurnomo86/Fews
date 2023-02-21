@@ -1,15 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    'nuxt-icon', 
+    'nuxt-icon',
     '@nuxtjs/tailwindcss',
-    '@morev/vue-transitions/nuxt', 
+    '@morev/vue-transitions/nuxt',
     'nuxt-swiper',
     '@nuxt/image-edge',
     '@nuxtjs/device',
   ],
   typescript: {
-    strict: true
+    strict: true,
   },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
@@ -18,11 +18,11 @@ export default defineNuxtConfig({
     injectPosition: 0,
     viewer: true,
   },
-  image : {
-    domains: ['source.unsplash.com']
+  image: {
+    domains: ['source.unsplash.com'],
   },
   device: {
-    refreshOnResize: true
+    refreshOnResize: true,
   },
   swiper: {
     // Swiper options
@@ -31,4 +31,4 @@ export default defineNuxtConfig({
     // styleLang: 'css',
     // modules: ['navigation', 'pagination'], // all modules are imported by default
   },
-})
+});

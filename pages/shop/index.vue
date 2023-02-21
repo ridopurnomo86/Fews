@@ -16,13 +16,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import ProductCard from "~~/components/cards/ProductCard.vue";
+import { defineComponent } from 'vue';
+import ProductCard from '~~/components/cards/ProductCard.vue';
 
 export default defineComponent({
+  components: { ProductCard },
   setup() {
     return {};
   },
-  components: { ProductCard },
 });
 </script>

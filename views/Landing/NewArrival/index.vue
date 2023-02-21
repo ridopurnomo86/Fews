@@ -2,19 +2,18 @@
   <div class="w-full overflow-hidden">
     <div class="flex w-full items-end justify-between mb-8">
       <div class="section">
-        <p class="font-bold text-2xl mb-2">
-          New <span class="text-indigo-800">Arrivals.</span>
-        </p>
+        <p class="font-bold text-2xl mb-2">New <span class="text-indigo-800">Arrivals.</span></p>
         <p class="font-medium text-sm text-gray-600">
           Explore new-in products and future bestsellers.
         </p>
         <p class="font-medium text-sm text-gray-600 max-w-md">
-          Find your bag from our various collections. Here bag are endless and
-          profit is also endless.
+          Find your bag from our various collections. Here bag are endless and profit is also
+          endless.
         </p>
       </div>
       <div class="additional">
         <button
+          type="button"
           class="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded transition-all"
         >
           See More.
@@ -34,7 +33,7 @@
       :grab-cursor="true"
       :space-between="24"
       :slides-per-view="4"
-      :autoplayDisableOnInteraction="true"
+      :autoplay-disable-on-interaction="true"
     >
       <SwiperSlide v-for="product in DATA" :key="product.product_id">
         <div class="w-64">
@@ -51,6 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import DATA from "~~/data/products";
-import ProductCard from "~~/components/cards/ProductCard.vue";
+import DATA from '~~/data/products';
+import ProductCard from '~~/components/cards/ProductCard.vue';
 </script>

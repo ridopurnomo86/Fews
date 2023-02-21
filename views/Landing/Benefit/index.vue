@@ -1,9 +1,7 @@
 <template>
   <div class="flex flex-wrap items-center justify-center gap-16 mb-20">
     <div class="flex items-center">
-      <div
-        class="p-4 rounded-full bg-indigo-600 justify-center items-center flex"
-      >
+      <div class="p-4 rounded-full bg-indigo-600 justify-center items-center flex">
         <Icon name="mdi:package-check" size="24px" class="text-indigo-50" />
       </div>
       <div class="ml-4">
@@ -12,14 +10,8 @@
       </div>
     </div>
     <div class="flex items-center">
-      <div
-        class="p-4 rounded-full bg-indigo-600 justify-center items-center flex"
-      >
-        <Icon
-          name="mdi:credit-card-multiple"
-          size="24px"
-          class="text-indigo-50"
-        />
+      <div class="p-4 rounded-full bg-indigo-600 justify-center items-center flex">
+        <Icon name="mdi:credit-card-multiple" size="24px" class="text-indigo-50" />
       </div>
       <div class="ml-4">
         <p class="text-base font-bold">Secure Payment.</p>
@@ -27,9 +19,7 @@
       </div>
     </div>
     <div class="flex items-center">
-      <div
-        class="p-4 rounded-full bg-indigo-600 justify-center items-center flex"
-      >
+      <div class="p-4 rounded-full bg-indigo-600 justify-center items-center flex">
         <Icon name="ph:phone-call-fill" size="24px" class="text-indigo-50" />
       </div>
       <div class="ml-4">

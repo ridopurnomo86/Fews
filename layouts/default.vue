@@ -18,10 +18,10 @@
 </template>
 
 <script lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
 export default defineComponent({
-  name: "Layouts",
+  name: 'Layouts',
   setup() {
     const showSidebar = ref<boolean>(false);
 

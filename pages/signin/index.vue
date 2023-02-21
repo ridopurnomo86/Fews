@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import Signin from "~~/views/auth/Signin/index.vue";
+import Signin from '~~/views/auth/Signin/index.vue';
 
 definePageMeta({
-  layout: "auth",
+  layout: 'auth',
 });
 </script>
