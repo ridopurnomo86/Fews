@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    baseBackendUrl: process.env.NUXT_BACKEND_URL,
+  },
   modules: [
     'nuxt-icon',
     '@nuxtjs/tailwindcss',

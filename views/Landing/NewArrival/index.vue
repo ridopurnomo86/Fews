@@ -38,6 +38,7 @@
       <SwiperSlide v-for="product in DATA" :key="product.product_id">
         <div class="w-64">
           <ProductCard
+            :type="product?.type"
             :description="product.description"
             :image-url="product.image_url"
             :price="product.price"

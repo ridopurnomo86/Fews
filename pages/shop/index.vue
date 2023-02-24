@@ -4,6 +4,7 @@
       <div class="flex gap-10">
         <div class="max-w-sm">
           <ProductCard
+            :type="'Mini Bag'"
             :description="`Same manufacture as premium European cast iron brands. Same manufacture as premium European cast iron brands.`"
             :title="`Alter Leather Bag`"
             :price="50"
@@ -15,14 +16,10 @@
   </TransitionFade>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import ProductCard from '~~/components/cards/ProductCard.vue';
 
-export default defineComponent({
-  components: { ProductCard },
-  setup() {
-    return {};
-  },
-});
+const { data } = await useFetch('/api/product');
+
+console.log(data);
 </script>

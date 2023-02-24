@@ -3,8 +3,8 @@
     <div>
       <Hero />
       <div class="mx-auto container mb-20">
-        <TypeProduct />
         <Benefit />
+        <TypeProduct />
         <NewArrival />
       </div>
     </div>
