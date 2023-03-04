@@ -6,7 +6,7 @@
   </Head>
   <div>
     <Navbar :on-click-side-bard="handleSideBar" />
-    <Sidebar :is-show-sidebar="showSidebar" />
+    <Sidebar :is-show-sidebar="showSidebar" :handle-close-side-bar="handleSideBar" />
   </div>
 
   <!-- Children -->
@@ -20,6 +20,8 @@
 <script lang="ts">
 import { ref } from 'vue';
 
+const { disableScroll, enableScroll } = useDisableScroll();
+
 export default defineComponent({
   name: 'Layouts',
   setup() {
@@ -27,6 +29,8 @@ export default defineComponent({
 
     const handleSideBar = () => {
       showSidebar.value = !showSidebar.value;
+      if (!showSidebar.value) return enableScroll();
+      return disableScroll();
     };
 
     return { showSidebar, handleSideBar };

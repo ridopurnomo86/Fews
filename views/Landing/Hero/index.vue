@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-[28rem] mb-20 relative mix-blend-overlay flex mx-auto container gap-8">
-    <div class="bg-white flex-1">
+    <div class="">
       <div class="mb-8 flex flex-col items-left justify-center h-full">
         <p class="font-semibold text-sm text-black mb-2 text-indigo-800">Fews Collection</p>
         <p class="font-bold text-xl md:text-4xl max-w-lg text-black mb-8">

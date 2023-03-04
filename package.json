@@ -28,6 +28,9 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.2.1"
   },
+  "engines" : { 
+    "node" : ">=16.0.0 <17.0.0"
+  },
   "dependencies": {
     "@morev/vue-transitions": "^2.3.5",
     "@tailwindcss/line-clamp": "^0.4.2",

@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
-    baseBackendUrl: process.env.NUXT_BACKEND_URL,
+    baseBackendUrl: process.env.BASE_BACKEND_URL,
   },
   modules: [
     'nuxt-icon',
@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     viewer: true,
   },
   image: {
-    domains: ['source.unsplash.com'],
+    domains: ['source.unsplash.com', 'ipfs.filebase.io'],
   },
   device: {
     refreshOnResize: true,

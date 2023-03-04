@@ -1,15 +1,17 @@
 <template>
   <TransitionFade :delay="200" :duration="600" :appear="true">
     <div class="mx-auto container">
-      <div class="flex gap-10">
-        <div class="max-w-sm">
-          <ProductCard
-            :type="'Mini Bag'"
-            :description="`Same manufacture as premium European cast iron brands. Same manufacture as premium European cast iron brands.`"
-            :title="`Alter Leather Bag`"
-            :price="50"
-            :image-url="`https://source.unsplash.com/APNnyM36puU`"
-          />
+      <div class="flex flex-wrap gap-12">
+        <div v-for="product in products" :key="product.id">
+          <div class="max-w-[250px]">
+            <ProductCard
+              :type="product.category"
+              :description="product.description"
+              :title="product.name"
+              :price="product.price"
+              :image-url="product.image_url"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -19,7 +21,5 @@
 <script setup lang="ts">
 import ProductCard from '~~/components/cards/ProductCard.vue';
 
-const { data } = await useFetch('/api/product');
-
-console.log(data);
+const { data: products } = await useFetch('/api/product');
 </script>

@@ -26,12 +26,11 @@
           <label class="block text-gray-700 text-sm font-medium mb-2" for="password">
             Password
           </label>
-
           <input
             id="password"
             class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             type="password"
-            placeholder="******************"
+            placeholder="******"
           />
           <span class="absolute inset-y-0 right-0 mr-2 flex items-center pl-2">
             <div class="focus:outline-none focus:shadow-outline">
