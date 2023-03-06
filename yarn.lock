@@ -748,6 +748,30 @@
     unimport "^2.2.4"
     untyped "^1.2.2"
 
+"@nuxt/kit@npm:@nuxt/kit-edge@latest":
+  version "3.3.0-27965718.b73ca9143"
+  resolved "https://registry.yarnpkg.com/@nuxt/kit-edge/-/kit-edge-3.3.0-27965718.b73ca9143.tgz#8aedaae65b5affb30a1ad1399d5ec791500d8e09"
+  integrity sha512-8MWLV9x1k6Sz09Tf/liFptsgTiCpRadKz8hnDbIOq2DCGe7LLEMDfke2x0kDAhQA2+a9yI2txgJqw+1aVP1Yog==
+  dependencies:
+    "@nuxt/schema" "npm:@nuxt/schema-edge@3.3.0-27965718.b73ca9143"
+    c12 "^1.1.2"
+    consola "^2.15.3"
+    defu "^6.1.2"
+    globby "^13.1.3"
+    hash-sum "^2.0.0"
+    ignore "^5.2.4"
+    jiti "^1.17.1"
+    knitwork "^1.0.0"
+    lodash.template "^4.5.0"
+    mlly "^1.1.1"
+    pathe "^1.1.0"
+    pkg-types "^1.0.2"
+    scule "^1.0.0"
+    semver "^7.3.8"
+    unctx "^2.1.2"
+    unimport "^3.0.2"
+    untyped "^1.2.2"
+
 "@nuxt/postcss8@^1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nuxt/postcss8/-/postcss8-1.1.3.tgz#a7f8f6f2a664430bbdd3b175498eb693e0b1b351"
@@ -779,6 +803,25 @@
     std-env "^3.3.2"
     ufo "^1.1.0"
     unimport "^2.2.4"
+    untyped "^1.2.2"
+
+"@nuxt/schema@npm:@nuxt/schema-edge@3.3.0-27965718.b73ca9143":
+  version "3.3.0-27965718.b73ca9143"
+  resolved "https://registry.yarnpkg.com/@nuxt/schema-edge/-/schema-edge-3.3.0-27965718.b73ca9143.tgz#d210a371158380307617f25e5e84c4a956e9f364"
+  integrity sha512-2v+CXFbkQvCw+Dz8JaV3cMk6gmPn2hkPh9NM7Z805IsCfc27O7+MkcWuYWOgNRc4ymfrUlr7d7+WwwjXpagjzA==
+  dependencies:
+    c12 "^1.1.2"
+    create-require "^1.1.1"
+    defu "^6.1.2"
+    hookable "^5.4.2"
+    jiti "^1.17.1"
+    pathe "^1.1.0"
+    pkg-types "^1.0.2"
+    postcss-import-resolver "^2.0.0"
+    scule "^1.0.0"
+    std-env "^3.3.2"
+    ufo "^1.1.1"
+    unimport "^3.0.2"
     untyped "^1.2.2"
 
 "@nuxt/telemetry@^2.1.10":
@@ -1009,6 +1052,15 @@
     "@types/estree" "^1.0.0"
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
+
+"@tailvue/nuxt@^0.1.68":
+  version "0.1.68"
+  resolved "https://registry.yarnpkg.com/@tailvue/nuxt/-/nuxt-0.1.68.tgz#ae042c0f82933141ea9d81080f3e3bb75c6472fb"
+  integrity sha512-AFLn6skqX/UbAZZv4IsiGX9WMi1ET9jSt0xOFYu0GgfDyjLq2iVx491sKcntfyZ6IGzxdN+8hz1miPQwms4ScA==
+  dependencies:
+    "@nuxt/kit" "npm:@nuxt/kit-edge@latest"
+    pathe "^0.2.0"
+    tailvue "^0.1.30"
 
 "@tailwindcss/line-clamp@^0.4.2":
   version "0.4.2"
@@ -4630,6 +4682,13 @@ magic-string@^0.29.0:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.13"
 
+magic-string@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.0.tgz#fd58a4748c5c4547338a424e90fa5dd17f4de529"
+  integrity sha512-LA+31JYDJLs82r2ScLrlz1GjSgu66ZV518eyWT+S8VhyQn/JL0u9MeBOvQMGYiPk1DBiSN9DDMOcXvigJZaViQ==
+  dependencies:
+    "@jridgewell/sourcemap-codec" "^1.4.13"
+
 make-dir@^3.1.0, make-dir@~3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-3.1.0.tgz#415e967046b3a7f1d185277d84aa58203726a13f"
@@ -5416,6 +5475,11 @@ path-type@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
+
+pathe@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/pathe/-/pathe-0.2.0.tgz#30fd7bbe0a0d91f0e60bae621f5d19e9e225c339"
+  integrity sha512-sTitTPYnn23esFR3RlqYBWn4c45WGeLcsKzQiUpXJAyfcWkolvlYpV8FLo7JishK946oQwMFUCHXQ9AjGPKExw==
 
 pathe@^1.0.0, pathe@^1.1.0:
   version "1.1.0"
@@ -6609,6 +6673,13 @@ synckit@^0.8.4:
     "@pkgr/utils" "^2.3.1"
     tslib "^2.5.0"
 
+tailvue@^0.1.30, tailvue@^0.1.68:
+  version "0.1.68"
+  resolved "https://registry.yarnpkg.com/tailvue/-/tailvue-0.1.68.tgz#578f4662e5bca067696b389c12574c20c9bde231"
+  integrity sha512-59F/5WXs+9u1dAir9pAfel0hp9PA616yA/4QaRUCxszSPVJSqv4qkvLhLSGqaTHQfndXmo1BORdyOOSJTUcIsg==
+  dependencies:
+    vue "^3.2.21"
+
 tailwind-config-viewer@^1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/tailwind-config-viewer/-/tailwind-config-viewer-1.7.2.tgz#3d8242e6ef69d08f388c5dadb40eee62d4ae6386"
@@ -6860,6 +6931,11 @@ ufo@^1.0.0, ufo@^1.0.1, ufo@^1.1.0:
   resolved "https://registry.yarnpkg.com/ufo/-/ufo-1.1.0.tgz#a5c4c814b0a98f7e0ca42c478688663fd3e3c037"
   integrity sha512-LQc2s/ZDMaCN3QLpa+uzHUOQ7SdV0qgv3VBXOolQGXTaaZpIur6PwUclF5nN2hNkiTRcUugXd1zFOW3FLJ135Q==
 
+ufo@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ufo/-/ufo-1.1.1.tgz#e70265e7152f3aba425bd013d150b2cdf4056d7c"
+  integrity sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==
+
 unbox-primitive@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/unbox-primitive/-/unbox-primitive-1.0.2.tgz#29032021057d5e6cdbd08c5129c226dff8ed6f9e"
@@ -6921,6 +6997,23 @@ unimport@^2.2.4:
     scule "^1.0.0"
     strip-literal "^1.0.0"
     unplugin "^1.0.1"
+
+unimport@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/unimport/-/unimport-3.0.2.tgz#c7016df38775e03c4bc7682b0194c98236e308db"
+  integrity sha512-OQ0hShpcerS1PSsISsyn/NV2dGe5xfdUn4p5nwOodq0iqq5xxYQrTidHqlFGjxIliPDtDJp80OeySzyPTjYHmA==
+  dependencies:
+    "@rollup/pluginutils" "^5.0.2"
+    escape-string-regexp "^5.0.0"
+    fast-glob "^3.2.12"
+    local-pkg "^0.4.3"
+    magic-string "^0.30.0"
+    mlly "^1.1.1"
+    pathe "^1.1.0"
+    pkg-types "^1.0.2"
+    scule "^1.0.0"
+    strip-literal "^1.0.1"
+    unplugin "^1.1.0"
 
 universalify@^2.0.0:
   version "2.0.0"
@@ -7146,7 +7239,7 @@ vue-tsc@1.0.24:
     "@volar/vue-language-core" "1.0.24"
     "@volar/vue-typescript" "1.0.24"
 
-vue@^3.2.47:
+vue@^3.2.21, vue@^3.2.47:
   version "3.2.47"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.47.tgz#3eb736cbc606fc87038dbba6a154707c8a34cff0"
   integrity sha512-60188y/9Dc9WVrAZeUVSDxRQOZ+z+y5nO2ts9jWXSTkMvayiWxCWOWtBQoYjLeccfXkiiPZWAHcV+WTPhkqJHQ==

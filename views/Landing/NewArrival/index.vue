@@ -35,20 +35,23 @@
       :slides-per-view="4"
       :autoplay-disable-on-interaction="true"
     >
-      <SwiperSlide v-for="product in DATA" :key="product.product_id">
-        <ProductCard
-          :type="product?.type"
-          :description="product.description"
-          :image-url="product.image_url"
-          :price="product.price"
-          :title="product.title"
-        />
+      <SwiperSlide v-for="product in products" :key="product.product_id">
+        <div class="max-w-[250px]">
+          <ProductCard
+            :type="product.category"
+            :description="product.description"
+            :title="product.name"
+            :price="product.price"
+            :image-url="product.image_url"
+          />
+        </div>
       </SwiperSlide>
     </Swiper>
   </div>
 </template>
 
 <script setup lang="ts">
-import DATA from '~~/data/products';
 import ProductCard from '~~/components/cards/ProductCard.vue';
+
+const { data: products } = await useFetch('/api/product');
 </script>

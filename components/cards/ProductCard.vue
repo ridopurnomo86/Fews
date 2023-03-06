@@ -20,7 +20,11 @@
         <p class="font-semibold text-black text-sm truncate">
           {{ `${formatter.format(price)}` }}
         </p>
-        <div class="px-2 py-1 bg-indigo-100 rounded hover:opacity-60 transition-all delay-75">
+        <div
+          class="px-2 py-1 bg-indigo-100 rounded hover:opacity-60 transition-all delay-75"
+          @click="onClickCart"
+          @keypress="onClickCart"
+        >
           <Icon :name="'material-symbols:shopping-bag'" size="20px" />
         </div>
       </div>
@@ -40,5 +44,6 @@ defineProps<{
   title: string;
   price: number;
   onClick?: () => void;
+  onClickCart?: () => void;
 }>();
 </script>

@@ -40,6 +40,7 @@
           <input
             id="password"
             v-model="formData.password"
+            name="password"
             class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             :type="showPassword ? 'text' : 'password'"
             placeholder="******"
@@ -77,30 +78,55 @@
           Your password must be at least 8 Character in length and may not contain spaces.
         </p>
       </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-medium mb-2" for="confirm-password"
+          >Confirm Password</label
+        >
+        <div class="relative">
+          <input
+            id="confirm-password"
+            v-model="formData.confirmPassword"
+            name="confirm-password"
+            class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            :type="'password'"
+            placeholder="******"
+            :class="{
+              'border-red-500 focus:border-red-500': v$.confirmPassword.$error,
+              'border-[#42d392] ': !v$.confirmPassword.$invalid,
+            }"
+            @change="v$.confirmPassword.$touch"
+          />
+        </div>
+        <span v-if="v$.confirmPassword.$error" class="text-xs text-red-500">
+          {{ v$.confirmPassword.$errors[0].$message }}
+        </span>
+      </div>
     </form>
 
     <div class="flex items-center justify-between">
       <Button :text="'Create a account'" :type="'submit'" @click="handleSubmit" />
     </div>
-    <p class="text-gray-500 text-xs mt-4">
-      &copy;2023 Fews Corp. All rights reserved. {{ formData.email }} {{ formData.password }}
-    </p>
+    <p class="text-gray-500 text-xs mt-4">&copy;2023 Fews Corp. All rights reserved.</p>
   </div>
 </template>
 
 <script lang="ts">
 import { ref } from 'vue';
-import { required, email, minLength, helpers } from '@vuelidate/validators';
+import { required, email, minLength, helpers, sameAs } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
+import { useToast, useModal } from 'tailvue';
 
 export default defineComponent({
   name: 'SignupForm',
   setup() {
+    const $toast = useToast();
+    const $modal = useModal();
     const showPassword = ref<boolean>(false);
 
     const formData = reactive({
       email: '',
       password: '',
+      confirmPassword: '',
     });
 
     const rules = computed(() => {
@@ -113,6 +139,10 @@ export default defineComponent({
           required: helpers.withMessage('The Password field is required', required),
           minLength: minLength(8),
         },
+        confirmPassword: {
+          required: helpers.withMessage('The password confirmation field is required', required),
+          sameAs: helpers.withMessage("Passwords don't match", sameAs(formData.password)),
+        },
       };
     });
 
@@ -124,9 +154,26 @@ export default defineComponent({
 
     const handleSubmit = () => {
       v$.value.$validate();
-      if (!v$.value.$error) {
+
+      if (v$.value.$error) {
         //    Some code
         console.log('error');
+        // $toast.show('this is a test');
+        $modal.show({
+          type: 'danger',
+          title: 'This is the title property',
+          body: 'This is the body property.',
+          primary: {
+            label: 'Primary Action',
+            theme: 'red',
+            action: () => $toast.show('Primary Button clicked'),
+          },
+          secondary: {
+            label: 'Secondary Action',
+            theme: 'white',
+            action: () => $toast.show('Clicked Secondary'),
+          },
+        });
       }
     };
 

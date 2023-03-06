@@ -12,6 +12,7 @@ module.exports = {
     './plugins/**/*.{js,ts}',
     './nuxt.config.{js,ts}',
     './app.vue',
+    'node_modules/tailvue/dist/tailvue.es.js',
   ],
   plugins: [require('@tailwindcss/line-clamp')],
 };

@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     'nuxt-swiper',
     '@nuxt/image-edge',
     '@nuxtjs/device',
+    '@tailvue/nuxt',
   ],
   typescript: {
     strict: true,
