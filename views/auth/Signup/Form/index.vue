@@ -1,3 +1,4 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
   <div class="w-6/12 flex flex-col justify-center px-10 container mx-auto">
     <div class="mb-10">
@@ -7,18 +8,129 @@
       </p>
       <p class="font-medium text-sm text-gray-600">
         Already have a Fews.
-        <NuxtLink href="/signin" class="text-blue-600 text-bold">Sign In. </NuxtLink>
+        <NuxtLink href="/signin" class="text-blue-600 text-bold">Sign In.</NuxtLink>
       </p>
     </div>
-    <Form :forms="DATA" />
+    <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-medium mb-2" for="email">
+          Email Address
+        </label>
+        <div class="relative">
+          <input
+            id="email"
+            v-model="formData.email"
+            class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="email"
+            placeholder="john@email.com"
+            :class="{
+              'border-red-500 focus:border-red-500': v$.email.$error,
+              'border-[#42d392] ': !v$.email.$invalid,
+            }"
+            @change="v$.email.$touch"
+          />
+          <span v-if="v$.email.$error" class="text-xs text-red-500">
+            {{ v$.email.$errors[0].$message }}
+          </span>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-medium mb-2" for="password">Password</label>
+        <div class="relative">
+          <input
+            id="password"
+            v-model="formData.password"
+            class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            :type="showPassword ? 'text' : 'password'"
+            placeholder="******"
+            :class="{
+              'border-red-500 focus:border-red-500': v$.password.$error,
+              'border-[#42d392] ': !v$.password.$invalid,
+            }"
+            @change="v$.password.$touch"
+          />
+          <span
+            class="absolute top-1 bottom-0 right-0 mr-2 pl-2"
+            :class="[v$.password.$error || !v$.password.$invalid ? 'top-0' : 'top-1']"
+            @click="handleShowPassword"
+          >
+            <div class="focus:outline-none focus:shadow-outline">
+              <Icon
+                v-if="showPassword"
+                name="ant-design:eye-outlined"
+                size="20px"
+                class="cursor-pointer text-gray-600"
+              />
+              <Icon
+                v-if="!showPassword"
+                name="ant-design:eye-invisible-outlined"
+                size="20px"
+                class="cursor-pointer text-gray-600"
+              />
+            </div>
+          </span>
+        </div>
+        <span v-if="v$.password.$error" class="text-xs text-red-500">
+          {{ v$.password.$errors[0].$message }}
+        </span>
+        <p class="text-gray-600 text-xs mt-2">
+          Your password must be at least 8 Character in length and may not contain spaces.
+        </p>
+      </div>
+    </form>
+
     <div class="flex items-center justify-between">
-      <Button :text="'Create a account'" :type="'submit'" />
+      <Button :text="'Create a account'" :type="'submit'" @click="handleSubmit" />
     </div>
-    <p class="text-gray-500 text-xs mt-4">&copy;2023 Fews Corp. All rights reserved.</p>
+    <p class="text-gray-500 text-xs mt-4">
+      &copy;2023 Fews Corp. All rights reserved. {{ formData.email }} {{ formData.password }}
+    </p>
   </div>
 </template>
 
-<script setup lang="ts">
-import Form from '~~/components/Form/index.vue';
-import DATA from './data';
+<script lang="ts">
+import { ref } from 'vue';
+import { required, email, minLength, helpers } from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
+
+export default defineComponent({
+  name: 'SignupForm',
+  setup() {
+    const showPassword = ref<boolean>(false);
+
+    const formData = reactive({
+      email: '',
+      password: '',
+    });
+
+    const rules = computed(() => {
+      return {
+        email: {
+          required: helpers.withMessage('The Email field is required', required),
+          email: helpers.withMessage('Invalid Email format', email),
+        },
+        password: {
+          required: helpers.withMessage('The Password field is required', required),
+          minLength: minLength(8),
+        },
+      };
+    });
+
+    const v$ = useVuelidate(rules, formData);
+
+    const handleShowPassword = () => {
+      showPassword.value = !showPassword.value;
+    };
+
+    const handleSubmit = () => {
+      v$.value.$validate();
+      if (!v$.value.$error) {
+        //    Some code
+        console.log('error');
+      }
+    };
+
+    return { v$, formData, showPassword, handleShowPassword, handleSubmit };
+  },
+});
 </script>
