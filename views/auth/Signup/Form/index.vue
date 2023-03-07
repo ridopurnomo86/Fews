@@ -114,13 +114,10 @@
 import { ref } from 'vue';
 import { required, email, minLength, helpers, sameAs } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-import { useToast, useModal } from 'tailvue';
 
 export default defineComponent({
   name: 'SignupForm',
   setup() {
-    const $toast = useToast();
-    const $modal = useModal();
     const showPassword = ref<boolean>(false);
 
     const formData = reactive({
@@ -154,27 +151,7 @@ export default defineComponent({
 
     const handleSubmit = () => {
       v$.value.$validate();
-
-      if (v$.value.$error) {
-        //    Some code
-        console.log('error');
-        // $toast.show('this is a test');
-        $modal.show({
-          type: 'danger',
-          title: 'This is the title property',
-          body: 'This is the body property.',
-          primary: {
-            label: 'Primary Action',
-            theme: 'red',
-            action: () => $toast.show('Primary Button clicked'),
-          },
-          secondary: {
-            label: 'Secondary Action',
-            theme: 'white',
-            action: () => $toast.show('Clicked Secondary'),
-          },
-        });
-      }
+      console.log(formData);
     };
 
     return { v$, formData, showPassword, handleShowPassword, handleSubmit };

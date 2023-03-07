@@ -10,13 +10,14 @@
     </div>
 
     <div class="w-full relative">
-      <form>
+      <form @submit.prevent="handleSubmit">
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-medium mb-2" for="email">
             Email Address
           </label>
           <input
             id="email"
+            v-model="formData.email"
             class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="email"
             placeholder="john@email.com"
@@ -28,6 +29,7 @@
           </label>
           <input
             id="password"
+            v-model="formData.password"
             class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             type="password"
             placeholder="******"
@@ -43,12 +45,11 @@
           </span>
         </div>
         <div class="flex items-center justify-between">
-          <button
+          <Button
             class="bg-transparent border-gray-600 border hover:bg-black hover:text-white text-black font-bold transition py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-          >
-            Sign in.
-          </button>
+            type="submit"
+            :text="'Sign in.'"
+          />
         </div>
       </form>
       <p class="text-gray-500 text-xs mt-4">&copy;2023 Fews Corp. All rights reserved.</p>
@@ -57,10 +58,40 @@
 </template>
 
 <script lang="ts">
+import { useToast } from 'tailvue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'FormSignin',
-  components: {},
+  name: 'SigninForm',
+  setup() {
+    const toast = useToast();
+    const { signIn } = useSession();
+
+    const formData = reactive({
+      email: '',
+      password: '',
+    });
+
+    const handleSubmit = async () => {
+      const res = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        callbackUrl: '/signin',
+        redirect: false,
+      });
+
+      if (res.error)
+        return toast.show({
+          type: 'danger',
+          message: JSON.parse(res.error).message,
+          timeout: 6,
+          title: 'Warning',
+        });
+
+      return null;
+    };
+
+    return { handleSubmit, formData };
+  },
 });
 </script>
