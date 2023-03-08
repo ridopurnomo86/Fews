@@ -52,6 +52,7 @@
 
 <script setup lang="ts">
 import ProductCard from '~~/components/cards/ProductCard.vue';
+import { ProductDataType } from '~~/types/product';
 
-const { data: products } = await useFetch('/api/product');
+const { data: products } = await useFetch<ProductDataType[]>('/api/product');
 </script>

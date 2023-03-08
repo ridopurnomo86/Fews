@@ -14,25 +14,24 @@ export default NuxtAuthHandler({
       name: 'credentials',
       async authorize(credential: any) {
         try {
-          const res = await $fetch(`${config.baseBackendUrl}api/v1/account/login`, {
-            body: {
+          const res: any = await $fetch(`${config.baseBackendUrl}api/v1/account/login`, {
+            body: JSON.stringify({
               email: credential.email,
               password: credential.password,
-            },
+            }),
             credentials: 'include',
-            method: 'post',
+            method: 'POST',
           });
 
-          const data = await res.json();
-
-          if (data?.type === 'success') return data;
+          if (res?.type === 'success') {
+            return res;
+          }
 
           return null;
         } catch (error: Error | any) {
           // eslint-disable-next-line no-underscore-dangle
           if (error.response) throw new Error(JSON.stringify(error.response._data));
         }
-
         return null;
       },
     }),

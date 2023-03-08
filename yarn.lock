@@ -883,11 +883,11 @@
     untyped "^1.2.2"
 
 "@nuxt/kit@npm:@nuxt/kit-edge@latest":
-  version "3.3.0-27965718.b73ca9143"
-  resolved "https://registry.yarnpkg.com/@nuxt/kit-edge/-/kit-edge-3.3.0-27965718.b73ca9143.tgz#8aedaae65b5affb30a1ad1399d5ec791500d8e09"
-  integrity sha512-8MWLV9x1k6Sz09Tf/liFptsgTiCpRadKz8hnDbIOq2DCGe7LLEMDfke2x0kDAhQA2+a9yI2txgJqw+1aVP1Yog==
+  version "4.0.0-27970394.60d07df4"
+  resolved "https://registry.yarnpkg.com/@nuxt/kit-edge/-/kit-edge-4.0.0-27970394.60d07df4.tgz#2362117c72a765c40f34ec7105c2d6a833e5474e"
+  integrity sha512-3Kj4D7Y/dYhQKNwHk/YwOUspUKn2JtbK3ahq7C9ovRnCrTfaMjDE12MzUl3OBoZChGgwkhHAuI52bQknAldKSQ==
   dependencies:
-    "@nuxt/schema" "npm:@nuxt/schema-edge@3.3.0-27965718.b73ca9143"
+    "@nuxt/schema" "npm:@nuxt/schema-edge@4.0.0-27970394.60d07df4"
     c12 "^1.1.2"
     consola "^2.15.3"
     defu "^6.1.2"
@@ -958,10 +958,10 @@
     unimport "^2.2.4"
     untyped "^1.2.2"
 
-"@nuxt/schema@npm:@nuxt/schema-edge@3.3.0-27965718.b73ca9143":
-  version "3.3.0-27965718.b73ca9143"
-  resolved "https://registry.yarnpkg.com/@nuxt/schema-edge/-/schema-edge-3.3.0-27965718.b73ca9143.tgz#d210a371158380307617f25e5e84c4a956e9f364"
-  integrity sha512-2v+CXFbkQvCw+Dz8JaV3cMk6gmPn2hkPh9NM7Z805IsCfc27O7+MkcWuYWOgNRc4ymfrUlr7d7+WwwjXpagjzA==
+"@nuxt/schema@npm:@nuxt/schema-edge@4.0.0-27970394.60d07df4":
+  version "4.0.0-27970394.60d07df4"
+  resolved "https://registry.yarnpkg.com/@nuxt/schema-edge/-/schema-edge-4.0.0-27970394.60d07df4.tgz#829243c22c245e16778960d166e214d5056e7288"
+  integrity sha512-PRFKcEoiVQNIsW5Qk7tdU5R+ipu4wM3EbtHAhz26TviqAsnU70Wojl+BTh3gOVXPs9jjicHJr+lZS881moiurw==
   dependencies:
     c12 "^1.1.2"
     create-require "^1.1.1"
@@ -2445,6 +2445,11 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+crypto-js@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
+  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
 
 css-declaration-sorter@^6.3.1:
   version "6.3.1"

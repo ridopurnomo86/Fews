@@ -1,10 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from 'nuxt/config';
+
 export default defineNuxtConfig({
-  runtimeConfig: {
-    baseBackendUrl: process.env.BASE_BACKEND_URL,
-    authSecret: process.env.NUXT_AUTH_SECRET,
-    origin: process.env.NUXT_AUTH_ORIGIN,
-  },
   modules: [
     'nuxt-icon',
     '@nuxtjs/tailwindcss',
@@ -15,6 +12,11 @@ export default defineNuxtConfig({
     '@sidebase/nuxt-auth',
     '@tailvue/nuxt',
   ],
+  runtimeConfig: {
+    baseBackendUrl: process.env.BASE_BACKEND_URL,
+    authSecret: process.env.NUXT_AUTH_SECRET,
+    origin: process.env.NUXT_AUTH_ORIGIN,
+  },
   auth: {
     origin: process.env.NUXT_AUTH_ORIGIN,
     basePath: '/api/auth',

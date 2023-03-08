@@ -1,3 +1,4 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
   <div class="w-6/12 flex flex-col justify-center px-10 container mx-auto">
     <div class="mb-10">
@@ -15,33 +16,65 @@
           <label class="block text-gray-700 text-sm font-medium mb-2" for="email">
             Email Address
           </label>
-          <input
-            id="email"
-            v-model="formData.email"
-            class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="email"
-            placeholder="john@email.com"
-          />
+          <div class="relative">
+            <input
+              id="email"
+              v-model="formData.email"
+              class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="email"
+              placeholder="john@email.com"
+              :class="{
+                'border-red-500 focus:border-red-500': v$.email.$error,
+                'border-[#42d392] ': !v$.email.$invalid,
+              }"
+              @change="v$.email.$touch"
+            />
+            <span v-if="v$.email.$error" class="text-xs text-red-500">
+              {{ v$.email.$errors[0].$message }}
+            </span>
+          </div>
         </div>
-        <div class="mb-6">
-          <label class="block text-gray-700 text-sm font-medium mb-2" for="password">
-            Password
-          </label>
-          <input
-            id="password"
-            v-model="formData.password"
-            class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            type="password"
-            placeholder="******"
-          />
-          <span class="absolute inset-y-0 right-0 mr-2 flex items-center pl-2">
-            <div class="focus:outline-none focus:shadow-outline">
-              <Icon
-                name="ant-design:eye-outlined"
-                size="20px"
-                class="cursor-pointer text-gray-600"
-              />
-            </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="password"
+            >Password</label
+          >
+          <div class="relative">
+            <input
+              id="password"
+              v-model="formData.password"
+              name="password"
+              class="appearance-none border text-sm rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="******"
+              :class="{
+                'border-red-500 focus:border-red-500': v$.password.$error,
+                'border-[#42d392] ': !v$.password.$invalid,
+              }"
+              @change="v$.password.$touch"
+            />
+            <span
+              class="absolute top-1 bottom-0 right-0 mr-2 pl-2"
+              :class="[v$.password.$error || !v$.password.$invalid ? 'top-0' : 'top-1']"
+              @click="handleShowPassword"
+            >
+              <div class="focus:outline-none focus:shadow-outline">
+                <Icon
+                  v-if="showPassword"
+                  name="ant-design:eye-outlined"
+                  size="20px"
+                  class="cursor-pointer text-gray-600"
+                />
+                <Icon
+                  v-if="!showPassword"
+                  name="ant-design:eye-invisible-outlined"
+                  size="20px"
+                  class="cursor-pointer text-gray-600"
+                />
+              </div>
+            </span>
+          </div>
+          <span v-if="v$.password.$error" class="text-xs text-red-500">
+            {{ v$.password.$errors[0].$message }}
           </span>
         </div>
         <div class="flex items-center justify-between">
@@ -58,40 +91,74 @@
 </template>
 
 <script lang="ts">
-import { useToast } from 'tailvue';
 import { defineComponent } from 'vue';
+import { required, email, helpers } from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
+import { useToast } from 'tailvue';
 
 export default defineComponent({
   name: 'SigninForm',
   setup() {
-    const toast = useToast();
+    const $toast = useToast();
+
     const { signIn } = useSession();
+
+    const showPassword = ref<boolean>(false);
 
     const formData = reactive({
       email: '',
       password: '',
     });
 
-    const handleSubmit = async () => {
-      const res = await signIn('credentials', {
-        email: formData.email,
-        password: formData.password,
-        callbackUrl: '/signin',
-        redirect: false,
-      });
+    const rules = computed(() => {
+      return {
+        email: {
+          required: helpers.withMessage('The Email field is required', required),
+          email: helpers.withMessage('Invalid Email format', email),
+        },
+        password: {
+          required: helpers.withMessage('The Password field is required', required),
+        },
+      };
+    });
 
-      if (res.error)
-        return toast.show({
-          type: 'danger',
-          message: JSON.parse(res.error).message,
-          timeout: 6,
-          title: 'Warning',
+    const v$ = useVuelidate(rules, formData);
+
+    const handleShowPassword = () => {
+      showPassword.value = !showPassword.value;
+    };
+
+    const handleSubmit = async () => {
+      const isFormCorrect = await v$.value.$validate();
+
+      if (isFormCorrect) {
+        const { error } = await signIn('credentials', {
+          email: formData.email,
+          password: formData.password,
+          callbackUrl: '/signin',
+          redirect: false,
         });
+
+        if (error)
+          return $toast.show({
+            type: 'warning',
+            title: JSON.parse(error).type,
+            message: JSON.parse(error).message,
+            timeout: 6,
+          });
+
+        return $toast.show({
+          type: 'success',
+          title: 'Success',
+          message: 'Success Login',
+          timeout: 6,
+        });
+      }
 
       return null;
     };
 
-    return { handleSubmit, formData };
+    return { handleSubmit, formData, v$, handleShowPassword, showPassword };
   },
 });
 </script>
