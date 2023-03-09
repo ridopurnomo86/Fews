@@ -81,6 +81,7 @@
           <Button
             class="bg-transparent border-gray-600 border hover:bg-black hover:text-white text-black font-bold transition py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
+            :is-disable="v$.invalid || v$.$error || isLoading"
             :text="'Sign in.'"
           />
         </div>
@@ -100,10 +101,10 @@ export default defineComponent({
   name: 'SigninForm',
   setup() {
     const $toast = useToast();
-
-    const { signIn } = useSession();
+    const router = useRouter();
 
     const showPassword = ref<boolean>(false);
+    const isLoading = ref<boolean>(false);
 
     const formData = reactive({
       email: '',
@@ -132,33 +133,50 @@ export default defineComponent({
       const isFormCorrect = await v$.value.$validate();
 
       if (isFormCorrect) {
-        const { error } = await signIn('credentials', {
-          email: formData.email,
-          password: formData.password,
-          callbackUrl: '/signin',
-          redirect: false,
+        isLoading.value = true;
+
+        const { data, error }: any = await useFetch('http://localhost:8000/api/v1/account/login', {
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
 
-        if (error)
+        const errorData = error?.value?.data;
+
+        const responseData = data?.value;
+
+        if (errorData && errorData.type === 'error') {
+          isLoading.value = false;
           return $toast.show({
             type: 'warning',
-            title: JSON.parse(error).type,
-            message: JSON.parse(error).message,
+            title: errorData.type,
+            message: errorData.message,
             timeout: 6,
           });
+        }
 
-        return $toast.show({
-          type: 'success',
-          title: 'Success',
-          message: 'Success Login',
-          timeout: 6,
-        });
+        if (responseData && responseData.type === 'success') {
+          router.push({ path: '/' });
+          isLoading.value = false;
+          return $toast.show({
+            type: 'success',
+            title: responseData.type,
+            message: responseData.message,
+            timeout: 6,
+          });
+        }
       }
 
       return null;
     };
 
-    return { handleSubmit, formData, v$, handleShowPassword, showPassword };
+    return { handleSubmit, formData, v$, handleShowPassword, showPassword, isLoading };
   },
 });
 </script>

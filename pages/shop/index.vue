@@ -22,5 +22,9 @@
 import ProductCard from '~~/components/cards/ProductCard.vue';
 import { ProductDataType } from '~~/types/product';
 
+definePageMeta({
+  middleware: 'auth',
+});
+
 const { data: products } = await useFetch<ProductDataType[]>('/api/product');
 </script>

@@ -17,7 +17,6 @@
     "@nuxtjs/device": "^3.1.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/tailwindcss": "^6.2.0",
-    "@sidebase/nuxt-auth": "^0.4.2",
     "@tailvue/nuxt": "^0.1.68",
     "@types/node": "^18.14.0",
     "@vue/eslint-config-airbnb-with-typescript": "^7.0.0",
@@ -38,8 +37,6 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@vuelidate/core": "^2.0.0",
     "@vuelidate/validators": "^2.0.0",
-    "crypto-js": "^4.1.1",
-    "next-auth": "4.18.8",
     "nuxt-swiper": "^0.1.9",
     "tailvue": "^0.1.68"
   }

@@ -11,6 +11,7 @@
 
   <!-- Children -->
   <div class="min-h-screen">
+    <NuxtLoadingIndicator />
     <slot />
   </div>
 
