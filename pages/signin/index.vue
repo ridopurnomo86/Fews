@@ -7,5 +7,6 @@ import Signin from '~~/views/auth/Signin/index.vue';
 
 definePageMeta({
   layout: 'auth',
+  middleware: 'auth',
 });
 </script>

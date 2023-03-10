@@ -102,6 +102,7 @@ export default defineComponent({
   setup() {
     const $toast = useToast();
     const router = useRouter();
+    const cookie = useCookie('fews_credential');
 
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
@@ -162,6 +163,7 @@ export default defineComponent({
         }
 
         if (responseData && responseData.type === 'success') {
+          cookie.value = responseData.data.access_token;
           router.push({ path: '/' });
           isLoading.value = false;
           return $toast.show({
