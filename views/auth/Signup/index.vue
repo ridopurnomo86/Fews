@@ -1,10 +1,8 @@
 <template>
   <TransitionFade :delay="200" :duration="600" :appear="true">
-    <div class="h-screen">
-      <div class="flex h-full">
-        <SignupForm />
-        <Background />
-      </div>
+    <div class="min-h-[100vh] flex">
+      <SignupForm />
+      <Background />
     </div>
   </TransitionFade>
 </template>

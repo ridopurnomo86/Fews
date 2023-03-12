@@ -8,8 +8,9 @@
         :src="`${imageUrl}`"
         :alt="`${imageUrl}`"
         :fit="'cover'"
+        :format="'webp'"
         preload
-        loading="lazy"
+        :loading="'lazy'"
         class="mb-4 w-[240px] h-[240px] rounded object-cover"
       />
       <p class="font-semibold text-black text-sm truncate">
@@ -17,9 +18,12 @@
       </p>
       <p class="font-medium text-gray-600 text-xs truncate mb-4">{{ type }}</p>
       <div class="flex flex-row items-center justify-between">
-        <p class="font-semibold text-black text-sm truncate">
-          {{ `${formatter.format(price)}` }}
-        </p>
+        <div>
+          <p class="text-xs font-medium text-gray-400 truncate">Price:</p>
+          <p class="font-semibold text-black text-sm truncate">
+            {{ `${formatter.format(price)}` }}
+          </p>
+        </div>
         <div
           class="px-2 py-1 bg-indigo-100 rounded hover:opacity-60 transition-all delay-75"
           @click="onClickCart"

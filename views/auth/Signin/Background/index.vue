@@ -1,5 +1,5 @@
 <template>
-  <div class="background-container h-full w-6/12">
+  <div class="background-container h-full w-6/12 hidden lg:block">
     <div class="relative mix-blend-overlay">
       <nuxt-img
         src="https://source.unsplash.com/qvY5qqOOFH4"

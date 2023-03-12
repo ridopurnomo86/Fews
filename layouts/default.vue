@@ -5,8 +5,12 @@
     <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </Head>
   <div>
-    <Navbar :on-click-side-bard="handleSideBar" />
-    <Sidebar :is-show-sidebar="showSidebar" :handle-close-side-bar="handleSideBar" />
+    <Navbar :on-click-side-bard="handleSideBar" :is-authenticated="isAuthenticated" />
+    <Sidebar
+      ref="sidebarRef"
+      :is-show-sidebar="showSidebar"
+      :handle-close-side-bar="handleSideBar"
+    />
   </div>
 
   <!-- Children -->
@@ -20,6 +24,7 @@
 
 <script lang="ts">
 import { ref } from 'vue';
+import useAuth from '~~/composables/useAuth';
 
 const { disableScroll, enableScroll } = useDisableScroll();
 
@@ -28,13 +33,15 @@ export default defineComponent({
   setup() {
     const showSidebar = ref<boolean>(false);
 
+    const { isAuthenticated } = useAuth();
+
     const handleSideBar = () => {
       showSidebar.value = !showSidebar.value;
       if (!showSidebar.value) return enableScroll();
       return disableScroll();
     };
 
-    return { showSidebar, handleSideBar };
+    return { showSidebar, handleSideBar, isAuthenticated };
   },
 });
 </script>
