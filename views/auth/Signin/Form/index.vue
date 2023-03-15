@@ -71,6 +71,8 @@ import { useVuelidate } from '@vuelidate/core';
 import { useToast } from 'tailvue';
 import HeaderForm from './HeaderForm/index.vue';
 
+const config = useRuntimeConfig();
+
 export default defineComponent({
   name: 'SigninForm',
   components: {
@@ -79,7 +81,7 @@ export default defineComponent({
   setup() {
     const $toast = useToast();
     const router = useRouter();
-    const cookie = useCookie('fews_credential');
+    const cookie = useCookie(config.authSession);
 
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
@@ -135,7 +137,7 @@ export default defineComponent({
             type: 'warning',
             title: errorData.type,
             message: errorData.message,
-            timeout: 6,
+            timeout: 3,
           });
         }
 
@@ -147,7 +149,7 @@ export default defineComponent({
             type: 'success',
             title: responseData.type,
             message: responseData.message,
-            timeout: 6,
+            timeout: 3,
           });
         }
       }

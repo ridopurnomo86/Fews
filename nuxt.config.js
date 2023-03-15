@@ -13,8 +13,10 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     baseBackendUrl: process.env.BASE_BACKEND_URL,
-    authSecret: process.env.NUXT_AUTH_SECRET,
-    origin: process.env.NUXT_AUTH_ORIGIN,
+    authSession: process.env.NUXT_CREDENTIAL_AUTH,
+    public: {
+      authSession: process.env.NUXT_CREDENTIAL_AUTH,
+    },
   },
   typescript: {
     strict: true,

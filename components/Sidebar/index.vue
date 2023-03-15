@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed left-0 top-0 w-full h-full overflow-auto bg-black opacity-40"
+    class="fixed z-[30] left-0 top-0 w-full h-full overflow-auto bg-black opacity-40"
     :class="[isShowSidebar ? 'block' : 'hidden']"
   />
   <aside
@@ -38,17 +38,18 @@
         </ul>
       </div>
       <div>
-        <NuxtLink
-          :href="'/logout'"
-          class="flex items-center cursor-pointer px-2 py-4 text-base font-normal text-gray-900 rounded-lg hover:bg-zinc-200 transition"
+        <button
+          type="button"
+          class="flex items-center w-full cursor-pointer px-2 py-4 text-base font-normal rounded-lg hover:bg-zinc-200 transition"
+          @click="handleLogout"
         >
           <Icon
             :name="'ion:md-log-out'"
             size="24px"
-            class="mr-4 cursor-pointer text-gray-600 -rotate-180"
+            class="mr-4 cursor-pointer text-red-600 -rotate-180"
           />
-          <p class="text-gray-600 text-sm font-medium">Logout</p>
-        </NuxtLink>
+          <p class="text-red-600 text-sm font-medium">Logout</p>
+        </button>
         <NuxtLink
           :href="'/signin'"
           class="flex items-center cursor-pointer px-2 py-4 text-base font-normal text-gray-900 rounded-lg hover:bg-zinc-200 transition"
@@ -66,9 +67,50 @@
 </template>
 
 <script setup lang="ts">
+import { useToast } from 'tailvue';
 import SIDEBAR_LINK from './data';
 
 defineProps<{ isShowSidebar: boolean; handleCloseSideBar: () => void }>();
-</script>
 
-<style scoped></style>
+const config = useRuntimeConfig();
+
+const $toast = useToast();
+
+const handleLogout = async () => {
+  const { data, error }: any = await useFetch('/api/logout', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (data.value) {
+    const cookies = useCookie(config.authSession, {
+      maxAge: 0,
+    });
+    cookies.value = '';
+    $toast.show({
+      message: data.value.message,
+      type: 'success',
+      title: data.value.type,
+      timeout: 2,
+      wide: true,
+    });
+
+    return cookies;
+  }
+
+  if (error.value) {
+    return $toast.show({
+      message: 'Something Gone Wrong',
+      type: 'warning',
+      title: 'Error',
+      timeout: 2,
+      wide: true,
+    });
+  }
+
+  return null;
+};
+</script>

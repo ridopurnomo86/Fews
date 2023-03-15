@@ -6,11 +6,9 @@
   </Head>
   <div>
     <Navbar :on-click-side-bard="handleSideBar" :is-authenticated="isAuthenticated" />
-    <Sidebar
-      ref="sidebarRef"
-      :is-show-sidebar="showSidebar"
-      :handle-close-side-bar="handleSideBar"
-    />
+    <ClientOnly>
+      <Sidebar :is-show-sidebar="showSidebar" :handle-close-side-bar="handleSideBar" />
+    </ClientOnly>
   </div>
 
   <!-- Children -->
