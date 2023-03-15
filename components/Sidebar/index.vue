@@ -15,7 +15,7 @@
           <NuxtLink to="/">
             <p class="text-xl font-bold">Fews</p>
           </NuxtLink>
-          <button type="button" @click="handleCloseSideBar">
+          <button text="" type="button" @click="handleCloseSideBar">
             <Icon
               :name="'carbon:close-filled'"
               size="20px"

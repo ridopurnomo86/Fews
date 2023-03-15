@@ -11,12 +11,6 @@ const NAVBAR_LINK = [
     title: 'Search',
     link: '/search',
   },
-  {
-    id: 3,
-    icon: 'octicon:person-16',
-    title: 'Profile',
-    link: '/profile',
-  },
 ];
 
 export default NAVBAR_LINK;

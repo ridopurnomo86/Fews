@@ -4,8 +4,16 @@
     <Meta :x-ua-compatible="'X-UA-Compatible'" content="IE=edge" />
     <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </Head>
-  <div>
-    <Navbar :on-click-side-bard="handleSideBar" :is-authenticated="isAuthenticated" />
+  <div class="relative">
+    <Navbar
+      :email="'John'"
+      :full-name="'Mactavish'"
+      :on-click-side-bar="handleSideBar"
+      :is-authenticated="isAuthenticated"
+      :on-click-profile="handleShowProfile"
+      :is-show-profile="showProfile"
+      :on-click-logout="handleLogout"
+    />
     <ClientOnly>
       <Sidebar :is-show-sidebar="showSidebar" :handle-close-side-bar="handleSideBar" />
     </ClientOnly>
@@ -30,6 +38,7 @@ export default defineComponent({
   name: 'Layouts',
   setup() {
     const showSidebar = ref<boolean>(false);
+    const showProfile = ref<boolean>(false);
 
     const { isAuthenticated } = useAuth();
 
@@ -39,7 +48,22 @@ export default defineComponent({
       return disableScroll();
     };
 
-    return { showSidebar, handleSideBar, isAuthenticated };
+    const handleShowProfile = () => {
+      showProfile.value = !showProfile.value;
+    };
+
+    const handleLogout = async () => {
+      return null;
+    };
+
+    return {
+      showSidebar,
+      handleSideBar,
+      isAuthenticated,
+      handleShowProfile,
+      handleLogout,
+      showProfile,
+    };
   },
 });
 </script>
