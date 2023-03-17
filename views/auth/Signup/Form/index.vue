@@ -98,14 +98,13 @@
           />
         </div>
       </form>
-
       <p class="text-gray-500 text-xs mt-4">&copy;2023 Fews Corp. All rights reserved.</p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { required, email, minLength, helpers, sameAs } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import { useToast } from 'tailvue';
@@ -162,36 +161,44 @@ export default defineComponent({
 
     const handleSubmit = async () => {
       const isFormCorrect = await v$.value.$validate();
+
       if (isFormCorrect) {
         isLoading.value = true;
 
-        const { data }: any = await useFetch('/api/signup', {
-          method: 'post',
+        const { data, error }: any = await useFetch('/api/signup', {
+          method: 'POST',
           body: JSON.stringify({
             full_name: formData.fullName,
             phone_number: formData.phoneNumber,
             email: formData.email,
             password: formData.password,
           }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
 
-        if (data.value.type === 'error') {
+        const errorData = error?.value?.data;
+
+        const responseData = data?.value;
+
+        if (error && errorData.type === 'error') {
           isLoading.value = false;
           return $toast.show({
             type: 'warning',
-            title: data.value.type,
-            message: data.value.message,
+            title: errorData.type,
+            message: errorData.message,
             timeout: 3,
           });
         }
 
-        if (data.value.type === 'success') {
+        if (responseData && responseData.type === 'success') {
           isLoading.value = false;
           router.push({ path: '/signin' });
           return $toast.show({
             type: 'success',
-            title: data.value.type,
-            message: data.value.message,
+            title: responseData.type,
+            message: responseData.message,
             timeout: 3,
           });
         }

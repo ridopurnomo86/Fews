@@ -11,7 +11,7 @@
           size="24px"
           class="text-gray-600"
         />
-        <p v-if="hasAuthenticated" class="text-md text-black font-semibold">
+        <p v-else class="text-md text-black font-semibold">
           {{ displayName(fullName) }}
         </p>
       </div>
@@ -35,22 +35,25 @@
           <p class="text-xs sm:text-sm text-gray-600 font-semibold">Account Settings</p>
         </div>
       </NuxtLink>
-      <button
-        v-if="hasAuthenticated"
-        text=""
-        type="button"
-        class="flex items-center mb-3 cursor-pointer"
-        @click="onLogout"
-      >
-        <Icon :name="'ion:md-log-out'" size="20px" class="mr-4 text-gray-600" />
-        <p class="text-xs sm:text-sm text-gray-600 font-semibold">Logout</p>
-      </button>
-      <NuxtLink v-if="!hasAuthenticated" href="/signin">
-        <div class="flex items-center">
-          <Icon :name="'clarity:sign-in-solid'" size="20px" class="mr-4 text-gray-600" />
-          <p class="text-xs sm:text-sm text-gray-600 font-semibold">Sign in</p>
-        </div>
-      </NuxtLink>
+      <div v-if="hasAuthenticated">
+        <button
+          text=""
+          type="button"
+          class="flex items-center mb-3 cursor-pointer"
+          @click="onLogout"
+        >
+          <Icon :name="'ion:md-log-out'" size="20px" class="mr-4 text-gray-600" />
+          <p class="text-xs sm:text-sm text-gray-600 font-semibold">Logout</p>
+        </button>
+      </div>
+      <div v-else>
+        <NuxtLink href="/signin">
+          <div class="flex items-center">
+            <Icon :name="'clarity:sign-in-solid'" size="20px" class="mr-4 text-gray-600" />
+            <p class="text-xs sm:text-sm text-gray-600 font-semibold">Sign in</p>
+          </div>
+        </NuxtLink>
+      </div>
     </div>
   </div>
 </template>
@@ -73,7 +76,6 @@ interface UserMenuCardPropsType {
 }
 
 withDefaults(defineProps<UserMenuCardPropsType>(), {
-  hasAuthenticated: false,
   isShow: false,
   type: 'button',
   onLogout: () => {},

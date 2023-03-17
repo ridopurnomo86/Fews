@@ -1,7 +1,8 @@
 const useAuth = () => {
+  const config = useRuntimeConfig();
   let isAuthenticated = false;
 
-  const cookie = useCookie('fews_credential', {
+  const cookie = useCookie(config.authSession, {
     watch: true,
   }).value;
 

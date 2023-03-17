@@ -39,6 +39,8 @@
       </div>
       <div>
         <button
+          v-if="isAuthenticated"
+          :text="''"
           type="button"
           class="flex items-center w-full cursor-pointer px-2 py-4 text-base font-normal rounded-lg hover:bg-zinc-200 transition"
           @click="handleLogout"
@@ -51,6 +53,7 @@
           <p class="text-red-600 text-sm font-medium">Logout</p>
         </button>
         <NuxtLink
+          v-if="!isAuthenticated"
           :href="'/signin'"
           class="flex items-center cursor-pointer px-2 py-4 text-base font-normal text-gray-900 rounded-lg hover:bg-zinc-200 transition"
         >
@@ -76,6 +79,10 @@ const config = useRuntimeConfig();
 
 const $toast = useToast();
 
+const router = useRouter();
+
+const { isAuthenticated } = useAuth();
+
 const handleLogout = async () => {
   const { data, error }: any = await useFetch('/api/logout', {
     method: 'POST',
@@ -90,6 +97,7 @@ const handleLogout = async () => {
       maxAge: 0,
     });
     cookies.value = '';
+    router.replace('/signin');
     $toast.show({
       message: data.value.message,
       type: 'success',

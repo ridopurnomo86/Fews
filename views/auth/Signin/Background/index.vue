@@ -2,11 +2,21 @@
   <div class="background-container h-full w-6/12 hidden lg:block">
     <div class="relative mix-blend-overlay">
       <nuxt-img
-        src="https://source.unsplash.com/qvY5qqOOFH4"
+        src="https://source.unsplash.com/dF0YqnKNc8Y"
         alt="BannerImage"
-        class="absolute h-[100vh] w-full object-cover object-right opacity-70"
+        class="absolute h-[100vh] w-full object-cover object-top opacity-70"
       />
-      <div class="absolute -z-10 bg-gradient-to-b from-black to-gray-900 h-[100vh] w-full" />
+      <div class="absolute flex items-end p-12 h-[100vh] w-full">
+        <div class="flex flex-col">
+          <p class="text-3xl text-white font-semibold mb-12">
+            "We all need a splash of bad taste it's hearty, it's healthy, it's physical. I think we
+            could use more of it. No taste is what I'm against."
+          </p>
+          <p class="text-xl text-white font-semibold">Diana Vreeland</p>
+          <p class="text-md text-white font-normal">Designer</p>
+        </div>
+      </div>
+      <div class="absolute -z-10 h-[100vh] w-full bg-gradient-to-b from-zinc-900 to-black" />
     </div>
   </div>
 </template>

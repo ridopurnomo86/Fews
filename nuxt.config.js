@@ -10,13 +10,19 @@ export default defineNuxtConfig({
     '@nuxt/image-edge',
     '@nuxtjs/device',
     '@tailvue/nuxt',
+    'nuxt-vue3-google-signin',
   ],
   runtimeConfig: {
     baseBackendUrl: process.env.BASE_BACKEND_URL,
     authSession: process.env.NUXT_CREDENTIAL_AUTH,
+    googleClientId: process.env.GOOGLE_CLIENT_ID,
     public: {
       authSession: process.env.NUXT_CREDENTIAL_AUTH,
+      googleClientId: process.env.GOOGLE_CLIENT_ID,
     },
+  },
+  googleSignIn: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
   },
   typescript: {
     strict: true,

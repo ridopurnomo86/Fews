@@ -1,6 +1,6 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
-  <div class="lg:w-6/12 w-full flex flex-col justify-center px-10 container mx-auto">
+  <div class="lg:w-5/12 w-full flex flex-col justify-center px-10 container mx-auto">
     <HeaderForm />
     <div class="w-full relative">
       <form @submit.prevent="handleSubmit">
@@ -51,11 +51,36 @@
             </div>
           </span>
         </BaseInput>
-        <div class="flex items-center justify-between">
+        <NuxtLink href="/forgot-password">
+          <p class="text-black underline text-xs md:text-sm font-medium mb-4 right">
+            Forgot Password
+          </p>
+        </NuxtLink>
+        <button
+          type="button"
+          :disabled="!isReady"
+          :text="''"
+          :is-disable="v$.invalid || v$.$error || isLoading"
+          class="w-full border py-2 cursor-pointer bg-white rounded hover:opacity-60 transition-all"
+          @click="handleGoogleLogin"
+        >
+          <div class="flex items-center justify-center">
+            <Icon name="flat-color-icons:google" size="20px" class="text-gray-800" />
+            <p class="ml-2 text-gray-800 font-semibold text-sm">Log in with Google</p>
+          </div>
+        </button>
+        <div class="w-full flex items-center my-4">
+          <div class="h-[1px] w-full bg-gray-200" />
+          <p class="text-gray-600 font-semibold text-sm px-4">OR</p>
+          <div class="h-[1px] w-full bg-gray-200" />
+        </div>
+        <div class="w-full">
           <Button
+            id="customBtn"
             type="submit"
+            class="w-full"
             :is-disable="v$.invalid || v$.$error || isLoading"
-            :text="'Sign in.'"
+            :text="'Log in.'"
           />
         </div>
       </form>
@@ -69,6 +94,11 @@ import { defineComponent } from 'vue';
 import { required, email, helpers } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import { useToast } from 'tailvue';
+import {
+  useTokenClient,
+  type AuthCodeFlowSuccessResponse,
+  type AuthCodeFlowErrorResponse,
+} from 'vue3-google-signin';
 import HeaderForm from './HeaderForm/index.vue';
 
 const config = useRuntimeConfig();
@@ -78,6 +108,7 @@ export default defineComponent({
   components: {
     HeaderForm,
   },
+
   setup() {
     const $toast = useToast();
     const router = useRouter();
@@ -157,7 +188,33 @@ export default defineComponent({
       return null;
     };
 
-    return { handleSubmit, formData, v$, handleShowPassword, showPassword, isLoading };
+    const handleOnSuccess = (response: AuthCodeFlowSuccessResponse) => {
+      console.log(response);
+      console.log('Access Token: ', response.access_token);
+    };
+
+    const handleOnError = (errorResponse: AuthCodeFlowErrorResponse) => {
+      console.log('Error: ', errorResponse);
+    };
+
+    const { isReady, login: handleGoogleLogin } = useTokenClient({
+      onSuccess: handleOnSuccess,
+      onError: handleOnError,
+      // other options
+    });
+
+    console.log(isReady);
+
+    return {
+      handleGoogleLogin,
+      isReady,
+      handleSubmit,
+      formData,
+      v$,
+      handleShowPassword,
+      showPassword,
+      isLoading,
+    };
   },
 });
 </script>

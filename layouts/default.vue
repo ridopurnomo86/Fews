@@ -1,21 +1,12 @@
 <template>
-  <Head>
-    <Meta charset="UTF-8" />
-    <Meta :x-ua-compatible="'X-UA-Compatible'" content="IE=edge" />
-    <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </Head>
   <div class="relative">
-    <Navbar
-      :email="'John'"
-      :full-name="'Mactavish'"
-      :on-click-side-bar="handleSideBar"
-      :is-authenticated="isAuthenticated"
-      :on-click-profile="handleShowProfile"
-      :is-show-profile="showProfile"
-      :on-click-logout="handleLogout"
-    />
+    <Navbar :on-click-side-bar="handleSideBar" />
     <ClientOnly>
-      <Sidebar :is-show-sidebar="showSidebar" :handle-close-side-bar="handleSideBar" />
+      <Sidebar
+        v-on-click-outside="handleSideBar"
+        :is-show-sidebar="showSidebar"
+        :handle-close-side-bar="handleSideBar"
+      />
     </ClientOnly>
   </div>
 
@@ -39,6 +30,7 @@ export default defineComponent({
   setup() {
     const showSidebar = ref<boolean>(false);
     const showProfile = ref<boolean>(false);
+    const sidebarRef = ref(null);
 
     const { isAuthenticated } = useAuth();
 
@@ -57,6 +49,7 @@ export default defineComponent({
     };
 
     return {
+      sidebarRef,
       showSidebar,
       handleSideBar,
       isAuthenticated,
