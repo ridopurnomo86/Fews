@@ -2,11 +2,7 @@
   <div class="relative">
     <Navbar :on-click-side-bar="handleSideBar" />
     <ClientOnly>
-      <Sidebar
-        v-on-click-outside="handleSideBar"
-        :is-show-sidebar="showSidebar"
-        :handle-close-side-bar="handleSideBar"
-      />
+      <Sidebar :is-show-sidebar="showSidebar" :handle-close-side-bar="handleSideBar" />
     </ClientOnly>
   </div>
 

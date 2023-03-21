@@ -1,6 +1,11 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
-  <div class="lg:w-5/12 w-full flex flex-col justify-center px-10 container mx-auto">
+  <div class="lg:w-5/12 w-full flex flex-col justify-center px-10 container mx-auto relative">
+    <div class="absolute top-10 bottom-0">
+      <NuxtLink to="/">
+        <p class="text-xl font-bold mr-4">Fews</p>
+      </NuxtLink>
+    </div>
     <HeaderForm />
     <div class="w-full relative">
       <form @submit.prevent="handleSubmit">
@@ -76,7 +81,6 @@
         </div>
         <div class="w-full">
           <Button
-            id="customBtn"
             type="submit"
             class="w-full"
             :is-disable="v$.invalid || v$.$error || isLoading"
@@ -141,11 +145,11 @@ export default defineComponent({
     };
 
     const handleSubmit = async () => {
+      isLoading.value = true;
+
       const isFormCorrect = await v$.value.$validate();
 
       if (isFormCorrect) {
-        isLoading.value = true;
-
         const { data, error }: any = await useFetch('http://localhost:8000/api/v1/account/login', {
           body: JSON.stringify({
             email: formData.email,
@@ -183,27 +187,85 @@ export default defineComponent({
             timeout: 3,
           });
         }
+
+        isLoading.value = false;
       }
 
       return null;
     };
 
-    const handleOnSuccess = (response: AuthCodeFlowSuccessResponse) => {
-      console.log(response);
-      console.log('Access Token: ', response.access_token);
+    const handleOnSuccess = async (response: AuthCodeFlowSuccessResponse) => {
+      isLoading.value = true;
+
+      if (response.access_token) {
+        const { data, error }: any = await useFetch(
+          'http://localhost:8000/api/v1/account/google/login',
+          {
+            body: JSON.stringify({
+              token: response.access_token,
+            }),
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        const errorData = error?.value?.data;
+
+        const responseData = data?.value;
+
+        if (errorData && errorData.type === 'error') {
+          isLoading.value = false;
+          return $toast.show({
+            type: 'warning',
+            title: errorData.type,
+            message: errorData.message,
+            timeout: 3,
+          });
+        }
+
+        if (responseData && responseData.code === 'user_not_exist') {
+          router.push({ path: '/set-password' });
+          return $toast.show({
+            type: 'success',
+            title: responseData.type,
+            message: responseData.message,
+            timeout: 3,
+          });
+        }
+
+        if (responseData && responseData.type === 'success') {
+          cookie.value = responseData.data.access_token;
+          router.push({ path: '/' });
+          isLoading.value = false;
+          return $toast.show({
+            type: 'success',
+            title: responseData.type,
+            message: responseData.message,
+            timeout: 3,
+          });
+        }
+      }
+
+      isLoading.value = false;
+
+      return null;
     };
 
     const handleOnError = (errorResponse: AuthCodeFlowErrorResponse) => {
-      console.log('Error: ', errorResponse);
+      return $toast.show({
+        type: 'danger',
+        title: 'Error',
+        message: errorResponse.error_description,
+        timeout: 3,
+      });
     };
 
     const { isReady, login: handleGoogleLogin } = useTokenClient({
       onSuccess: handleOnSuccess,
       onError: handleOnError,
-      // other options
     });
-
-    console.log(isReady);
 
     return {
       handleGoogleLogin,
