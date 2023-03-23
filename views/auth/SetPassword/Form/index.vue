@@ -60,7 +60,7 @@
           <Button
             type="submit"
             class="w-full"
-            :is-disable="v$.invalid || v$.$errors.length < 0 || isLoading"
+            :is-disable="v$.invalid || v$.$error || isLoading"
             :text="'Set Password'"
           />
         </div>
@@ -77,20 +77,16 @@ import { required, helpers, minLength, sameAs } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import HeaderForm from './HeaderForm/index.vue';
 
-const config = useRuntimeConfig();
-
 export default defineComponent({
   name: 'SetPassword',
   components: {
     HeaderForm,
   },
-
   setup() {
     const $toast = useToast();
     const router = useRouter();
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
-    const cookie = useCookie(config.authSession);
 
     const formData = reactive({
       password: '',
@@ -121,20 +117,20 @@ export default defineComponent({
 
       const isFormCorrect = await v$.value.$validate();
 
+      if (!isFormCorrect) {
+        isLoading.value = false;
+      }
+
       if (isFormCorrect) {
-        const { data, error }: any = await useFetch(
-          'http://localhost:8000/api/v1/account/google/set',
-          {
-            body: JSON.stringify({
-              password: formData.password,
-            }),
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const { data, error }: any = await useFetch('/api/set-password', {
+          body: JSON.stringify({
+            password: formData.password,
+          }),
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
         const errorData = error?.value?.data;
         const responseData = data?.value;
@@ -150,13 +146,12 @@ export default defineComponent({
         }
 
         if (responseData && responseData.type === 'success') {
-          cookie.value = responseData.data.access_token;
-          router.push({ path: '/' });
+          router.push({ path: '/signin' });
           isLoading.value = false;
           return $toast.show({
             type: 'success',
             title: responseData.type,
-            message: responseData.message,
+            message: 'Success set password, Please Login',
             timeout: 3,
           });
         }

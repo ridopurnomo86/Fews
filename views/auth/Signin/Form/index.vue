@@ -191,6 +191,10 @@ export default defineComponent({
         isLoading.value = false;
       }
 
+      if (!isFormCorrect) {
+        isLoading.value = false;
+      }
+
       return null;
     };
 
@@ -247,8 +251,6 @@ export default defineComponent({
           });
         }
       }
-
-      isLoading.value = false;
 
       return null;
     };
