@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@tailvue/nuxt',
     'nuxt-vue3-google-signin',
+    '@pinia/nuxt',
   ],
   runtimeConfig: {
     baseBackendUrl: process.env.BASE_BACKEND_URL,

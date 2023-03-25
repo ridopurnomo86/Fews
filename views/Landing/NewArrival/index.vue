@@ -1,5 +1,6 @@
 <template>
   <div class="w-full overflow-hidden">
+    <p>{{ cartStore.cart }}</p>
     <div class="flex w-full items-end justify-between mb-8">
       <div class="section">
         <p class="font-bold text-2xl mb-2">New <span class="text-indigo-800">Arrivals.</span></p>
@@ -35,7 +36,7 @@
       :slides-per-view="4"
       :autoplay-disable-on-interaction="true"
     >
-      <SwiperSlide v-for="product in products" :key="product.product_id">
+      <SwiperSlide v-for="product in products" :key="product.id">
         <div class="max-w-[250px]">
           <ProductCard
             :type="product.category"
@@ -50,9 +51,22 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import ProductCard from '~~/components/cards/ProductCard.vue';
+import useCartStore from '~~/stores/useCart';
 import { ProductDataType } from '~~/types/product';
 
-const { data: products } = await useFetch<ProductDataType[]>('/api/product');
+export default defineComponent({
+  name: 'NewArrival',
+  components: {
+    ProductCard,
+  },
+  async setup() {
+    const cartStore = useCartStore();
+
+    const { data: products } = await useFetch<ProductDataType[]>('/api/product');
+
+    return { cartStore, products };
+  },
+});
 </script>
