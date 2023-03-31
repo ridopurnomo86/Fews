@@ -116,7 +116,9 @@ export default defineComponent({
   setup() {
     const $toast = useToast();
     const router = useRouter();
-    const cookie = useCookie(config.authSession);
+    const cookie = useCookie(config.authSession, {
+      maxAge: 18000,
+    });
 
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);

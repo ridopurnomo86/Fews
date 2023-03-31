@@ -2,17 +2,20 @@
   <div class="background-container h-full w-6/12 hidden lg:block">
     <div class="relative mix-blend-overlay">
       <nuxt-img
-        src="https://source.unsplash.com/dF0YqnKNc8Y"
+        src="https://source.unsplash.com/DYUqR5lVD2I"
         alt="BannerImage"
-        class="absolute h-[100vh] w-full object-cover object-top opacity-70"
+        :fit="'cover'"
+        :preload="true"
+        :loading="'lazy'"
+        class="absolute h-[100vh] w-full object-cover object-center opacity-70"
       />
       <div class="absolute flex items-end p-12 h-[100vh] w-full">
         <div class="flex flex-col">
           <p class="text-3xl text-white font-semibold mb-12">
-            "We all need a splash of bad taste it's hearty, it's healthy, it's physical. I think we
-            could use more of it. No taste is what I'm against."
+            "Fashion is a religion in one sense. Once upon a time, our brand was considered the
+            sanctum sanctorum of fashion. I want to produce things that people really want to buy."
           </p>
-          <p class="text-xl text-white font-semibold">Diana Vreeland</p>
+          <p class="text-xl text-white font-semibold">Alessandro Michele</p>
           <p class="text-md text-white font-normal">Designer</p>
         </div>
       </div>

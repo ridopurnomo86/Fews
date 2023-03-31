@@ -5155,6 +5155,11 @@ nuxt-icon@^0.2.5:
     "@nuxt/kit" "^3.1.0"
     nuxt-config-schema "^0.4.4"
 
+nuxt-storage@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/nuxt-storage/-/nuxt-storage-1.2.2.tgz#f3282948bac8cdc3fb7d0655972d1d1963045ca4"
+  integrity sha512-quJbZ87NO7QRCSp7YZolot6VwktciSLuTS/sRl8NPz5rAWA84U5Py0y9FmAsbKTiaqJtFcCKSaJGzky948jA3w==
+
 nuxt-swiper@^0.1.9:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/nuxt-swiper/-/nuxt-swiper-0.1.9.tgz#9d67b1c4af228c63d1e61a907d5d56b8c6b1a56f"

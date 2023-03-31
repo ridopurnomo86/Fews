@@ -2,6 +2,7 @@
   <div
     class="fixed z-[30] left-0 top-0 w-full h-full overflow-auto bg-black opacity-40"
     :class="[isShowSidebar ? 'block' : 'hidden']"
+    @click="handleCloseSideBar"
   />
   <aside
     id="sidebar-multi-level-sidebar"

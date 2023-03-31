@@ -15,11 +15,20 @@
           </li>
         </ul>
         <ul class="flex items-center">
-          <div v-for="item in NAVBAR_LINK" :key="item.id">
-            <NuxtLink :href="item.link" class="hidden md:block">
-              <Icon :name="item.icon" size="20px" class="mr-4 cursor-pointer" />
+          <li class="hidden md:block cursor-pointer">
+            <NuxtLink :href="'/cart'" class="hidden md:block">
+              <Icon
+                :name="'material-symbols:shopping-bag-outline'"
+                size="20px"
+                class="mr-4 cursor-pointer"
+              />
             </NuxtLink>
-          </div>
+          </li>
+          <li class="hidden md:block cursor-pointer relative">
+            <NuxtLink :href="'/search'" class="hidden md:block">
+              <Icon :name="'octicon:search-16'" size="20px" class="mr-4 cursor-pointer" />
+            </NuxtLink>
+          </li>
           <li class="hidden md:block cursor-pointer">
             <button text="" type="button">
               <Icon :name="'octicon:person-16'" size="20px" />
@@ -41,8 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import NAVBAR_LINK from './data';
-
 defineProps<{
   onClickSideBar: () => void;
 }>();

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-wrap gap-12">
-    <div v-for="product in products" :key="product.product_id">
+    <div v-for="product in products" :key="product.id">
       <div class="max-w-[250px]">
         <ProductCard
           :type="product.category"
@@ -8,6 +8,7 @@
           :title="product.name"
           :price="product.price"
           :image-url="product.image_url"
+          :on-click-cart="() => cartStore.addToCart(product)"
         />
       </div>
     </div>
@@ -16,6 +17,7 @@
 
 <script lang="ts">
 import ProductCard from '~~/components/cards/ProductCard.vue';
+import { useCartStore } from '~~/stores/useCart';
 import { ProductDataType } from '~~/types/product';
 
 export default defineComponent({
@@ -24,9 +26,10 @@ export default defineComponent({
     ProductCard,
   },
   async setup() {
+    const cartStore = useCartStore();
     const { data: products } = await useFetch<ProductDataType[]>('/api/product');
 
-    return { products };
+    return { products, cartStore };
   },
 });
 </script>

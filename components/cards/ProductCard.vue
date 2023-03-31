@@ -27,7 +27,6 @@
         <div
           class="px-2 py-1 bg-indigo-100 rounded hover:opacity-60 transition-all delay-75"
           @click="onClickCart"
-          @keypress="onClickCart"
         >
           <Icon :name="'material-symbols:shopping-bag'" size="20px" />
         </div>

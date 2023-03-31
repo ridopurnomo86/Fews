@@ -1,6 +1,5 @@
 <template>
   <div class="w-full overflow-hidden">
-    <p>{{ cartStore.cart }}</p>
     <div class="flex w-full items-end justify-between mb-8">
       <div class="section">
         <p class="font-bold text-2xl mb-2">New <span class="text-indigo-800">Arrivals.</span></p>
@@ -53,7 +52,6 @@
 
 <script lang="ts">
 import ProductCard from '~~/components/cards/ProductCard.vue';
-import useCartStore from '~~/stores/useCart';
 import { ProductDataType } from '~~/types/product';
 
 export default defineComponent({
@@ -62,11 +60,9 @@ export default defineComponent({
     ProductCard,
   },
   async setup() {
-    const cartStore = useCartStore();
-
     const { data: products } = await useFetch<ProductDataType[]>('/api/product');
 
-    return { cartStore, products };
+    return { products };
   },
 });
 </script>
