@@ -18,17 +18,31 @@ export const useCartStore = defineStore('cart', {
   actions: {
     addToCart(item: ProductDataType) {
       const toast = useToast();
-      const index = this.cartItems.filter((product: ProductDataType) => product.id === item.id);
+      const products = getLocalStorage('cart-items');
 
-      if (index.length > 0 || this.cartItems !== null) return null;
+      if (products !== undefined) {
+        const filterIndex = products.filter((product: ProductDataType) => product.id === item.id);
+        if (filterIndex.length > 0) return null;
+        setLocalStorage('cart-items', [...products, item]);
+        return toast.show({
+          message: 'Success add to cart',
+          title: 'Success',
+          type: 'success',
+        });
+      }
 
-      const existingItems = getLocalStorage('cart-items');
-      existingItems.push(item);
-
-      setLocalStorage('cart-items', existingItems);
-
+      setLocalStorage('cart-items', [item]);
       return toast.show({
         message: 'Success add to cart',
+        title: 'Success',
+        type: 'success',
+      });
+    },
+    deleteAllCart() {
+      const toast = useToast();
+      setLocalStorage('cart-items', []);
+      return toast.show({
+        message: 'Success delete all cart',
         title: 'Success',
         type: 'success',
       });
