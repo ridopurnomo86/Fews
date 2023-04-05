@@ -12,7 +12,16 @@ export default defineNuxtConfig({
     '@tailvue/nuxt',
     'nuxt-vue3-google-signin',
     '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+    '@vueuse/nuxt',
   ],
+
+  piniaPersistedstate: {
+    cookieOptions: {
+      sameSite: 'strict',
+    },
+    storage: 'localStorage',
+  },
   runtimeConfig: {
     baseBackendUrl: process.env.BASE_BACKEND_URL,
     authSession: process.env.NUXT_CREDENTIAL_AUTH,

@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia';
 import { useToast } from 'tailvue';
-import { getLocalStorage, setLocalStorage } from '~~/modules/storage';
 import { ProductDataType } from '~~/types/product';
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    cartItems: getLocalStorage('cart-items', []),
+    cartItems: [] as ProductDataType[] | any,
   }),
   getters: {
     countCartItems(): number {
@@ -18,12 +17,13 @@ export const useCartStore = defineStore('cart', {
   actions: {
     addToCart(item: ProductDataType) {
       const toast = useToast();
-      const products = getLocalStorage('cart-items');
 
-      if (products !== undefined) {
-        const filterIndex = products.filter((product: ProductDataType) => product.id === item.id);
+      if (this.cartItems !== undefined) {
+        const filterIndex = this.cartItems.filter(
+          (product: ProductDataType) => product.id === item.id
+        );
         if (filterIndex.length > 0) return null;
-        setLocalStorage('cart-items', [...products, item]);
+        this.cartItems.push(item);
         return toast.show({
           message: 'Success add to cart',
           title: 'Success',
@@ -31,16 +31,17 @@ export const useCartStore = defineStore('cart', {
         });
       }
 
-      setLocalStorage('cart-items', [item]);
+      this.cartItems.push(item);
       return toast.show({
         message: 'Success add to cart',
         title: 'Success',
         type: 'success',
       });
     },
+
     deleteAllCart() {
       const toast = useToast();
-      setLocalStorage('cart-items', []);
+      this.cartItems = [];
       return toast.show({
         message: 'Success delete all cart',
         title: 'Success',
@@ -48,4 +49,5 @@ export const useCartStore = defineStore('cart', {
       });
     },
   },
+  persist: true,
 });

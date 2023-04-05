@@ -1,17 +1,7 @@
 <template>
-  <div>
+  <div class="mx-auto container">
     <h1>Cart Page</h1>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  setup() {
-    return {};
-  },
-});
-</script>
-
-<style scoped></style>
+<script setup lang="ts"></script>
