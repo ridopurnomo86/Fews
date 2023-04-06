@@ -29,6 +29,7 @@
             <NuxtLink
               :href="item.link"
               class="flex items-center cursor-pointer px-2 py-4 text-base font-normal text-gray-900 rounded-lg hover:bg-zinc-200 transition"
+              @click="handleCloseSideBar"
             >
               <Icon :name="item.icon" size="24px" class="mr-4 cursor-pointer text-gray-600" />
               <p class="text-gray-600 text-sm font-medium">

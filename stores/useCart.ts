@@ -23,7 +23,7 @@ export const useCartStore = defineStore('cart', {
           (product: ProductDataType) => product.id === item.id
         );
         if (filterIndex.length > 0) return null;
-        this.cartItems.push(item);
+        this.cartItems.push({ ...item, quantity: 1 });
         return toast.show({
           message: 'Success add to cart',
           title: 'Success',
@@ -31,7 +31,7 @@ export const useCartStore = defineStore('cart', {
         });
       }
 
-      this.cartItems.push(item);
+      this.cartItems.push({ ...item, quantity: 1 });
       return toast.show({
         message: 'Success add to cart',
         title: 'Success',
@@ -41,12 +41,38 @@ export const useCartStore = defineStore('cart', {
 
     deleteAllCart() {
       const toast = useToast();
-      this.cartItems = [];
+      if (this.cartItems.length > 0) {
+        this.cartItems = [];
+        return toast.show({
+          message: 'Success delete all cart',
+          title: 'Success',
+          type: 'success',
+        });
+      }
+      return null;
+    },
+
+    deleteCartById(id: ProductDataType['id']) {
+      const toast = useToast();
+      const filterItems = this.cartItems.filter((item: ProductDataType) => item.id !== id);
+      this.cartItems = filterItems;
       return toast.show({
-        message: 'Success delete all cart',
+        message: 'Success delete cart',
         title: 'Success',
         type: 'success',
       });
+    },
+
+    increaseQuantity(id: number) {
+      const selectedItem = this.cartItems.find((product: ProductDataType) => product.id === id);
+      if (selectedItem.quantity > 0) selectedItem.quantity += 1;
+      return null;
+    },
+
+    decreaseQuantity(id: number) {
+      const selectedItem = this.cartItems.find((product: ProductDataType) => product.id === id);
+      if (selectedItem.quantity > 1 && selectedItem.quantity !== 1) selectedItem.quantity -= 1;
+      return null;
     },
   },
   persist: true,

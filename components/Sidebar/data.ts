@@ -23,6 +23,12 @@ const SIDEBAR_LINK = [
     title: 'Orders',
     link: '/order',
   },
+  {
+    id: 5,
+    icon: 'ph:shopping-cart-fill',
+    title: 'Cart',
+    link: '/cart',
+  },
 ];
 
 export default SIDEBAR_LINK;

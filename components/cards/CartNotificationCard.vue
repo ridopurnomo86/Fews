@@ -57,20 +57,26 @@
                 {{ formatter.format(cart.price) }}
               </p>
               <div class="flex mt-4">
-                <div class="rounded border bg-white px-2 cursor-pointer">
+                <div
+                  class="rounded border bg-white px-2 cursor-pointer"
+                  @click="cartStore.decreaseQuantity(cart.id)"
+                >
                   <p class="font-semibold text-neutral-800 text-sm">-</p>
                 </div>
                 <div class="rounded border bg-white px-8 mx-2 cursor-pointer">
-                  <p class="font-semibold text-neutral-800 text-sm">{{ cart.totalAmount }}</p>
+                  <p class="font-semibold text-neutral-800 text-sm">{{ cart.quantity }}</p>
                 </div>
-                <div class="rounded border bg-white px-2 cursor-pointer">
+                <div
+                  class="rounded border bg-white px-2 cursor-pointer"
+                  @click="cartStore.increaseQuantity(cart.id)"
+                >
                   <p class="font-semibold text-neutral-800 text-sm">+</p>
                 </div>
               </div>
             </div>
           </div>
           <div class="flex flex-col justify-between items-end">
-            <button type="button" text="" @click="cart.onDeleteCart">
+            <button type="button" @click="cartStore.deleteCartById(cart.id)">
               <Icon :name="'ion:bag-remove'" size="20px" class="text-red-600 cursor-pointer" />
             </button>
             <div>
@@ -87,10 +93,14 @@
 </template>
 
 <script setup lang="ts">
+import { useCartStore } from '~~/stores/useCart';
+
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
 });
+
+const cartStore = useCartStore();
 
 defineProps<{
   carts: Array<{
@@ -98,7 +108,7 @@ defineProps<{
     imageUrl: string;
     name: string;
     price: number;
-    totalAmount?: number;
+    quantity?: number;
     id: number;
     description: string;
     onDeleteCart?: () => void;
