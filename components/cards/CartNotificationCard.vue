@@ -26,7 +26,7 @@
         <nuxt-img
           class="h-full w-full object-cover"
           src="/images/women-empty-cart.png"
-          alt="man-category-image"
+          alt="women-empty-cart"
         />
       </div>
       <p class="text-md font-semibold text-black">Your Cart is Empty</p>
