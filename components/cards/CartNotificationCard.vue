@@ -40,8 +40,8 @@
           <div class="flex">
             <div class="w-24 aspect-square mr-4">
               <nuxt-img
-                :src="`${cart.imageUrl}`"
-                :alt="`${cart.imageUrl}`"
+                :src="`${cart.image_url}`"
+                :alt="`${cart.image_url}`"
                 :fit="'cover'"
                 :preload="true"
                 :loading="'lazy'"
@@ -94,6 +94,7 @@
 
 <script setup lang="ts">
 import { useCartStore } from '~~/stores/useCart';
+import { ProductDataType } from '~~/types/product';
 
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -103,16 +104,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 const cartStore = useCartStore();
 
 defineProps<{
-  carts: Array<{
-    type: string;
-    imageUrl: string;
-    name: string;
-    price: number;
-    quantity?: number;
-    id: number;
-    description: string;
-    onDeleteCart?: () => void;
-  }>;
+  carts: Array<ProductDataType>;
   totalCart: number;
   onDeleteAllCart: () => void;
 }>();

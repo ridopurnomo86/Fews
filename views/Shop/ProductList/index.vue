@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap gap-12">
+  <div class="grid gap-8 grid-cols-fluid">
     <div v-for="product in products" :key="product.id">
       <div class="max-w-[250px]">
         <ProductCard

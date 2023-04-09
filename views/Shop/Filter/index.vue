@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full overflow-hidden rounded border max-h-[500px]">
+  <div class="h-full w-full overflow-hidden rounded border max-h-[550px] hidden md:block">
     <p class="px-4 py-2 font-semibold text-lg">Filter</p>
     <div class="types-container">
       <button

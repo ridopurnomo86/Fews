@@ -13,6 +13,14 @@ export const useCartStore = defineStore('cart', {
     getCartItems(): ProductDataType[] {
       return this.cartItems;
     },
+    countTotalPrice(): number | null {
+      if (this.cartItems || this.cartItems.length > 0) {
+        const price = this.cartItems?.map((item: ProductDataType) => item.price);
+        const totalPrice = price.reduce((total: number, num: number) => total + num);
+        return totalPrice;
+      }
+      return null;
+    },
   },
   actions: {
     addToCart(item: ProductDataType) {

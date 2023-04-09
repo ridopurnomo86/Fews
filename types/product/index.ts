@@ -5,6 +5,8 @@ export type ProductDataType = {
   price: number;
   image_url: string;
   category: string;
+  type: string;
+  quantity: number;
 };
 
 export type TypesProductDataType = {
