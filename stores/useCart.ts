@@ -1,37 +1,37 @@
 import { defineStore } from 'pinia';
 import { useToast } from 'tailvue';
-import { ProductDataType } from '~~/types/product';
+import { CartProductDataType } from '~~/types/product';
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    cartItems: [] as ProductDataType[] | any,
+    cartItems: [] as CartProductDataType[] | any,
   }),
   getters: {
     countCartItems(): number {
       return this.cartItems.length;
     },
-    getCartItems(): ProductDataType[] {
+    getCartItems(): CartProductDataType[] {
       return this.cartItems;
     },
     countTotalPrice(): number | null {
-      if (this.cartItems || this.cartItems.length > 0) {
-        const price = this.cartItems?.map((item: ProductDataType) => item.price);
-        const totalPrice = price.reduce((total: number, num: number) => total + num);
+      const price = this.cartItems?.map((item: CartProductDataType) => item.totalPrice);
+      if (price || price.length > 0) {
+        const totalPrice = price.reduce((total: number, num: number) => total + num, 0);
         return totalPrice;
       }
-      return null;
+      return 0;
     },
   },
   actions: {
-    addToCart(item: ProductDataType) {
+    addToCart(item: CartProductDataType) {
       const toast = useToast();
 
       if (this.cartItems !== undefined) {
         const filterIndex = this.cartItems.filter(
-          (product: ProductDataType) => product.id === item.id
+          (product: CartProductDataType) => product.id === item.id
         );
         if (filterIndex.length > 0) return null;
-        this.cartItems.push({ ...item, quantity: 1 });
+        this.cartItems.push({ ...item, quantity: 1, totalPrice: item.price });
         return toast.show({
           message: 'Success add to cart',
           title: 'Success',
@@ -39,7 +39,7 @@ export const useCartStore = defineStore('cart', {
         });
       }
 
-      this.cartItems.push({ ...item, quantity: 1 });
+      this.cartItems.push({ ...item, quantity: 1, totalPrice: item.price });
       return toast.show({
         message: 'Success add to cart',
         title: 'Success',
@@ -60,9 +60,9 @@ export const useCartStore = defineStore('cart', {
       return null;
     },
 
-    deleteCartById(id: ProductDataType['id']) {
+    deleteCartById(id: CartProductDataType['id']) {
       const toast = useToast();
-      const filterItems = this.cartItems.filter((item: ProductDataType) => item.id !== id);
+      const filterItems = this.cartItems.filter((item: CartProductDataType) => item.id !== id);
       this.cartItems = filterItems;
       return toast.show({
         message: 'Success delete cart',
@@ -72,14 +72,20 @@ export const useCartStore = defineStore('cart', {
     },
 
     increaseQuantity(id: number) {
-      const selectedItem = this.cartItems.find((product: ProductDataType) => product.id === id);
-      if (selectedItem.quantity > 0) selectedItem.quantity += 1;
+      const selectedItem = this.cartItems.find((product: CartProductDataType) => product.id === id);
+      if (selectedItem.quantity > 0) {
+        selectedItem.quantity += 1;
+        selectedItem.totalPrice = selectedItem.price * selectedItem.quantity;
+      }
       return null;
     },
 
     decreaseQuantity(id: number) {
-      const selectedItem = this.cartItems.find((product: ProductDataType) => product.id === id);
-      if (selectedItem.quantity > 1 && selectedItem.quantity !== 1) selectedItem.quantity -= 1;
+      const selectedItem = this.cartItems.find((product: CartProductDataType) => product.id === id);
+      if (selectedItem.quantity > 1 && selectedItem.quantity !== 1) {
+        selectedItem.quantity -= 1;
+        selectedItem.totalPrice = selectedItem.price * selectedItem.quantity;
+      }
       return null;
     },
   },

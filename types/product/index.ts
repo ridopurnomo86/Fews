@@ -1,4 +1,4 @@
-export type ProductDataType = {
+export type CartProductDataType = {
   id: number;
   description: string;
   name: string;
@@ -7,6 +7,17 @@ export type ProductDataType = {
   category: string;
   type: string;
   quantity: number;
+  totalPrice: number;
+};
+
+export type ProductDataType = {
+  id: number;
+  description: string;
+  name: string;
+  price: number;
+  image_url: string;
+  category: string;
+  type: string;
 };
 
 export type TypesProductDataType = {

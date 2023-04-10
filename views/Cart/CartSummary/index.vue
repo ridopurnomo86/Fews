@@ -31,7 +31,7 @@
     </div>
     <div class="w-full mt-4">
       <NuxtLink href="/shop">
-        <Button type="button" class="w-full bg-indigo-100" :text="'Continue Shopping'" />
+        <Button class="w-full" type="button" :text="'Continue Shopping'" />
       </NuxtLink>
     </div>
   </div>
