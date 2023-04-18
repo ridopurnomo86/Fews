@@ -13,6 +13,7 @@ definePageMeta({
 });
 
 useHead({
+  title: 'Signin',
   meta: [
     {
       name: 'google-signin-client_id',

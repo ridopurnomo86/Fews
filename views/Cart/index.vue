@@ -4,7 +4,7 @@
       <h1 class="text-lg font-semibold text-black mb-4">
         My Cart {{ `(${cartStore.countCartItems ?? '-'})` }}
       </h1>
-      <div class="grid grid-cols-[70%,30%] grid-flow-row auto-rows-[400px] gap-4">
+      <div class="grid grid-cols-1 grid-flow-row gap-4 lg:grid-cols-[70%,30%]">
         <CartList />
         <CartSummary />
       </div>

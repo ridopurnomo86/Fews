@@ -9,19 +9,6 @@
     <div class="w-full relative">
       <form @submit.prevent="handleSubmit">
         <BaseInput
-          :id="'email'"
-          v-model="formData.email"
-          :label="'Email Address'"
-          :name="'email'"
-          :type="'email'"
-          :placeholder="'John@email.com'"
-          :error-message="`${v$.email.$errors[0]?.$message}`"
-          :is-disable="isLoading"
-          :is-error="v$.email.$error"
-          :is-invalid="!v$.email.$invalid"
-          :on-change="v$.email.$touch"
-        />
-        <BaseInput
           :id="'password'"
           v-model="formData.password"
           :label="'Password'"
@@ -55,35 +42,25 @@
             </div>
           </span>
         </BaseInput>
-        <NuxtLink href="/forgot-password">
-          <p class="text-black underline text-xs md:text-sm font-medium mb-4 right">
-            Forgot Password
-          </p>
-        </NuxtLink>
-        <button
-          type="button"
-          :disabled="!isReady"
-          :text="''"
-          :is-disable="v$.invalid || v$.$error || isLoading"
-          class="w-full border py-2 cursor-pointer bg-white rounded hover:opacity-60 transition-all"
-          @click="handleGoogleLogin"
-        >
-          <div class="flex items-center justify-center">
-            <Icon name="flat-color-icons:google" size="20px" class="text-gray-800" />
-            <p class="ml-2 text-gray-800 font-semibold text-sm">Log in with Google</p>
-          </div>
-        </button>
-        <div class="w-full flex items-center my-4">
-          <div class="h-[1px] w-full bg-gray-200" />
-          <p class="text-gray-600 font-semibold text-sm px-4">OR</p>
-          <div class="h-[1px] w-full bg-gray-200" />
-        </div>
+        <BaseInput
+          :id="'confirm_password'"
+          v-model="formData.confirmPassword"
+          :label="'Confirm Password'"
+          :name="'confirm_password'"
+          :type="'password'"
+          :placeholder="'******'"
+          :error-message="`${v$.confirmPassword.$errors[0]?.$message}`"
+          :is-disable="isLoading"
+          :is-error="v$.confirmPassword.$error"
+          :is-invalid="!v$.confirmPassword.$invalid"
+          :on-change="v$.confirmPassword.$touch"
+        />
         <div class="w-full">
           <Button
             type="submit"
             class="w-full"
             :is-disable="v$.invalid || v$.$error || isLoading"
-            :text="'Log in.'"
+            :text="'Set Password'"
           />
         </div>
       </form>
@@ -93,42 +70,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { required, email, helpers } from '@vuelidate/validators';
-import { useVuelidate } from '@vuelidate/core';
 import { useToast } from 'tailvue';
+import { defineComponent } from 'vue';
+import { required, helpers, minLength, sameAs } from '@vuelidate/validators';
+import useVuelidate from '@vuelidate/core';
 import HeaderForm from './HeaderForm/index.vue';
 
 export default defineComponent({
-  name: 'SigninForm',
+  name: 'SetPassword',
   components: {
     HeaderForm,
   },
-
   setup() {
-    const config = useRuntimeConfig();
     const $toast = useToast();
     const router = useRouter();
-    const cookie = useCookie(config.authSession, {
-      maxAge: 18000,
-    });
-
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
+    const { query } = useRoute();
 
     const formData = reactive({
-      email: '',
       password: '',
+      confirmPassword: '',
     });
 
     const rules = computed(() => {
       return {
-        email: {
-          required: helpers.withMessage('The Email field is required', required),
-          email: helpers.withMessage('Invalid Email format', email),
-        },
         password: {
           required: helpers.withMessage('The Password field is required', required),
+          minLength: minLength(8),
+        },
+        confirmPassword: {
+          required: helpers.withMessage('The password confirmation field is required', required),
+          sameAs: helpers.withMessage("Passwords don't match", sameAs(formData.password)),
         },
       };
     });
@@ -140,31 +113,35 @@ export default defineComponent({
     };
 
     const handleSubmit = async () => {
+      const setPasswordAPI =
+        query.type === 'password_confirm'
+          ? '/api/account/google/set-email'
+          : '/api/account/google/set';
+
       isLoading.value = true;
 
       const isFormCorrect = await v$.value.$validate();
 
-      if (isFormCorrect) {
-        const { data, error }: any = await useFetch(
-          `${config.baseBackendUrl}api/v1/account/login`,
-          {
-            body: JSON.stringify({
-              email: formData.email,
-              password: formData.password,
-            }),
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+      if (!isFormCorrect) {
+        isLoading.value = false;
+      }
 
-        const errorData = error?.value?.data;
+      if (isFormCorrect) {
+        const { data, error }: any = await useFetch(setPasswordAPI, {
+          body: JSON.stringify({
+            password: formData.password,
+          }),
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
         const responseData = data?.value;
+        const errorData = error?.value?.data?.data;
 
-        if (errorData && errorData.type === 'error') {
+        if (errorData || errorData?.type === 'error') {
           isLoading.value = false;
           return $toast.show({
             type: 'warning',
@@ -174,39 +151,31 @@ export default defineComponent({
           });
         }
 
-        if (responseData && responseData.type === 'success') {
-          cookie.value = responseData.data.access_token;
-          router.push({ path: '/' });
+        if (responseData || responseData?.type === 'success') {
+          router.push({ path: '/signin' });
           isLoading.value = false;
           return $toast.show({
             type: 'success',
             title: responseData.type,
-            message: responseData.message,
+            message: 'Success set password, Please Login',
             timeout: 3,
           });
         }
-
         isLoading.value = false;
       }
 
-      if (!isFormCorrect) {
-        isLoading.value = false;
-      }
-
+      isLoading.value = false;
       return null;
     };
 
-    const { handleGoogleLogin, isReady } = useAuthGoogle();
-
     return {
-      handleGoogleLogin,
-      isReady,
       handleSubmit,
       formData,
       v$,
       handleShowPassword,
       showPassword,
       isLoading,
+      query,
     };
   },
 });

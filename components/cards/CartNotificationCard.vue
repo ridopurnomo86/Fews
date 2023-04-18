@@ -38,7 +38,7 @@
       <div class="py-4 cart-product">
         <div class="flex justify-between">
           <div class="flex">
-            <div class="w-24 aspect-square mr-4">
+            <div class="max-w-[80px] aspect-square mr-4">
               <nuxt-img
                 :src="`${cart.image_url}`"
                 :alt="`${cart.image_url}`"
@@ -94,7 +94,7 @@
 
 <script setup lang="ts">
 import { useCartStore } from '~~/stores/useCart';
-import { ProductDataType } from '~~/types/product';
+import { CartProductDataType } from '~~/types/product';
 
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -104,7 +104,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 const cartStore = useCartStore();
 
 defineProps<{
-  carts: Array<ProductDataType>;
+  carts: Array<CartProductDataType>;
   totalCart: number;
   onDeleteAllCart: () => void;
 }>();

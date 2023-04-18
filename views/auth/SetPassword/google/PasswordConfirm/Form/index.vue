@@ -1,4 +1,3 @@
-<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
   <div class="lg:w-5/12 w-full flex flex-col justify-center px-10 container mx-auto relative">
     <div class="absolute top-10 bottom-0">
@@ -43,19 +42,6 @@
             </div>
           </span>
         </BaseInput>
-        <BaseInput
-          :id="'confirm_password'"
-          v-model="formData.confirmPassword"
-          :label="'Confirm Password'"
-          :name="'confirm_password'"
-          :type="'password'"
-          :placeholder="'******'"
-          :error-message="`${v$.confirmPassword.$errors[0]?.$message}`"
-          :is-disable="isLoading"
-          :is-error="v$.confirmPassword.$error"
-          :is-invalid="!v$.confirmPassword.$invalid"
-          :on-change="v$.confirmPassword.$touch"
-        />
         <div class="w-full">
           <Button
             type="submit"
@@ -73,7 +59,7 @@
 <script lang="ts">
 import { useToast } from 'tailvue';
 import { defineComponent } from 'vue';
-import { required, helpers, minLength, sameAs } from '@vuelidate/validators';
+import { required, helpers, minLength } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import HeaderForm from './HeaderForm/index.vue';
 
@@ -87,6 +73,7 @@ export default defineComponent({
     const router = useRouter();
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
+    const { query } = useRoute();
 
     const formData = reactive({
       password: '',
@@ -98,10 +85,6 @@ export default defineComponent({
         password: {
           required: helpers.withMessage('The Password field is required', required),
           minLength: minLength(8),
-        },
-        confirmPassword: {
-          required: helpers.withMessage('The password confirmation field is required', required),
-          sameAs: helpers.withMessage("Passwords don't match", sameAs(formData.password)),
         },
       };
     });
@@ -122,20 +105,21 @@ export default defineComponent({
       }
 
       if (isFormCorrect) {
-        const { data, error }: any = await useFetch('/api/set-password', {
+        const { data, error }: any = await useFetch('/api/account/google/set-email', {
           body: JSON.stringify({
             password: formData.password,
           }),
           method: 'POST',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
           },
         });
 
-        const errorData = error?.value?.data;
         const responseData = data?.value;
+        const errorData = error?.value?.data?.data;
 
-        if (errorData && errorData.type === 'error') {
+        if (errorData || errorData?.type === 'error') {
           isLoading.value = false;
           return $toast.show({
             type: 'warning',
@@ -145,7 +129,7 @@ export default defineComponent({
           });
         }
 
-        if (responseData && responseData.type === 'success') {
+        if (responseData || responseData?.type === 'success') {
           router.push({ path: '/signin' });
           isLoading.value = false;
           return $toast.show({
@@ -155,15 +139,10 @@ export default defineComponent({
             timeout: 3,
           });
         }
-
-        return $toast.show({
-          type: 'success',
-          title: 'success',
-          message: 'success',
-          timeout: 3,
-        });
+        isLoading.value = false;
       }
 
+      isLoading.value = false;
       return null;
     };
 
@@ -174,6 +153,7 @@ export default defineComponent({
       handleShowPassword,
       showPassword,
       isLoading,
+      query,
     };
   },
 });

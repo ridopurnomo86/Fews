@@ -9,4 +9,8 @@ definePageMeta({
   layout: 'auth',
   middleware: 'auth',
 });
+
+useHead({
+  title: 'Signup',
+});
 </script>

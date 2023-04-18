@@ -163,11 +163,11 @@ export default defineComponent({
     };
 
     const handleSubmit = async () => {
+      isLoading.value = true;
+
       const isFormCorrect = await v$.value.$validate();
 
       if (isFormCorrect) {
-        isLoading.value = true;
-
         const { data, error }: any = await useFetch('/api/signup', {
           method: 'POST',
           body: JSON.stringify({
@@ -181,11 +181,11 @@ export default defineComponent({
           },
         });
 
-        const errorData = error?.value?.data;
+        const errorData = error?.value?.data?.data;
 
         const responseData = data?.value;
 
-        if (error && errorData.type === 'error') {
+        if (errorData?.type === 'error') {
           isLoading.value = false;
           return $toast.show({
             type: 'warning',
@@ -195,7 +195,7 @@ export default defineComponent({
           });
         }
 
-        if (responseData && responseData.type === 'success') {
+        if (responseData?.type === 'success') {
           isLoading.value = false;
           router.push({ path: '/signin' });
           return $toast.show({
@@ -205,7 +205,11 @@ export default defineComponent({
             timeout: 3,
           });
         }
+
+        isLoading.value = false;
       }
+
+      isLoading.value = false;
 
       return null;
     };

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 rounded border bg-white overflow-hidden">
+  <div class="p-4 rounded border bg-white overflow-hidden h-full lg:h-[400px]">
     <h1 class="text-lg font-semibold text-black mb-2">Order Summary</h1>
     <div>
       <p class="text-md font-semibold text-black border-b-[1px] py-2 mb-2">Details</p>

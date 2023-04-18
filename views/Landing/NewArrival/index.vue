@@ -43,7 +43,7 @@
             :title="product.name"
             :price="product.price"
             :image-url="product.image_url"
-            :on-click-cart="() => cartStore.addToCart(product)"
+            :on-click-cart="() => cartStore.addToCart(product as any)"
           />
         </div>
       </SwiperSlide>

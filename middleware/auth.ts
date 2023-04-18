@@ -1,7 +1,13 @@
 // @ts-ignore
 export default defineNuxtRouteMiddleware((to) => {
   const config = useRuntimeConfig();
-  const abortLink = ['/signin', '/signup', '/set-password', '/forgot-password'];
+  const abortLink = [
+    '/signin',
+    '/signup',
+    '/forgot-password',
+    '/set-password/google?type=password_confirm',
+    '/set-password/google?type=user_not_exist',
+  ];
 
   const cookie = useCookie(config.authSession).value;
 

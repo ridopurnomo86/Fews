@@ -1,7 +1,7 @@
 <template>
   <article
     class="overflow-hidden bg-white border p-4 rounded w-full h-full cursor-pointer hover:border-indigo-600 transition-all delay-75"
-    :on-click="onClick"
+    @click="onClick"
   >
     <div class="w-full h-full">
       <nuxt-img

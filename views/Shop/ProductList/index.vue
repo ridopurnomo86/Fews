@@ -8,7 +8,8 @@
           :title="product.name"
           :price="product.price"
           :image-url="product.image_url"
-          :on-click-cart="() => cartStore.addToCart(product)"
+          :on-click="() => router.push(`/product/${product.id}`)"
+          :on-click-cart="() => cartStore.addToCart(product as any)"
         />
       </div>
     </div>
@@ -26,10 +27,11 @@ export default defineComponent({
     ProductCard,
   },
   async setup() {
+    const router = useRouter();
     const cartStore = useCartStore();
     const { data: products } = await useFetch<ProductDataType[]>('/api/product');
 
-    return { products, cartStore };
+    return { products, cartStore, router };
   },
 });
 </script>
