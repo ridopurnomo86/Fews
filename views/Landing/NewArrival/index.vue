@@ -12,12 +12,14 @@
         </p>
       </div>
       <div class="additional">
-        <button
-          type="button"
-          class="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded transition-all"
-        >
-          See More.
-        </button>
+        <NuxtLink to="/shop">
+          <button
+            type="button"
+            class="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded transition-all"
+          >
+            See More.
+          </button>
+        </NuxtLink>
       </div>
     </div>
     <Swiper
@@ -43,7 +45,8 @@
             :title="product.name"
             :price="product.price"
             :image-url="product.image_url"
-            :on-click-cart="() => cartStore.addToCart(product as any)"
+            :on-click="() => router.push(`/product/${product.id}`)"
+            :on-click-cart="(event) => cartStore.addToCart(product as any, event)"
           />
         </div>
       </SwiperSlide>
@@ -62,11 +65,13 @@ export default defineComponent({
     ProductCard,
   },
   async setup() {
+    const router = useRouter();
+
     const cartStore = useCartStore();
 
     const { data: products } = await useFetch<ProductDataType[]>('/api/product');
 
-    return { products, cartStore };
+    return { products, cartStore, router };
   },
 });
 </script>

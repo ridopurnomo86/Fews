@@ -22,23 +22,29 @@
             @mouseenter="isShowCart = true"
             @blur="isShowCart = true"
           >
-            <NuxtLink :href="'/cart'" class="hidden md:block">
+            <NuxtLink :to="'/cart'" class="hidden md:block relative">
               <Icon
                 :name="'material-symbols:shopping-bag-outline'"
                 size="20px"
                 class="cursor-pointer"
               />
+              <span
+                v-if="cartStore.countTotalPrice"
+                class="absolute h-[20px] w-[20px] flex items-center justify-center rounded-full bg-red-500 border-[1px] top-[-4px] right-0 left-3"
+              >
+                <p class="text-xs font-medium text-white">{{ cartStore.countCartItems }}</p>
+              </span>
             </NuxtLink>
           </li>
           <li class="hidden md:block cursor-pointer">
-            <NuxtLink :href="'/search'" class="hidden md:block">
+            <NuxtLink :to="'/search'">
               <Icon :name="'octicon:search-16'" size="20px" class="cursor-pointer" />
             </NuxtLink>
           </li>
           <li class="hidden md:block cursor-pointer">
-            <button text="" type="button">
+            <NuxtLink :to="'/profile/my-details'">
               <Icon :name="'octicon:person-16'" size="20px" />
-            </button>
+            </NuxtLink>
           </li>
           <li>
             <button text="" type="button" @click="onClickSideBar">

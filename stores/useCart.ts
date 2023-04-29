@@ -23,7 +23,8 @@ export const useCartStore = defineStore('cart', {
     },
   },
   actions: {
-    addToCart(item: CartProductDataType) {
+    addToCart(item: CartProductDataType, event: Event) {
+      event.stopPropagation();
       const toast = useToast();
 
       if (this.cartItems !== undefined) {

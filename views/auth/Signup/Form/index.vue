@@ -18,7 +18,6 @@
         :error-message="`${v$.fullName.$errors[0]?.$message}`"
         :is-disable="isLoading"
         :is-error="v$.fullName.$error"
-        :is-invalid="!v$.fullName.$invalid"
         :on-change="v$.fullName.$touch"
       />
       <BaseInput
@@ -31,7 +30,6 @@
         :error-message="`${v$.phoneNumber.$errors[0]?.$message}`"
         :is-disable="isLoading"
         :is-error="v$.phoneNumber.$error"
-        :is-invalid="!v$.phoneNumber.$invalid"
         :on-change="v$.phoneNumber.$touch"
       />
       <BaseInput
@@ -44,7 +42,6 @@
         :error-message="`${v$.email.$errors[0]?.$message}`"
         :is-disable="isLoading"
         :is-error="v$.email.$error"
-        :is-invalid="!v$.email.$invalid"
         :on-change="v$.email.$touch"
       />
       <BaseInput
@@ -57,7 +54,6 @@
         :error-message="`${v$.password.$errors[0]?.$message}`"
         :is-disable="isLoading"
         :is-error="v$.password.$error"
-        :is-invalid="!v$.password.$invalid"
         :on-change="v$.password.$touch"
       >
         <span
@@ -91,7 +87,6 @@
         :error-message="`${v$.confirmPassword.$errors[0]?.$message}`"
         :is-disable="isLoading"
         :is-error="v$.confirmPassword.$error"
-        :is-invalid="!v$.confirmPassword.$invalid"
         :on-change="v$.confirmPassword.$touch"
       />
       <div class="flex items-center justify-between">

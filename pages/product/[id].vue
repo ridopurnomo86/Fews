@@ -7,7 +7,11 @@ import ProductDetail from '~/views/product/ProductDetail/index.vue';
 import { ProductDataType } from '~~/types/product';
 
 const route = useRoute();
-const { data } = useFetch<ProductDataType | any>(`/api/product/${route.params.id}`);
+const { data } = await useFetch<ProductDataType | any>(`/api/product/${route.query.product_id}`);
+
+if (!data.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
+}
 
 useHead({
   title: data.value?.name,

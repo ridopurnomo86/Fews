@@ -8,7 +8,7 @@
           :category="data.category"
           :description="data.description"
           :name="data.name"
-          :on-add-to-cart="() => cartStore.addToCart(data as CartProductDataType)"
+          :on-add-to-cart="(event) => cartStore.addToCart(data as CartProductDataType, event)"
           :price="data.price"
         />
       </div>

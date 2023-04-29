@@ -21,6 +21,9 @@ export default defineNuxtConfig({
     },
     storage: 'localStorage',
   },
+  build: {
+    transpile: ['@vuepic/vue-datepicker'],
+  },
   runtimeConfig: {
     baseBackendUrl: process.env.BASE_BACKEND_URL,
     authSession: process.env.NUXT_CREDENTIAL_AUTH,

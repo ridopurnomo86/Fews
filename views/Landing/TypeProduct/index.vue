@@ -9,7 +9,7 @@
       <p class="font-medium text-sm text-gray-600 max-w-md mt-4">Check our new collections.</p>
     </div>
     <div class="flex flex-wrap items-center justify-center gap-8">
-      <NuxtLink href="/shop/men" class="w-96 h-[10rem]">
+      <NuxtLink to="/shop/men" class="w-96 h-[10rem]">
         <div
           class="w-full h-full transition-all duration-500 relative mix-blend-overlay cursor-pointer rounded bg-indigo-100 overflow-hidden hover:opacity-70"
         >
@@ -23,7 +23,7 @@
           </div>
         </div>
       </NuxtLink>
-      <NuxtLink href="/shop/women" class="w-96 h-[10rem]">
+      <NuxtLink to="/shop/women" class="w-96 h-[10rem]">
         <div
           class="w-full h-full transition-all duration-500 relative mix-blend-overlay cursor-pointer rounded bg-red-100 overflow-hidden hover:opacity-70"
         >

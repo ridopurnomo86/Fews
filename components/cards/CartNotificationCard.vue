@@ -7,7 +7,7 @@
         My Cart {{ `(${totalCart ?? '-'})` }}
       </p>
       <div class="flex items-center">
-        <NuxtLink class="text-medium font-medium text-sm text-gray-600 cursor-pointer" href="/cart"
+        <NuxtLink class="text-medium font-medium text-sm text-gray-600 cursor-pointer" to="/cart"
           >View All</NuxtLink
         >
         <p class="text-medium font-medium text-sm text-gray-600 mx-2">|</p>

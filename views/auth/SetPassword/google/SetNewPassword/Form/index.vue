@@ -18,7 +18,6 @@
           :error-message="`${v$.password.$errors[0]?.$message}`"
           :is-disable="isLoading"
           :is-error="v$.password.$error"
-          :is-invalid="!v$.password.$invalid"
           :on-change="v$.password.$touch"
         >
           <span
@@ -52,7 +51,6 @@
           :error-message="`${v$.confirmPassword.$errors[0]?.$message}`"
           :is-disable="isLoading"
           :is-error="v$.confirmPassword.$error"
-          :is-invalid="!v$.confirmPassword.$invalid"
           :on-change="v$.confirmPassword.$touch"
         />
         <div class="w-full">

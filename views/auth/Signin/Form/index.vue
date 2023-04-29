@@ -18,7 +18,6 @@
           :error-message="`${v$.email.$errors[0]?.$message}`"
           :is-disable="isLoading"
           :is-error="v$.email.$error"
-          :is-invalid="!v$.email.$invalid"
           :on-change="v$.email.$touch"
         />
         <BaseInput
@@ -31,7 +30,6 @@
           :error-message="`${v$.password.$errors[0]?.$message}`"
           :is-disable="isLoading"
           :is-error="v$.password.$error"
-          :is-invalid="!v$.password.$invalid"
           :on-change="v$.password.$touch"
         >
           <span
@@ -55,7 +53,7 @@
             </div>
           </span>
         </BaseInput>
-        <NuxtLink href="/forgot-password">
+        <NuxtLink to="/forgot-password">
           <p class="text-black underline text-xs md:text-sm font-medium mb-4 right">
             Forgot Password
           </p>

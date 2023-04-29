@@ -47,7 +47,7 @@ defineProps<{
   name: string;
   category: string;
   description: string;
-  onAddToCart: () => void;
+  onAddToCart: (e: Event) => void;
   price: number;
 }>();
 </script>

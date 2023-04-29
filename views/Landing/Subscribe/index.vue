@@ -24,7 +24,7 @@
       <Button :text="'Subscribe'" type="submit" />
       <p class="mt-4 text-sm text-gray-600 font-medium text-center">
         You will be able to unsubscribe at any time. Read our Privacy Policy
-        <NuxtLink href="/policy" class="underline font-bold">here.</NuxtLink>
+        <NuxtLink to="/policy" class="underline font-bold">here.</NuxtLink>
       </p>
     </div>
   </div>

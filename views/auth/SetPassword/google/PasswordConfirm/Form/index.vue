@@ -18,7 +18,6 @@
           :error-message="`${v$.password.$errors[0]?.$message}`"
           :is-disable="isLoading"
           :is-error="v$.password.$error"
-          :is-invalid="!v$.password.$invalid"
           :on-change="v$.password.$touch"
         >
           <span

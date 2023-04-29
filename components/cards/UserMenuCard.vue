@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="p-4">
-      <NuxtLink href="/account/settings">
+      <NuxtLink to="/account/settings">
         <div class="flex items-center mb-3">
           <Icon
             :name="'material-symbols:person-outline-rounded'"
@@ -47,7 +47,7 @@
         </button>
       </div>
       <div v-else>
-        <NuxtLink href="/signin">
+        <NuxtLink to="/signin">
           <div class="flex items-center">
             <Icon :name="'clarity:sign-in-solid'" size="20px" class="mr-4 text-gray-600" />
             <p class="text-xs sm:text-sm text-gray-600 font-semibold">Sign in</p>

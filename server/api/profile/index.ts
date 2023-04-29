@@ -14,5 +14,5 @@ export default eventHandler(async (event) => {
     }
   );
 
-  return res;
+  return res.data;
 });

@@ -1,6 +1,6 @@
 <template>
   <TransitionFade :delay="200" :duration="600" :appear="true">
-    <div class="mx-auto container grid md:grid-cols-[25%_75%] grid-cols-1 gap-4">
+    <div class="mx-auto container py-10 grid md:grid-cols-[25%_75%] grid-cols-1 gap-4">
       <MultipleSelect />
       <FilterProduct />
       <ProductList />

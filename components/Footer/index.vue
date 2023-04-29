@@ -19,7 +19,7 @@
         <div>
           <p class="font-semibold text-black text-base mb-2">Main Page</p>
           <div v-for="item in MAIN_PAGE" :key="item.id">
-            <NuxtLink href="{{ item.link }}" class="block text-gray-600 text-sm font-medium mb-2">{{
+            <NuxtLink to="{{ item.link }}" class="block text-gray-600 text-sm font-medium mb-2">{{
               item.title
             }}</NuxtLink>
           </div>
@@ -27,7 +27,7 @@
         <div>
           <p class="font-semibold text-black text-base mb-2">Freshness</p>
           <div v-for="item in FRESHNESS" :key="item.id">
-            <NuxtLink :href="item.link" class="block text-gray-600 text-sm font-medium mb-2">{{
+            <NuxtLink :to="item.link" class="block text-gray-600 text-sm font-medium mb-2">{{
               item.title
             }}</NuxtLink>
           </div>
@@ -35,7 +35,7 @@
         <div>
           <p class="font-semibold text-black text-base mb-2">Shop</p>
           <div v-for="item in SHOP" :key="item.id">
-            <NuxtLink :href="item.link" class="block text-gray-600 text-sm font-medium mb-2">{{
+            <NuxtLink :to="item.link" class="block text-gray-600 text-sm font-medium mb-2">{{
               item.title
             }}</NuxtLink>
           </div>

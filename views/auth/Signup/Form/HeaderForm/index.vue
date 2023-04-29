@@ -6,7 +6,7 @@
     </p>
     <p class="font-medium text-sm text-gray-600">
       Already have a Fews.
-      <NuxtLink href="/signin" class="text-blue-600 text-bold">Sign In.</NuxtLink>
+      <NuxtLink to="/signin" class="text-blue-600 text-bold">Sign In.</NuxtLink>
     </p>
   </div>
 </template>

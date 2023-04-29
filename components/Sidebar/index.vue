@@ -27,14 +27,22 @@
         <ul class="space-y-2">
           <div v-for="item in SIDEBAR_LINK" :key="item.id">
             <NuxtLink
-              :href="item.link"
-              class="flex items-center cursor-pointer px-2 py-4 text-base font-normal text-gray-900 rounded-lg hover:bg-zinc-200 transition"
+              :to="item.link"
+              class="flex items-center justify-between cursor-pointer px-2 py-4 text-base font-normal text-gray-900 rounded-lg hover:bg-zinc-200 transition"
               @click="handleCloseSideBar"
             >
-              <Icon :name="item.icon" size="24px" class="mr-4 cursor-pointer text-gray-600" />
-              <p class="text-gray-600 text-sm font-medium">
-                {{ item.title }}
-              </p>
+              <div class="flex items-center">
+                <Icon :name="item.icon" size="24px" class="mr-4 cursor-pointer text-gray-600" />
+                <p class="text-gray-600 text-sm font-medium">
+                  {{ item.title }}
+                </p>
+              </div>
+              <span
+                v-if="cartStore.countTotalPrice && item.id === 5"
+                class="h-[20px] w-[20px] flex items-center justify-center rounded-full bg-red-500 border-[1px] top-[-4px] right-0 left-3"
+              >
+                <p class="text-xs font-medium text-white">{{ cartStore.countCartItems }}</p>
+              </span>
             </NuxtLink>
           </div>
         </ul>
@@ -56,7 +64,7 @@
         </button>
         <NuxtLink
           v-if="!isAuthenticated"
-          :href="'/signin'"
+          :to="'/signin'"
           class="flex items-center cursor-pointer px-2 py-4 text-base font-normal text-gray-900 rounded-lg hover:bg-zinc-200 transition"
         >
           <Icon
@@ -72,6 +80,7 @@
 </template>
 
 <script setup lang="ts">
+import { useCartStore } from '~~/stores/useCart';
 import { useToast } from 'tailvue';
 import SIDEBAR_LINK from './data';
 
@@ -80,6 +89,8 @@ defineProps<{ isShowSidebar: boolean; handleCloseSideBar: () => void }>();
 const config = useRuntimeConfig();
 
 const $toast = useToast();
+
+const cartStore = useCartStore();
 
 const router = useRouter();
 

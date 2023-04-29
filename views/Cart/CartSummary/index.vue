@@ -25,12 +25,16 @@
       </div>
     </div>
     <div class="w-full mt-8">
-      <NuxtLink href="/checkout">
-        <Button type="button" class="w-full" :text="'Proceed To Pay'" />
-      </NuxtLink>
+      <Button
+        type="button"
+        class="w-full"
+        :is-disable="Boolean(!cartStore.countCartItems)"
+        :text="'Proceed To Pay'"
+        :on-click="async () => await navigateTo('/checkout')"
+      />
     </div>
     <div class="w-full mt-4">
-      <NuxtLink href="/shop">
+      <NuxtLink to="/shop">
         <Button class="w-full" type="button" :text="'Continue Shopping'" />
       </NuxtLink>
     </div>

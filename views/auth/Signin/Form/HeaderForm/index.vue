@@ -4,7 +4,7 @@
     <p class="font-medium text-sm text-gray-600">Log in into your account.</p>
     <p class="font-medium text-sm text-gray-600">
       Dont't have a Fews account?
-      <NuxtLink href="/signup" class="text-blue-600 text-bold">Sign Up. </NuxtLink>
+      <NuxtLink to="/signup" class="text-blue-600 text-bold">Sign Up. </NuxtLink>
     </p>
   </div>
 </template>
