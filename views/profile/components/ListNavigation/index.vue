@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-start overflow-x-auto md:block">
+  <div class="hidden items-start md:block">
     <Navigation :path="'/profile/my-details'" :title="'My Details'" />
     <Navigation :path="'/profile/password'" :title="'Password'" />
     <Navigation :path="'/profile/email'" :title="'Email'" />
@@ -13,6 +13,26 @@
       </p>
     </button>
   </div>
+  <div class="block md:hidden">
+    <BaseSelectInput
+      :id="'navigation'"
+      v-model="formData.navigation"
+      :options="[
+        { id: 'profile-my-details', name: 'My Details', value: '/profile/my-details' },
+        { id: 'profile-password', name: 'Password', value: '/profile/password' },
+        { id: 'profile-email', name: 'Email', value: '/profile/email' },
+        { id: 'profile-order', name: 'Orders', value: '/profile/order' },
+        { id: 'profile-address', name: 'Address', value: '/profile/address' },
+      ]"
+      :label="''"
+      :name="'navigation'"
+      :placeholder="''"
+      :error-message="``"
+      :is-disable="false"
+      :is-error="false"
+      :on-change="handleNavigation"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -23,7 +43,16 @@ const config = useRuntimeConfig();
 
 const $toast = useToast();
 
+const route = useRoute();
 const router = useRouter();
+
+const formData = ref({
+  navigation: route.path,
+});
+
+const handleNavigation = async (e: Event) => {
+  await navigateTo((e?.target as HTMLInputElement).value);
+};
 
 const handleLogout = async () => {
   const { data, error }: any = await useFetch('/api/logout', {

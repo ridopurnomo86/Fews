@@ -15,7 +15,7 @@ const SIDEBAR_LINK = [
     id: 3,
     icon: 'carbon:user-profile',
     title: 'Profile',
-    link: '/profile',
+    link: '/profile/my-details',
   },
   {
     id: 4,

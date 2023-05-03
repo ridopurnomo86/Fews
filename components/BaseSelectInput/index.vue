@@ -5,8 +5,9 @@
     }}</label>
     <div class="relative">
       <select
-        id="countries"
+        :id="id"
         class="appearance-none text-sm border rounded text-gray-700 block w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline w-full"
+        @change="onChange"
       >
         <option value="" selected disabled hidden>Choose {{ name }}</option>
         <option

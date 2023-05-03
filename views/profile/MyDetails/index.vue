@@ -47,6 +47,18 @@
             :is-error="v$.email.$error"
             :on-change="v$.email.$touch"
           />
+          <BaseInput
+            :id="'phone_number'"
+            v-model="formData.phone_number"
+            :label="'Phone Number'"
+            :name="'phone_number'"
+            :type="'text'"
+            :placeholder="''"
+            :error-message="`${v$.phone_number.$errors[0]?.$message}`"
+            :is-disable="true"
+            :is-error="v$.phone_number.$error"
+            :on-change="v$.phone_number.$touch"
+          />
           <BaseSelectInput
             :id="'gender'"
             v-model="formData.gender"
@@ -90,6 +102,7 @@ const { data } = await useFetch<ProfileDataType>('/api/profile');
 const formData = reactive({
   name: data.value?.full_name,
   email: data.value?.email,
+  phone_number: data.value?.phone_number,
   gender: data.value?.gender,
   date: data.value?.birth_date,
 });
@@ -104,6 +117,9 @@ const rules = computed(() => {
       email: helpers.withMessage('Invalid Email format', email),
     },
     gender: {
+      required: helpers.withMessage('The Gender field is required', required),
+    },
+    phone_number: {
       required: helpers.withMessage('The Gender field is required', required),
     },
     date: {

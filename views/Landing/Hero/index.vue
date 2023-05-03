@@ -10,13 +10,15 @@
           Style is the only thing you can’t buy. It’s not in a shopping bag, a label, or a price
           tag. It’s something reflected from our soul to the outside world—an emotion.
         </p>
-        <button
-          type="button"
-          class="mt-6 bg-black hover:bg-white text-white font-semibold hover:text-black py-2 px-4 border border-white hover:border-black rounded transition-all w-32"
-          :text="'Shop Now'"
-        >
-          Shop Now
-        </button>
+        <NuxtLink to="/shop">
+          <button
+            type="button"
+            class="mt-6 bg-black hover:bg-white text-white font-semibold hover:text-black py-2 px-4 border border-white hover:border-black rounded transition-all w-32"
+            :text="'Shop Now'"
+          >
+            Shop Now
+          </button>
+        </NuxtLink>
       </div>
     </div>
     <div class="h-full w-full hidden md:block flex-1">
