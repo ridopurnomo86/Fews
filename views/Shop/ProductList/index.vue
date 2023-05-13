@@ -10,14 +10,17 @@
           :image-url="product.image_url"
           :on-click="
             async () => {
-              await navigateTo({
-                path: `/product/${convertProductLink(product.name)}`,
-                replace: true,
-                force: true,
-                query: {
-                  product_id: product.id,
+              await navigateTo(
+                {
+                  path: `/product/${convertProductLink(product.name)}`,
+                  replace: true,
+                  force: true,
+                  query: {
+                    product_id: product.id,
+                  },
                 },
-              });
+                { replace: true, external: true }
+              );
             }
           "
           :on-click-cart="(event:Event) => {

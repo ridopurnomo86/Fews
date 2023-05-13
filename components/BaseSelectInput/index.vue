@@ -6,8 +6,11 @@
     <div class="relative">
       <select
         :id="id"
+        :value="modelValue"
+        v-bind="$attrs"
         class="appearance-none text-sm border rounded text-gray-700 block w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline w-full"
         @change="onChange"
+        @input="($event) => $emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       >
         <option value="" selected disabled hidden>Choose {{ name }}</option>
         <option
