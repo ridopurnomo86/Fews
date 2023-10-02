@@ -26,6 +26,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     baseBackendUrl: process.env.BASE_BACKEND_URL,
+    baseRedisUrl: process.env.REDIS_URL,
     authSession: process.env.NUXT_CREDENTIAL_AUTH,
     googleSession: process.env.NUXT_CREDENTIAL_GOOGLE_AUTH,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
@@ -55,13 +56,6 @@ export default defineNuxtConfig({
   },
   device: {
     refreshOnResize: true,
-  },
-  swiper: {
-    // Swiper options
-    //----------------------
-    // prefix: 'Swiper',
-    // styleLang: 'css',
-    // modules: ['navigation', 'pagination'], // all modules are imported by default
   },
   ssr: true,
 });
