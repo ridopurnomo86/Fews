@@ -18,6 +18,13 @@ export type ProductDataType = {
   image_url: string;
   category: string;
   type: string;
+  created_at: string;
+  updated_at: string;
+  slug: string;
+  type_id: number;
+  category_id: number;
+  Type_Product: TypesProductDataType;
+  Category_Product: CategoryProductDataType;
 };
 
 export type TypesProductDataType = {

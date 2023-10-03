@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@vueuse/nuxt',
+    'nuxt-security',
   ],
   piniaPersistedstate: {
     cookieOptions: {

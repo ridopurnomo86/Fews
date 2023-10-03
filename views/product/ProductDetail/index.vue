@@ -4,11 +4,11 @@
       <div class="grid grid-flow-row gap-8 grid-cols-1 lg:grid-cols-[50%,50%] px-5 py-10">
         <ImageProduct :img-url="data.image_url" :name-product="data.name" />
         <Details
-          :type="data.type"
-          :category="data.category"
+          :type="data.Type_Product.name"
+          :category="data.Category_Product.name"
           :description="data.description"
           :name="data.name"
-          :on-add-to-cart="(event) => cartStore.addToCart(data as CartProductDataType, event)"
+          :on-add-to-cart="(event:Event) => cartStore.addToCart(data as CartProductDataType, event)"
           :price="data.price"
         />
       </div>
