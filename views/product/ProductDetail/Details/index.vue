@@ -2,7 +2,7 @@
   <div class="overflow-hidden">
     <div class="mb-4">
       <p class="font-medium text-md text-gray-800 mb-2">{{ type }}</p>
-      <h1 class="font-bold text-lg text-black mb-1">{{ name }}</h1>
+      <h1 class="font-bold text-lg lg:text-2xl text-black mb-1">{{ name }}</h1>
       <p class="font-medium text-sm text-gray-600 mb-4">{{ category }}</p>
       <p class="font-semibold text-md text-gray-600">{{ formatter.format(price) }}</p>
 

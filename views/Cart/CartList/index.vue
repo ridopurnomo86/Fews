@@ -5,15 +5,15 @@
         v-if="cartStore.countCartItems === 0"
         class="flex flex-col items-center justify-center min-h-[30vh] lg:min-h-[100vh]"
       >
-        <div class="max-w-[150px]">
+        <div class="max-w-[95px] lg:max-w-[150px]">
           <nuxt-img
             class="h-full w-full object-cover"
             src="/images/women-empty-cart.png"
             alt="women-empty-cart"
           />
         </div>
-        <p class="text-md font-semibold text-black">Your Cart is Empty</p>
-        <p class="text-sm font-regular text-gray-600">
+        <p class="text-sm lg:text-md font-semibold text-black">Your Cart is Empty</p>
+        <p class="text-xs lg:text-sm font-regular text-gray-600">
           looks like you haven't added anything to your cart yet.
         </p>
       </div>

@@ -12,8 +12,9 @@ const { data } = await useFetch<ProductDataType | any>(`/api/product/${route.que
 if (!data.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
 }
+const { data } = await useFetch<ProductDataType | any>(`/api/product/${route.params.id}`);
 
 useHead({
-  title: data.value?.name,
+  title: data.value.name,
 });
 </script>
