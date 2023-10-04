@@ -4,10 +4,10 @@ export type CartProductDataType = {
   name: string;
   price: number;
   image_url: string;
-  category: string;
-  type: string;
   quantity: number;
   totalPrice: number;
+  Type_Product: TypesProductDataType;
+  Category_Product: CategoryProductDataType;
 };
 
 export type ProductDataType = {

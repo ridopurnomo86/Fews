@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { redis } from '~~/server/lib/redis';
+import prisma from '~~/server/lib/prisma';
 
 export default eventHandler(async () => {
-  const prisma = new PrismaClient();
-
   const cachedValue = await redis.get('products');
 
   if (!cachedValue) {

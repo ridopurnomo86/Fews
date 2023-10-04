@@ -40,7 +40,7 @@
                   {{ cart.name }}
                 </p>
                 <p class="font-medium text-gray-600 text-xs truncate mb-4">
-                  {{ cart.category }}
+                  {{ cart.Category_Product.name }}
                 </p>
               </div>
               <p class="font-medium text-gray-600 text-xs whitespace-nowrap">

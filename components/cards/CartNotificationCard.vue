@@ -49,7 +49,9 @@
               />
             </div>
             <div>
-              <p class="font-medium text-gray-600 text-xs truncate mb-1">{{ cart.type }}</p>
+              <p class="font-medium text-gray-600 text-xs truncate mb-1">
+                {{ cart.Category_Product.name }}
+              </p>
               <p class="font-semibold text-black text-sm truncate">
                 {{ cart.name }}
               </p>

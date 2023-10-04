@@ -1,4 +1,3 @@
-<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
   <div class="lg:w-5/12 w-full flex flex-col justify-center px-10 container mx-auto relative">
     <div class="absolute top-10 bottom-0">
@@ -105,7 +104,6 @@
 import { defineComponent, ref } from 'vue';
 import { required, email, minLength, helpers, sameAs } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-import { useToast } from 'tailvue';
 import HeaderForm from './HeaderForm/index.vue';
 
 export default defineComponent({
@@ -114,11 +112,9 @@ export default defineComponent({
     HeaderForm,
   },
   setup() {
-    const $toast = useToast();
-    const router = useRouter();
-
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
+    const snackbar = useSnackbar();
 
     const formData = reactive({
       fullName: '',
@@ -158,58 +154,37 @@ export default defineComponent({
     };
 
     const handleSubmit = async () => {
-      isLoading.value = true;
-
       const isFormCorrect = await v$.value.$validate();
 
       if (isFormCorrect) {
-        const { data, error }: any = await useFetch('/api/signup', {
-          method: 'POST',
-          body: JSON.stringify({
-            full_name: formData.fullName,
+        const { data } = useFetch('/api/account/register', {
+          body: {
+            name: formData.fullName,
             phone_number: formData.phoneNumber,
             email: formData.email,
             password: formData.password,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
           },
+          method: 'POST',
         });
 
-        const errorData = error?.value?.data?.data;
-
-        const responseData = data?.value;
-
-        if (errorData?.type === 'error') {
-          isLoading.value = false;
-          return $toast.show({
-            type: 'warning',
-            title: errorData.type,
-            message: errorData.message,
-            timeout: 3,
+        if (data.value?.type === 'error')
+          return snackbar.add({
+            type: 'error',
+            text: data.value.message,
           });
-        }
-
-        if (responseData?.type === 'success') {
-          isLoading.value = false;
-          router.push({ path: '/signin' });
-          return $toast.show({
-            type: 'success',
-            title: responseData.type,
-            message: responseData.message,
-            timeout: 3,
-          });
-        }
-
-        isLoading.value = false;
       }
-
-      isLoading.value = false;
 
       return null;
     };
 
-    return { isLoading, v$, formData, showPassword, handleShowPassword, handleSubmit };
+    return {
+      isLoading,
+      v$,
+      formData,
+      showPassword,
+      handleShowPassword,
+      handleSubmit,
+    };
   },
 });
 </script>

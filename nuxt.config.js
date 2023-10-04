@@ -2,6 +2,25 @@
 import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
+  app: {
+    head: {
+      title: 'Fews',
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+      link: [
+        { rel: 'dns-prefetch', href: '//fonts.googleapis.com' },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap',
+        },
+      ],
+    },
+  },
+  routeRules: {
+    '/': { prerender: true },
+    '/api/**': { cors: true },
+    '/signup': { ssr: true },
+  },
   modules: [
     'nuxt-icon',
     '@nuxtjs/tailwindcss',
@@ -15,6 +34,7 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
     '@vueuse/nuxt',
     'nuxt-security',
+    'nuxt-snackbar',
   ],
   piniaPersistedstate: {
     cookieOptions: {

@@ -10,9 +10,7 @@ const route = useRoute();
 
 const { data } = await useFetch<ProductDataType | any>(`/api/product/${route.params.slug}`);
 
-if (!data.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
-}
+if (!data.value) throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
 
 useHead({
   title: data.value.name,

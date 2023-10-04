@@ -38,3 +38,19 @@ model Category_Product {
   updated_at DateTime  @db.Timestamptz(6)
   Product    Product[]
 }
+
+model User {
+  id                 Int       @id @default(autoincrement())
+  name               String    @db.VarChar
+  email              String    @unique @db.VarChar
+  password           String    @db.VarChar
+  remember_token     String?   @db.VarChar
+  is_email_verified  Int       @default(0)
+  gender             String?
+  birth_date         DateTime? @db.Date
+  is_google_provider Int?      @default(0)
+  is_email_provider  Int?      @default(0)
+  created_at         DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime  @default(now()) @db.Timestamptz(6)
+  phone_number       String    @unique(map: "User_phone_number_unique")
+}

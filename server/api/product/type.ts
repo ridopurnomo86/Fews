@@ -1,11 +1,14 @@
-import { TypesProductDataType } from '~~/types/product';
-
-const config = useRuntimeConfig();
+import { redis } from '~~/server/lib/redis';
+import prisma from '~~/server/lib/prisma';
 
 export default eventHandler(async () => {
-  const res = await $fetch<{ data: TypesProductDataType[]; type?: string }>(
-    `${config.baseBackendUrl}api/v1/product/type`
-  );
+  const cachedValue = await redis.get('type-product');
 
-  return res.data;
+  if (!cachedValue) {
+    const data = await prisma.type_Product.findMany();
+    await redis.set('type-product', JSON.stringify(data));
+    return data;
+  }
+
+  return JSON.parse(cachedValue);
 });

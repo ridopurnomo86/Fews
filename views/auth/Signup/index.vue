@@ -1,12 +1,10 @@
 <template>
-  <ClientOnly>
-    <TransitionFade :delay="200" :duration="600" :appear="true">
-      <div class="min-h-[100vh] flex">
-        <SignupForm />
-        <Background />
-      </div>
-    </TransitionFade>
-  </ClientOnly>
+  <TransitionFade :delay="200" :duration="600" :appear="true">
+    <div class="min-h-[100vh] flex">
+      <SignupForm />
+      <Background />
+    </div>
+  </TransitionFade>
 </template>
 
 <script setup lang="ts">
