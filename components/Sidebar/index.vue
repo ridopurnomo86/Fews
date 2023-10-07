@@ -49,7 +49,7 @@
       </div>
       <div>
         <button
-          v-if="isAuthenticated"
+          v-if="status === 'authenticated'"
           :text="''"
           type="button"
           class="flex items-center w-full cursor-pointer px-2 py-4 text-base font-normal rounded-lg hover:bg-zinc-200 transition"
@@ -63,7 +63,7 @@
           <p class="text-red-600 text-sm font-medium">Logout</p>
         </button>
         <NuxtLink
-          v-if="!isAuthenticated"
+          v-if="status === 'unauthenticated'"
           :to="'/signin'"
           class="flex items-center cursor-pointer px-2 py-4 text-base font-normal text-gray-900 rounded-lg hover:bg-zinc-200 transition"
         >
@@ -81,57 +81,15 @@
 
 <script setup lang="ts">
 import { useCartStore } from '~~/stores/useCart';
-import { useToast } from 'tailvue';
 import SIDEBAR_LINK from './data';
 
 defineProps<{ isShowSidebar: boolean; handleCloseSideBar: () => void }>();
 
-const config = useRuntimeConfig();
-
-const $toast = useToast();
+const { status, signOut } = useAuth();
 
 const cartStore = useCartStore();
 
-const router = useRouter();
-
-const { isAuthenticated } = useAuth();
-
 const handleLogout = async () => {
-  const { data, error }: any = await useFetch('/api/logout', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (data.value) {
-    const cookies = useCookie(config.authSession, {
-      maxAge: 0,
-    });
-    cookies.value = '';
-    router.replace('/signin');
-    $toast.show({
-      message: data.value.message,
-      type: 'success',
-      title: data.value.type,
-      timeout: 2,
-      wide: true,
-    });
-
-    return cookies;
-  }
-
-  if (error.value) {
-    return $toast.show({
-      message: 'Something Gone Wrong',
-      type: 'warning',
-      title: 'Error',
-      timeout: 2,
-      wide: true,
-    });
-  }
-
-  return null;
+  await signOut();
 };
 </script>

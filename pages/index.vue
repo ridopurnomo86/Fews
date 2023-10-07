@@ -5,6 +5,8 @@
 <script setup lang="ts">
 import Landing from '~~/views/Landing/index.vue';
 
+definePageMeta({ auth: false, scrollToTop: true });
+
 useHead({
   title: 'Fews',
   meta: [

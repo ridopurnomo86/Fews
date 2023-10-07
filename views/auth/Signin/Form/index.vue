@@ -58,7 +58,7 @@
             Forgot Password
           </p>
         </NuxtLink>
-        <button
+        <!-- <button
           type="button"
           :disabled="!isReady"
           :text="''"
@@ -70,7 +70,7 @@
             <Icon name="flat-color-icons:google" size="20px" class="text-gray-800" />
             <p class="ml-2 text-gray-800 font-semibold text-sm">Log in with Google</p>
           </div>
-        </button>
+        </button> -->
         <div class="w-full flex items-center my-4">
           <div class="h-[1px] w-full bg-gray-200" />
           <p class="text-gray-600 font-semibold text-sm px-4">OR</p>
@@ -94,7 +94,6 @@
 import { defineComponent } from 'vue';
 import { required, email, helpers } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-import { useToast } from 'tailvue';
 import HeaderForm from './HeaderForm/index.vue';
 
 export default defineComponent({
@@ -104,15 +103,11 @@ export default defineComponent({
   },
 
   setup() {
-    const config = useRuntimeConfig();
-    const $toast = useToast();
-    const router = useRouter();
-    const cookie = useCookie(config.authSession, {
-      maxAge: 18000,
-    });
-
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
+    const snackbar = useSnackbar();
+
+    const { signIn } = useAuth();
 
     const formData = reactive({
       email: '',
@@ -143,44 +138,18 @@ export default defineComponent({
       const isFormCorrect = await v$.value.$validate();
 
       if (isFormCorrect) {
-        const { data, error }: any = await useFetch(
-          `${config.baseBackendUrl}api/v1/account/login`,
-          {
-            body: JSON.stringify({
-              email: formData.email,
-              password: formData.password,
-            }),
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res: any = await signIn('credentials', {
+          email: formData.email,
+          password: formData.password,
+          redirect: true,
+          callbackUrl: '/',
+        });
 
-        const errorData = error?.value?.data;
-
-        const responseData = data?.value;
-
-        if (errorData && errorData.type === 'error') {
+        if (res.error) {
           isLoading.value = false;
-          return $toast.show({
-            type: 'warning',
-            title: errorData.type,
-            message: errorData.message,
-            timeout: 3,
-          });
-        }
-
-        if (responseData && responseData.type === 'success') {
-          cookie.value = responseData.data.access_token;
-          router.push({ path: '/' });
-          isLoading.value = false;
-          return $toast.show({
-            type: 'success',
-            title: responseData.type,
-            message: responseData.message,
-            timeout: 3,
+          return snackbar.add({
+            type: 'error',
+            text: 'You have made a terrible mistake while entering your credentials',
           });
         }
 
@@ -194,11 +163,11 @@ export default defineComponent({
       return null;
     };
 
-    const { handleGoogleLogin, isReady } = useAuthGoogle();
+    // const { handleGoogleLogin, isReady } = useAuthGoogle();
 
     return {
-      handleGoogleLogin,
-      isReady,
+      // handleGoogleLogin,
+      // isReady,
       handleSubmit,
       formData,
       v$,

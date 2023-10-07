@@ -39,15 +39,16 @@
     >
       <SwiperSlide v-for="product in products" :key="product.id">
         <div class="max-w-[250px]">
-          <ProductCard
-            :type="product.Category_Product.name"
-            :description="product.description"
-            :title="product.name"
-            :price="product.price"
-            :image-url="product.image_url"
-            :on-click="() => router.push(`/product/${product.slug}`)"
-            :on-click-cart="(event:Event) => cartStore.addToCart(product as any, event)"
-          />
+          <NuxtLink :to="`/product/${product.slug}`">
+            <ProductCard
+              :type="product.Category_Product.name"
+              :description="product.description"
+              :title="product.name"
+              :price="product.price"
+              :image-url="product.image_url"
+              :on-click-cart="(event:Event) => cartStore.addToCart(product as any, event)"
+            />
+          </NuxtLink>
         </div>
       </SwiperSlide>
     </Swiper>

@@ -5,9 +5,7 @@
 <script setup lang="ts">
 import Shop from '~~/views/Shop/index.vue';
 
-definePageMeta({
-  middleware: 'auth',
-});
+definePageMeta({ auth: false, scrollToTop: true });
 
 useHead({
   title: 'Shop',

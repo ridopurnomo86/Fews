@@ -16,10 +16,30 @@ export default defineNuxtConfig({
       ],
     },
   },
+  auth: {
+    isEnabled: true,
+    globalAppMiddleware: true,
+    origin: process.env.AUTH_ORIGIN || 'http://localhost:9000/',
+    basePath: '/api/auth',
+    enableSessionRefreshPeriodically: true,
+    enableSessionRefreshOnWindowFocus: true,
+    addDefaultCallbackUrl: false,
+  },
   routeRules: {
     '/': { prerender: true },
     '/api/**': { cors: true },
+    '/signin': { cors: true, ssr: true },
     '/signup': { ssr: true },
+    '/profile/my-details': {
+      security: {
+        rateLimiter: {
+          tokensPerInterval: 50,
+          interval: 'day',
+          fireImmediately: false,
+          throwError: true,
+        },
+      },
+    },
   },
   modules: [
     'nuxt-icon',
@@ -28,14 +48,16 @@ export default defineNuxtConfig({
     'nuxt-swiper',
     '@nuxt/image-edge',
     '@nuxtjs/device',
-    '@tailvue/nuxt',
     'nuxt-vue3-google-signin',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
-    '@vueuse/nuxt',
     'nuxt-security',
     'nuxt-snackbar',
+    '@sidebase/nuxt-auth',
   ],
+  security: {
+    allowedMethodsRestricter: ['POST', 'GET'],
+  },
   piniaPersistedstate: {
     cookieOptions: {
       sameSite: 'strict',
@@ -52,6 +74,7 @@ export default defineNuxtConfig({
     googleSession: process.env.NUXT_CREDENTIAL_GOOGLE_AUTH,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
     authCredentialSession: process.env.NUXT_CREDENTIAL_AUTH_CREDENTIAL,
+    authSecret: process.env.NUXT_AUTH_SECRET,
     public: {
       authSession: process.env.NUXT_CREDENTIAL_AUTH,
       googleSession: process.env.NUXT_CREDENTIAL_GOOGLE_AUTH,
@@ -64,6 +87,7 @@ export default defineNuxtConfig({
   },
   typescript: {
     strict: true,
+    shim: false,
   },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',

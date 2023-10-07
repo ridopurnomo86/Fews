@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import { ref } from 'vue';
-import useAuth from '~~/composables/useAuth';
 
 const { disableScroll, enableScroll } = useDisableScroll();
 
@@ -28,7 +27,7 @@ export default defineComponent({
     const showProfile = ref<boolean>(false);
     const sidebarRef = ref(null);
 
-    const { isAuthenticated } = useAuth();
+    const isAuthenticated = ref(false);
 
     const handleSideBar = () => {
       showSidebar.value = !showSidebar.value;

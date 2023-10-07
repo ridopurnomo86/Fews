@@ -10,6 +10,10 @@ const config = useRuntimeConfig();
 definePageMeta({
   layout: 'auth',
   middleware: 'auth',
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: '/',
+  },
 });
 
 useHead({
@@ -17,7 +21,7 @@ useHead({
   meta: [
     {
       name: 'google-signin-client_id',
-      content: `${config.googleClientId}`,
+      content: `${config.googleClientId || ''}`,
     },
   ],
   script: [{ src: 'https://apis.google.com/js/platform.js', async: true, defer: true }],

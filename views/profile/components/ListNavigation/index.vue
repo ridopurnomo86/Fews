@@ -36,15 +36,11 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from 'tailvue';
 import Navigation from './Navigation/index.vue';
 
-const config = useRuntimeConfig();
-
-const $toast = useToast();
-
 const route = useRoute();
-const router = useRouter();
+
+const { signOut } = useAuth();
 
 const formData = ref({
   navigation: route.path,
@@ -55,41 +51,9 @@ const handleNavigation = async (e: Event) => {
 };
 
 const handleLogout = async () => {
-  const { data, error }: any = await useFetch('/api/logout', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  await signOut({
+    callbackUrl: '/profile/my-details',
+    redirect: true,
   });
-
-  if (data.value) {
-    const cookies = useCookie(config.authSession, {
-      maxAge: 0,
-    });
-    cookies.value = '';
-    router.replace('/signin');
-    $toast.show({
-      message: data.value.message,
-      type: 'success',
-      title: data.value.type,
-      timeout: 2,
-      wide: true,
-    });
-
-    return cookies;
-  }
-
-  if (error.value) {
-    return $toast.show({
-      message: 'Something Gone Wrong',
-      type: 'warning',
-      title: 'Error',
-      timeout: 2,
-      wide: true,
-    });
-  }
-
-  return null;
 };
 </script>

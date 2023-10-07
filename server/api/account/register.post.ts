@@ -9,7 +9,7 @@ export default eventHandler(async (event) => {
   try {
     const req = await prisma.user.create({
       data: {
-        name: body.name,
+        full_name: body.name,
         email: body.email,
         phone_number: body.phone_number,
         password: hash,

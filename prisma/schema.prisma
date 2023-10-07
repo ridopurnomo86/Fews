@@ -41,7 +41,7 @@ model Category_Product {
 
 model User {
   id                 Int       @id @default(autoincrement())
-  name               String    @db.VarChar
+  full_name          String    @db.VarChar
   email              String    @unique @db.VarChar
   password           String    @db.VarChar
   remember_token     String?   @db.VarChar

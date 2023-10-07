@@ -159,7 +159,7 @@ export default defineComponent({
       if (isFormCorrect) {
         const { data } = useFetch('/api/account/register', {
           body: {
-            name: formData.fullName,
+            full_name: formData.fullName,
             phone_number: formData.phoneNumber,
             email: formData.email,
             password: formData.password,
@@ -172,6 +172,8 @@ export default defineComponent({
             type: 'error',
             text: data.value.message,
           });
+
+        return navigateTo('/signin', { external: true });
       }
 
       return null;

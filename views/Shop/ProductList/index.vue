@@ -2,32 +2,19 @@
   <div class="grid gap-8 grid-cols-fluid justify-items-center">
     <div v-for="product in products" :key="product.id">
       <div class="max-w-[250px]">
-        <ProductCard
-          :type="product.category"
-          :description="product.description"
-          :title="product.name"
-          :price="product.price"
-          :image-url="product.image_url"
-          :on-click="
-            async () => {
-              await navigateTo(
-                {
-                  path: `/product/${convertProductLink(product.name)}`,
-                  replace: true,
-                  force: true,
-                  query: {
-                    product_id: product.id,
-                  },
-                },
-                { replace: true, external: true }
-              );
-            }
-          "
-          :on-click-cart="(event:Event) => {
+        <NuxtLink :to="`/product/${product.slug}`">
+          <ProductCard
+            :type="product.Category_Product.name"
+            :description="product.description"
+            :title="product.name"
+            :price="product.price"
+            :image-url="product.image_url"
+            :on-click-cart="(event:Event) => {
             cartStore.addToCart(product as any, event)
           }
           "
-        />
+          />
+        </NuxtLink>
       </div>
     </div>
   </div>
