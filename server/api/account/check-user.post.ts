@@ -17,10 +17,11 @@ export default eventHandler(async (event) => {
       if (decrypt) return userEmail;
       return { status: 'error', type: 'error', message: 'Wrong Credential' };
     }
+    return { status: 'error', type: 'error', message: 'Something gone wrong' };
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError)
       return { status: 'error', type: 'error', message: 'Something gone wrong' };
   }
 
-  return null;
+  return { status: 'error', type: 'error', message: 'Something gone wrong' };
 });

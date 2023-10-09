@@ -10,7 +10,8 @@
             :price="product.price"
             :image-url="product.image_url"
             :on-click-cart="(event:Event) => {
-            cartStore.addToCart(product as any, event)
+              event.preventDefault();
+              cartStore.addToCart(product as any, event);
           }
           "
           />

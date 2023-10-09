@@ -1,7 +1,6 @@
 <template>
   <ProfileLayout>
     <h1 class="font-semibold text-lg text-black mb-4">Shipping Address</h1>
-
     <div class="border-b-[1px] my-4 pb-4">
       <div class="border p-4 rounded bg-white">
         <div

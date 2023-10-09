@@ -6,6 +6,8 @@
 import ProductDetail from '~/views/product/ProductDetail/index.vue';
 import { ProductDataType } from '~~/types/product';
 
+definePageMeta({ auth: false, scrollToTop: true });
+
 const route = useRoute();
 
 const { data } = await useFetch<ProductDataType | any>(`/api/product/${route.params.slug}`);

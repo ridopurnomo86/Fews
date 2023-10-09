@@ -26,10 +26,28 @@ export default defineNuxtConfig({
     addDefaultCallbackUrl: false,
   },
   routeRules: {
-    '/': { prerender: true },
+    '/': { prerender: true, ssr: true },
     '/api/**': { cors: true },
-    '/signin': { cors: true, ssr: true },
-    '/signup': { ssr: true },
+    '/signin': {
+      cors: true,
+      ssr: true,
+      security: {
+        xssValidator: true,
+        allowedMethodsRestricter: ['POST'],
+      },
+    },
+    '/signup': {
+      ssr: true,
+      security: {
+        rateLimiter: {
+          tokensPerInterval: 50,
+          interval: 'day',
+          fireImmediately: false,
+          throwError: true,
+        },
+        allowedMethodsRestricter: ['POST'],
+      },
+    },
     '/profile/my-details': {
       security: {
         rateLimiter: {
@@ -39,6 +57,7 @@ export default defineNuxtConfig({
           throwError: true,
         },
       },
+      ssr: true,
     },
   },
   modules: [
@@ -55,9 +74,6 @@ export default defineNuxtConfig({
     'nuxt-snackbar',
     '@sidebase/nuxt-auth',
   ],
-  security: {
-    allowedMethodsRestricter: ['POST', 'GET'],
-  },
   piniaPersistedstate: {
     cookieOptions: {
       sameSite: 'strict',
@@ -70,16 +86,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     baseBackendUrl: process.env.BASE_BACKEND_URL,
     baseRedisUrl: process.env.REDIS_URL,
-    authSession: process.env.NUXT_CREDENTIAL_AUTH,
-    googleSession: process.env.NUXT_CREDENTIAL_GOOGLE_AUTH,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
-    authCredentialSession: process.env.NUXT_CREDENTIAL_AUTH_CREDENTIAL,
     authSecret: process.env.NUXT_AUTH_SECRET,
     public: {
-      authSession: process.env.NUXT_CREDENTIAL_AUTH,
       googleSession: process.env.NUXT_CREDENTIAL_GOOGLE_AUTH,
       googleClientId: process.env.GOOGLE_CLIENT_ID,
-      baseBackendUrl: process.env.BASE_BACKEND_URL,
     },
   },
   googleSignIn: {

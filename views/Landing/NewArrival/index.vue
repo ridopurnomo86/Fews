@@ -46,7 +46,10 @@
               :title="product.name"
               :price="product.price"
               :image-url="product.image_url"
-              :on-click-cart="(event:Event) => cartStore.addToCart(product as any, event)"
+              :on-click-cart="(event:Event) => {
+                event.preventDefault();
+                cartStore.addToCart(product as any, event);
+              }"
             />
           </NuxtLink>
         </div>

@@ -5,7 +5,7 @@
       Please enter your current password to change new password.
     </p>
     <div class="mt-8">
-      <form>
+      <form @submit.prevent="handleSubmit">
         <BaseInput
           :id="'password'"
           v-model="formData.password"
@@ -20,10 +20,10 @@
         />
         <div>
           <BaseInput
-            :id="'password'"
+            :id="'new_password'"
             v-model="formData.new_password"
-            :label="'Password'"
-            :name="'password'"
+            :label="'New Password'"
+            :name="'new_password'"
             :type="showPassword ? 'text' : 'password'"
             :placeholder="'******'"
             :error-message="`${v$.new_password.$errors[0]?.$message}`"
@@ -58,7 +58,7 @@
         </div>
         <BaseInput
           :id="'confirm_password'"
-          v-model="formData.password"
+          v-model="formData.confirm_password"
           :label="'Confirm New Password'"
           :name="'confirm_password'"
           :type="'password'"
@@ -69,14 +69,13 @@
           :on-change="v$.confirm_password.$touch"
         />
         <div class="block md:flex items-center md:justify-end">
-          <button
-            class="rounded text-gray-600 border text-sm bg-white px-4 py-2 font-semibold mr-2 w-full mb-4 md:mb-0 md:max-w-[150px]"
-            type="button"
-          >
-            Cancel
-          </button>
           <div class="w-full md:max-w-[200px]">
-            <Button type="button" :text="'Update Password'" variant="primary" :is-disable="true" />
+            <Button
+              type="submit"
+              :text="'Update Password'"
+              variant="primary"
+              :is-disable="v$.invalid || v$.$error || isLoading"
+            />
           </div>
         </div>
       </form>
@@ -93,6 +92,8 @@ const isLoading = ref<boolean>(false);
 
 const showPassword = ref<boolean>(false);
 
+const snackbar = useSnackbar();
+
 const handleShowPassword = () => {
   showPassword.value = !showPassword.value;
 };
@@ -103,21 +104,62 @@ const formData = reactive({
   confirm_password: '',
 });
 
+const mustBeDifferent = (value: string) => value !== formData.password;
+
 const rules = computed(() => {
   return {
     password: {
-      required: helpers.withMessage('The Password field is required', required),
+      required: helpers.withMessage('The Current Password field is required', required),
     },
     new_password: {
-      required: helpers.withMessage('The Password field is required', required),
+      required: helpers.withMessage('The New Password field is required', required),
       minLength: minLength(8),
+      mustBeDifferent: helpers.withMessage('Password must be different', mustBeDifferent),
     },
     confirm_password: {
-      required: helpers.withMessage('The Password field is required', required),
+      required: helpers.withMessage('The Confirm Password field is required', required),
       sameAs: helpers.withMessage("Passwords don't match", sameAs(formData.new_password)),
     },
   };
 });
 
 const v$ = useVuelidate(rules, formData);
+
+const handleSubmit = async () => {
+  const isFormCorrect = await v$.value.$validate();
+
+  if (isFormCorrect) {
+    const { data } = useFetch('/api/profile/change-password', {
+      method: 'POST',
+      body: {
+        old_password: formData.password,
+        password: formData.new_password,
+      },
+      onResponse: ({ response }) => {
+        if (response) isLoading.value = false;
+      },
+      onRequest: ({ request }) => {
+        if (request) isLoading.value = true;
+      },
+    });
+
+    const { type, message } = data.value || {};
+
+    if (data.value?.type === 'error') {
+      return snackbar.add({
+        type,
+        text: message,
+      });
+    }
+
+    if (type === 'success') {
+      return snackbar.add({
+        type,
+        text: message,
+      });
+    }
+  }
+
+  return null;
+};
 </script>

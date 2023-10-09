@@ -11,6 +11,15 @@
             The changes will be displayed within 5 minutes.
           </p>
         </div>
+        <div>
+          <button
+            type="button"
+            :disabled="true"
+            class="text-sm xl:text-md font-bold w-full text-red-600 enabled:hover:opacity-80 enabled:hover:text-white transition py-2 px-4 rounded enabled:focus:outline-none enabled:focus:shadow-outline cursor-pointer"
+          >
+            Delete Account
+          </button>
+        </div>
       </div>
       <div class="mt-8">
         <form @submit.prevent="handleSubmit">
@@ -25,18 +34,6 @@
             :is-disable="isLoading"
             :is-error="v$.fullName.$error"
             :on-change="v$.fullName.$touch"
-          />
-          <BaseInput
-            :id="'email'"
-            v-model="formData.email"
-            :label="'Email'"
-            :name="'email'"
-            :type="'email'"
-            :placeholder="''"
-            :error-message="`${v$.email.$errors[0]?.$message}`"
-            :is-disable="true"
-            :is-error="v$.email.$error"
-            :on-change="v$.email.$touch"
           />
           <BaseInput
             :id="'phone_number'"
@@ -88,7 +85,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import '@vuepic/vue-datepicker/dist/main.css';
-import { required, helpers, email } from '@vuelidate/validators';
+import { required, helpers } from '@vuelidate/validators';
 import { ProfileDataType } from '~~/types/profile';
 import { useVuelidate } from '@vuelidate/core';
 import VueDatePicker from '@vuepic/vue-datepicker';
@@ -104,7 +101,6 @@ const { data } = await useFetch<ProfileDataType>('/api/profile');
 
 const formData = reactive({
   fullName: data.value?.full_name,
-  email: data.value?.email,
   phoneNumber: data.value?.phone_number,
   gender: data.value?.gender,
   birthDate: data.value?.birth_date,
@@ -114,10 +110,6 @@ const rules = computed(() => {
   return {
     fullName: {
       required: helpers.withMessage('The Name field is required', required),
-    },
-    email: {
-      required: helpers.withMessage('The Email field is required', required),
-      email: helpers.withMessage('Invalid Email format', email),
     },
     gender: {
       required: helpers.withMessage('The Gender field is required', required),
