@@ -8,8 +8,11 @@ import Signup from '~~/views/auth/Signup/index.vue';
 definePageMeta({
   layout: 'auth',
   middleware: 'auth',
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: '/',
+  },
 });
-
 useHead({
   title: 'Signup',
 });

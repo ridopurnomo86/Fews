@@ -89,11 +89,7 @@
         :on-change="v$.confirmPassword.$touch"
       />
       <div class="flex items-center justify-between">
-        <Button
-          type="submit"
-          :is-disable="v$.invalid || v$.$error || isLoading"
-          :text="'Create Account.'"
-        />
+        <Button type="submit" :is-disable="v$.invalid || v$.$error" :text="'Create Account.'" />
       </div>
     </form>
     <p class="text-gray-500 text-xs mt-4">&copy;2023 Fews Corp. All rights reserved.</p>
@@ -113,7 +109,6 @@ export default defineComponent({
   },
   setup() {
     const showPassword = ref<boolean>(false);
-    const isLoading = ref<boolean>(false);
     const snackbar = useSnackbar();
 
     const formData = reactive({
@@ -124,6 +119,8 @@ export default defineComponent({
       confirmPassword: '',
     });
 
+    const mustBePhoneNumber = helpers.regex(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/);
+
     const rules = computed(() => {
       return {
         fullName: {
@@ -131,6 +128,7 @@ export default defineComponent({
         },
         phoneNumber: {
           required: helpers.withMessage('The PhoneNumber field is required', required),
+          mustBePhoneNumber: helpers.withMessage('Phone number is not valid', mustBePhoneNumber),
         },
         email: {
           required: helpers.withMessage('The Email field is required', required),
@@ -165,6 +163,7 @@ export default defineComponent({
             password: formData.password,
           },
           method: 'POST',
+          lazy: true,
         });
 
         if (data.value?.type === 'error')
@@ -173,6 +172,11 @@ export default defineComponent({
             text: data.value.message,
           });
 
+        snackbar.add({
+          type: 'success',
+          text: data.value?.message,
+        });
+
         return navigateTo('/signin', { external: true });
       }
 
@@ -180,7 +184,6 @@ export default defineComponent({
     };
 
     return {
-      isLoading,
       v$,
       formData,
       showPassword,

@@ -40,17 +40,37 @@ model Category_Product {
 }
 
 model User {
-  id                 Int       @id @default(autoincrement())
-  full_name          String    @db.VarChar
-  email              String    @unique @db.VarChar
-  password           String    @db.VarChar
-  remember_token     String?   @db.VarChar
-  is_email_verified  Int       @default(0)
+  id                 Int            @id @default(autoincrement())
+  full_name          String         @db.VarChar
+  email              String         @unique @db.VarChar
+  password           String         @db.VarChar
+  remember_token     String?        @db.VarChar
+  is_email_verified  Int            @default(0)
   gender             String?
-  birth_date         DateTime? @db.Date
-  is_google_provider Int?      @default(0)
-  is_email_provider  Int?      @default(0)
-  created_at         DateTime  @default(now()) @db.Timestamptz(6)
-  updated_at         DateTime  @default(now()) @db.Timestamptz(6)
-  phone_number       String    @unique(map: "User_phone_number_unique")
+  birth_date         DateTime?      @db.Date
+  is_google_provider Int?           @default(0)
+  is_email_provider  Int?           @default(0)
+  created_at         DateTime       @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime       @default(now()) @db.Timestamptz(6)
+  phone_number       String         @unique(map: "User_phone_number_unique")
+  User_Address       User_Address[]
+}
+
+model User_Address {
+  id             Int       @id @default(autoincrement())
+  address_name   String?   @db.VarChar
+  label          String?   @db.VarChar
+  note           String?   @db.VarChar
+  recepient_name String?   @db.VarChar
+  user_id        Int?
+  phone_number   String?   @db.VarChar
+  country        String?   @db.VarChar
+  zip_code       String?   @db.VarChar
+  state          String?   @db.VarChar
+  city           String?   @db.VarChar
+  longitude      String?   @db.VarChar
+  langitude      String?   @db.VarChar
+  created_at     DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime? @db.Timestamptz(6)
+  User           User?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }

@@ -142,10 +142,10 @@ export default defineComponent({
           email: formData.email,
           password: formData.password,
           redirect: true,
-          callbackUrl: '/',
+          callbackUrl: '/signin',
         });
 
-        if (res.error) {
+        if (res?.error) {
           isLoading.value = false;
           return snackbar.add({
             type: 'error',
@@ -154,6 +154,7 @@ export default defineComponent({
         }
 
         isLoading.value = false;
+        await navigateTo('/', { external: true });
       }
 
       if (!isFormCorrect) {

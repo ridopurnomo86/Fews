@@ -1,18 +1,23 @@
-const config = useRuntimeConfig();
+import prisma from '~~/server/lib/prisma';
+import { getServerSession, getToken } from '#auth';
 
 export default eventHandler(async (event) => {
-  const res = await $fetch<{ data: any; type?: string }>(
-    `${config.baseBackendUrl}api/v1/user/profile/address`,
-    {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Cookie: event.req.rawHeaders[1],
-      },
-    }
-  );
+  const token = await getToken({ event });
+  const session: any = await getServerSession(event as any);
 
-  return res.data;
+  if (!token || !session)
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Unauthorized',
+    });
+
+  const addresses = await prisma.user_Address.findMany({
+    where: {
+      user_id: session.user.id,
+    },
+  });
+
+  if (!addresses || addresses.length === 0) return { type: 'success', status: 'success', data: [] };
+
+  return { type: 'success', status: 'success', data: addresses };
 });

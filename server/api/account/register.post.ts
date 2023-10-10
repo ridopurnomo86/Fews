@@ -7,20 +7,23 @@ export default eventHandler(async (event) => {
   const hash = await argon2.hash(body.password);
 
   try {
-    const req = await prisma.user.create({
+    const create = await prisma.user.create({
       data: {
-        full_name: body.name,
+        full_name: body.full_name,
         email: body.email,
         phone_number: body.phone_number,
         password: hash,
       },
     });
-    if (req) return { status: 'success', type: 'success', message: 'Register Successfully' };
-    return { status: 'error', type: 'error', message: 'Something gone wrong' };
+    if (create) return { status: 'success', type: 'success', message: 'Register Successfully' };
+    return { status: 'error', type: 'error', message: 'Sorry, email is exist' };
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError)
-      return { status: 'error', type: 'error', message: 'Something gone wrong' };
+    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002')
+      return {
+        status: 'error',
+        type: 'error',
+        message: 'A new user cannot be created with this email',
+      };
+    throw e;
   }
-
-  return null;
 });

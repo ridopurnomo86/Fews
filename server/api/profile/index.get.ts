@@ -3,11 +3,17 @@ import { getServerSession, getToken } from '#auth';
 
 export default eventHandler(async (event: any) => {
   const token = await getToken({ event });
-  const session = await getServerSession(event as any);
+  const session: any = await getServerSession(event as any);
+
+  if (!token || !session)
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Unauthorized',
+    });
 
   const user = await prisma.user.findFirst({
     where: {
-      email: session?.user?.email as string,
+      id: session?.user.id,
     },
   });
 
