@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { useToast } from 'tailvue';
 import { CartProductDataType } from '~~/types/product';
 
 export const useCartStore = defineStore('cart', {
@@ -25,51 +24,27 @@ export const useCartStore = defineStore('cart', {
   actions: {
     addToCart(item: CartProductDataType, event: Event) {
       event.stopPropagation();
-      const toast = useToast();
 
       if (this.cartItems !== undefined) {
         const filterIndex = this.cartItems.filter(
           (product: CartProductDataType) => product.id === item.id
         );
         if (filterIndex.length > 0) return null;
-        this.cartItems.push({ ...item, quantity: 1, totalPrice: item.price });
-        return toast.show({
-          message: 'Success add to cart',
-          title: 'Success',
-          type: 'success',
-        });
       }
 
-      this.cartItems.push({ ...item, quantity: 1, totalPrice: item.price });
-      return toast.show({
-        message: 'Success add to cart',
-        title: 'Success',
-        type: 'success',
-      });
+      return this.cartItems.push({ ...item, quantity: 1, totalPrice: item.price });
     },
 
     deleteAllCart() {
-      const toast = useToast();
       if (this.cartItems.length > 0) {
         this.cartItems = [];
-        return toast.show({
-          message: 'Success delete all cart',
-          title: 'Success',
-          type: 'success',
-        });
       }
       return null;
     },
 
     deleteCartById(id: CartProductDataType['id']) {
-      const toast = useToast();
       const filterItems = this.cartItems.filter((item: CartProductDataType) => item.id !== id);
       this.cartItems = filterItems;
-      return toast.show({
-        message: 'Success delete cart',
-        title: 'Success',
-        type: 'success',
-      });
     },
 
     increaseQuantity(id: number) {

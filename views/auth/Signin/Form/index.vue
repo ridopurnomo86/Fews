@@ -91,7 +91,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { required, email, helpers } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import HeaderForm from './HeaderForm/index.vue';
@@ -141,7 +141,6 @@ export default defineComponent({
         const res: any = await signIn('credentials', {
           email: formData.email,
           password: formData.password,
-          redirect: true,
           callbackUrl: '/signin',
         });
 
@@ -154,7 +153,8 @@ export default defineComponent({
         }
 
         isLoading.value = false;
-        await navigateTo('/', { external: true });
+
+        return navigateTo('/', { external: true });
       }
 
       if (!isFormCorrect) {
@@ -163,6 +163,18 @@ export default defineComponent({
 
       return null;
     };
+
+    const query = new URL(window.location).searchParams.get('error');
+
+    onMounted(() => {
+      if (query === 'CredentialsSignin') {
+        isLoading.value = false;
+        snackbar.add({
+          type: 'error',
+          text: 'You have made a terrible mistake while entering your credentials',
+        });
+      }
+    });
 
     // const { handleGoogleLogin, isReady } = useAuthGoogle();
 

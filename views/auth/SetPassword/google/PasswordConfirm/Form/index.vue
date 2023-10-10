@@ -56,7 +56,6 @@
 </template>
 
 <script lang="ts">
-import { useToast } from 'tailvue';
 import { defineComponent } from 'vue';
 import { required, helpers, minLength } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
@@ -68,7 +67,6 @@ export default defineComponent({
     HeaderForm,
   },
   setup() {
-    const $toast = useToast();
     const router = useRouter();
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
@@ -120,23 +118,11 @@ export default defineComponent({
 
         if (errorData || errorData?.type === 'error') {
           isLoading.value = false;
-          return $toast.show({
-            type: 'warning',
-            title: errorData.type,
-            message: errorData.message,
-            timeout: 3,
-          });
         }
 
         if (responseData || responseData?.type === 'success') {
           router.push({ path: '/signin' });
           isLoading.value = false;
-          return $toast.show({
-            type: 'success',
-            title: responseData.type,
-            message: 'Success set password, Please Login',
-            timeout: 3,
-          });
         }
         isLoading.value = false;
       }
