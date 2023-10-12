@@ -135,7 +135,7 @@ const handleSubmit = async () => {
       birth_date: dayjs(dayjs.tz(formData.birthDate, 'Asia/Jakarta')).format(),
     };
 
-    const res: any = useFetch('/api/profile/update', {
+    const res: any = await useFetch('/api/profile/update', {
       body,
       method: 'POST',
       onResponse: ({ response }) => {
@@ -144,6 +144,8 @@ const handleSubmit = async () => {
       onRequest: ({ request }) => {
         if (request) isLoading.value = true;
       },
+      lazy: true,
+      redirect: 'follow',
     });
 
     const { type, message } = res?.data?.value || {};

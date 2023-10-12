@@ -6,7 +6,7 @@
     <div class="w-full h-full">
       <nuxt-img
         :src="`${imageUrl}`"
-        :alt="`${imageUrl}`"
+        :alt="`product ${imageUrl}`"
         :fit="'cover'"
         :format="'webp'"
         preload

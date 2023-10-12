@@ -1,10 +1,10 @@
 export const MAIN_PAGE = [
   { id: 1, title: 'Information About Us', link: '/about-us' },
-  { id: 2, title: 'Product Catalog', link: '/product' },
+  { id: 2, title: 'Product Catalog', link: '/shop' },
 ];
 
 export const FRESHNESS = [
-  { id: 1, title: 'Terms Of Services', link: '/terms' },
+  { id: 1, title: 'Terms Of Services', link: '/terms-of-service' },
   { id: 2, title: 'About Fews Brand', link: '/about-brand' },
 ];
 

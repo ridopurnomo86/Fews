@@ -22,18 +22,22 @@
         ></label>
       </div>
       <div>
-        <p class="font-semibold text-sm text-gray-700 mb-2">{{ addressType }}</p>
-        <p class="font-medium text-sm text-gray-700">{{ name }}</p>
-        <p class="font-medium text-sm text-gray-700">{{ fullName }}</p>
-        <div class="flex items-center">
-          <p class="font-medium text-sm text-gray-700 mr-2">{{ city }}</p>
-          <p class="font-medium text-sm text-gray-700 mr-2">{{ state }}</p>
-          <p class="font-medium text-sm text-gray-700 mr-2">{{ zipCode }}</p>
-          <p class="font-medium text-sm text-gray-700">{{ country }}</p>
+        <div class="flex mb-2">
+          <p class="font-semibold text-sm text-gray-700">{{ label }}</p>
+          <p v-if="isPrimaryAddress" class="font-semibold text-sm text-gray-700 leading-[22px]">
+            &nbsp;|&nbsp;Primary Address
+          </p>
+        </div>
+        <p class="font-medium text-xs md:text-sm text-gray-700 mb-2">{{ name }}</p>
+        <p class="font-medium text-xs md:text-sm text-gray-700">{{ streetName }}</p>
+        <div class="flex items-center flex-wrap">
+          <p class="font-medium text-xs md:text-sm text-gray-700 mr-2">{{ city }}</p>
+          <p class="font-medium text-xs md:text-sm text-gray-700 mr-2">{{ state }}</p>
+          <p class="font-medium text-xs md:text-sm text-gray-700 mr-2">{{ zipCode }}</p>
+          <p class="font-medium text-xs md:text-sm text-gray-700">{{ country }}</p>
         </div>
       </div>
     </div>
-
     <div @click="(e:Event) => onEditAddress(e)">
       <p class="font-medium text-sm text-indigo-700 cursor-pointer">Edit</p>
     </div>
@@ -42,9 +46,10 @@
 
 <script setup lang="ts">
 defineProps<{
-  addressType: string;
+  label: string;
   name: string;
-  fullName: string;
+  streetName: string;
+  isPrimaryAddress?: boolean;
   city: string;
   state: string;
   zipCode: string;

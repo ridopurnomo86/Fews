@@ -1,7 +1,7 @@
 <template>
   <ProfileLayout>
     <h1 class="font-semibold text-lg text-black">Password</h1>
-    <p class="font-medium text-xs md:text-sm text-gray-600 antialiashed">
+    <p class="font-medium text-xs md:text-sm text-gray-600 antialiased">
       Please enter your current password to change new password.
     </p>
     <div class="mt-8">
@@ -51,7 +51,7 @@
                 />
               </div>
             </span>
-            <p class="font-medium text-xs md:text-sm text-gray-600 antialiashed mt-1">
+            <p class="font-medium text-xs md:text-sm text-gray-600 antialiased mt-1">
               Your new password must be more 8 characters.
             </p>
           </BaseInput>
@@ -129,7 +129,7 @@ const handleSubmit = async () => {
   const isFormCorrect = await v$.value.$validate();
 
   if (isFormCorrect) {
-    const { data } = useFetch('/api/profile/change-password', {
+    const { data } = await useFetch('/api/profile/change-password', {
       method: 'POST',
       body: {
         old_password: formData.password,
@@ -141,6 +141,8 @@ const handleSubmit = async () => {
       onRequest: ({ request }) => {
         if (request) isLoading.value = true;
       },
+      lazy: true,
+      redirect: 'follow',
     });
 
     const { type, message } = data.value || {};

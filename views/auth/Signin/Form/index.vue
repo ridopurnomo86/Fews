@@ -103,11 +103,12 @@ export default defineComponent({
   },
 
   setup() {
+    const route = useRoute();
+    const snackbar = useSnackbar();
+    const { signIn } = useAuth();
+
     const showPassword = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
-    const snackbar = useSnackbar();
-
-    const { signIn } = useAuth();
 
     const formData = reactive({
       email: '',
@@ -164,7 +165,7 @@ export default defineComponent({
       return null;
     };
 
-    const query = new URL(window.location).searchParams.get('error');
+    const query = route.query.error || '';
 
     onMounted(() => {
       if (query === 'CredentialsSignin') {

@@ -4,16 +4,17 @@
     <AddAddress />
     <div v-for="address in addresses?.data" :key="address.id">
       <AddressCard
-        :address-type="address.address_type"
+        :label="address.label"
         :city="address.city"
+        :street-name="address.address_name"
         :country="(getAddressName(address.country) as string)"
-        :full-name="address.full_name"
+        :name="address.recepient_name"
         :state="address.state"
         :zip-code="address.zip_code"
-        :name="address.address_name"
         :on-selected-address="() => handleSelectedAddress(address)"
         :on-edit-address="(e) => handleEditAddress(e)"
         :is-active="selectedAddress?.id === address.id"
+        :is-primary-address="true"
       />
     </div>
   </ProfileLayout>

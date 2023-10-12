@@ -21,18 +21,18 @@
         />
       </div>
       <div class="transition duration-500" :class="[isShowForm ? 'opacity-100' : 'opacity-0']">
-        <form v-if="isShowForm">
+        <form v-if="isShowForm" @submit.prevent="handleSubmit">
           <BaseInput
-            :id="'full_name'"
-            v-model="formData.full_name"
-            :label="'Full Name'"
-            :name="'full_name'"
+            :id="'label'"
+            v-model="formData.label"
+            :label="'Label'"
+            :name="'label'"
             :type="'text'"
-            :placeholder="'John Mactavish'"
-            :error-message="`${v$.full_name.$errors[0]?.$message}`"
+            :placeholder="'Ex. Office / Home'"
+            :error-message="`${v$.label.$errors[0]?.$message}`"
             :is-disable="isLoading"
-            :is-error="v$.full_name.$error"
-            :on-change="v$.full_name.$touch"
+            :is-error="v$.label.$error"
+            :on-change="v$.label.$touch"
           />
           <BaseInput
             :id="'address_name'"
@@ -47,16 +47,28 @@
             :on-change="v$.address_name.$touch"
           />
           <BaseInput
-            :id="'contact_phone_number'"
-            v-model="formData.contact_phone_number"
-            :label="'Contact Phone Number'"
-            :name="'contact_phone_number'"
+            :id="'recepient_name'"
+            v-model="formData.recepient_name"
+            :label="'Recepient Name'"
+            :name="'recepient_name'"
+            :type="'text'"
+            :placeholder="'John Mactavish'"
+            :error-message="`${v$.recepient_name.$errors[0]?.$message}`"
+            :is-disable="isLoading"
+            :is-error="v$.recepient_name.$error"
+            :on-change="v$.recepient_name.$touch"
+          />
+          <BaseInput
+            :id="'phone_number'"
+            v-model="formData.phone_number"
+            :label="'Phone Number'"
+            :name="'phone_number'"
             :type="'text'"
             :placeholder="'+62812********'"
-            :error-message="`${v$.contact_phone_number.$errors[0]?.$message}`"
+            :error-message="`${v$.phone_number.$errors[0]?.$message}`"
             :is-disable="isLoading"
-            :is-error="v$.contact_phone_number.$error"
-            :on-change="v$.contact_phone_number.$touch"
+            :is-error="v$.phone_number.$error"
+            :on-change="v$.phone_number.$touch"
           />
           <BaseSelectInput
             :id="'country'"
@@ -107,6 +119,15 @@
               :is-error="v$.zip_code.$error"
               :on-change="v$.zip_code.$touch"
             />
+            <BaseInput
+              :id="'note'"
+              v-model="formData.note"
+              :label="'Note'"
+              :name="'note'"
+              :type="'text'"
+              :placeholder="''"
+              :is-disable="isLoading"
+            />
           </div>
           <div class="block md:flex">
             <button
@@ -116,7 +137,12 @@
               Cancel
             </button>
             <div class="w-full md:max-w-[150px]">
-              <Button type="button" :text="'Save Changes'" variant="primary" :is-disable="true" />
+              <Button
+                type="submit"
+                :text="'Save Changes'"
+                variant="primary"
+                :is-disable="v$.$invalid || v$.$error || isLoading"
+              />
             </div>
           </div>
         </form>
@@ -130,6 +156,8 @@ import { ref, reactive, computed } from 'vue';
 import { required, helpers } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import country from '../../../../data/country';
+
+const snackbar = useSnackbar();
 
 const isLoading = ref<boolean>(false);
 
@@ -146,40 +174,89 @@ const handleShowForm = () => {
 };
 
 const formData = reactive({
-  country: '',
-  full_name: '',
   address_name: '',
-  zip_code: '',
   city: '',
+  country: '',
+  label: '',
+  note: '',
+  phone_number: '',
+  recepient_name: '',
   state: '',
-  contact_phone_number: '',
+  zip_code: '',
 });
+
+const mustBePhoneNumber = helpers.regex(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/);
 
 const rules = computed(() => {
   return {
-    country: {
-      required: helpers.withMessage('The Country field is required', required),
-    },
-    full_name: {
-      required: helpers.withMessage('The Full Name field is required', required),
-    },
     address_name: {
       required: helpers.withMessage('The Address Name field is required', required),
-    },
-    zip_code: {
-      required: helpers.withMessage('The Zip Code field is required', required),
     },
     city: {
       required: helpers.withMessage('The City field is required', required),
     },
+    country: {
+      required: helpers.withMessage('The Country field is required', required),
+    },
+    label: {
+      required: helpers.withMessage('The Label field is required', required),
+    },
+    phone_number: {
+      required: helpers.withMessage('The Contact Phone Number field is required', required),
+      mustBePhoneNumber: helpers.withMessage('Phone number is not valid', mustBePhoneNumber),
+    },
+    recepient_name: {
+      required: helpers.withMessage('The Full Name field is required', required),
+    },
     state: {
       required: helpers.withMessage('The State field is required', required),
     },
-    contact_phone_number: {
-      required: helpers.withMessage('The Contact Phone Number field is required', required),
+    zip_code: {
+      required: helpers.withMessage('The Zip Code field is required', required),
     },
   };
 });
 
 const v$ = useVuelidate(rules, formData);
+
+const handleSubmit = async () => {
+  const isFormCorrect = await v$.value.$validate();
+
+  if (isFormCorrect) {
+    const { data } = await useFetch('/api/profile/add-address', {
+      method: 'POST',
+      lazy: true,
+      body: {
+        ...formData,
+        langitude: '',
+        longitude: '',
+      },
+      onResponse: ({ response }) => {
+        if (response) isLoading.value = false;
+      },
+      onRequest: ({ request }) => {
+        if (request) isLoading.value = true;
+      },
+      redirect: 'follow',
+    });
+
+    const { type, message } = data.value || {};
+
+    if (data.value?.type === 'error') {
+      return snackbar.add({
+        type,
+        text: message,
+      });
+    }
+
+    if (type === 'success') {
+      return snackbar.add({
+        type,
+        text: message,
+      });
+    }
+  }
+
+  return null;
+};
 </script>

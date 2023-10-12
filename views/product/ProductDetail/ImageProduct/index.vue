@@ -2,10 +2,10 @@
   <div class="w-full max-h-[500px]">
     <nuxt-img
       class="h-full w-full object-cover rounded"
-      :src="imgUrl"
+      :src="`${imageUrl}`"
       :alt="`product ${nameProduct}`"
       format="webp"
-      quality="100"
+      quality="80"
       loading="lazy"
       preload
     />
@@ -13,5 +13,5 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ imgUrl: string; nameProduct: string }>();
+defineProps<{ imageUrl: string; nameProduct: string }>();
 </script>
