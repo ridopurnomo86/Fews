@@ -14,7 +14,7 @@
             taste is what I'm against."
           </p>
           <p class="text-xl text-white font-semibold">Diana Vreeland</p>
-          <p class="text-md text-white font-normal">Designer</p>
+          <p class="text-base text-white font-normal">Designer</p>
         </div>
       </div>
       <div class="absolute -z-10 h-[100vh] w-full bg-gradient-to-b from-zinc-900 to-neutral-800" />

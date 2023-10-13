@@ -3,7 +3,7 @@
     class="p-4 bg-white shadow rounded w-full max-h-[250px] border overflow-scroll overflow-x-hidden"
   >
     <div class="flex items-center justify-between pb-3 border-b-[1px]">
-      <p class="text-medium font-semibold text-black text-md">
+      <p class="text-medium font-semibold text-black text-base">
         My Cart {{ `(${totalCart ?? '-'})` }}
       </p>
       <div class="flex items-center">
@@ -29,7 +29,7 @@
           alt="women-empty-cart"
         />
       </div>
-      <p class="text-md font-semibold text-black">Your Cart is Empty</p>
+      <p class="text-base font-semibold text-black">Your Cart is Empty</p>
       <p class="text-sm font-regular text-gray-600">
         looks like you haven't added anything to your cart yet.
       </p>

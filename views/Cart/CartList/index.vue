@@ -12,7 +12,7 @@
             alt="women-empty-cart"
           />
         </div>
-        <p class="text-sm lg:text-md font-semibold text-black">Your Cart is Empty</p>
+        <p class="text-sm lg:text-base font-semibold text-black">Your Cart is Empty</p>
         <p class="text-xs lg:text-sm font-regular text-gray-600">
           looks like you haven't added anything to your cart yet.
         </p>

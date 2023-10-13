@@ -14,7 +14,7 @@
     :disabled="isDisable"
     @click="onClick"
   >
-    <p v-if="text" class="text-sm xl:text-md font-bold">
+    <p v-if="text" class="text-sm xl:text-base font-bold">
       {{ text }}
     </p>
     <slot />

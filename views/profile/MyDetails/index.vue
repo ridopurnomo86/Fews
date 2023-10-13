@@ -15,7 +15,7 @@
           <button
             type="button"
             :disabled="true"
-            class="text-sm xl:text-md font-bold w-full text-red-600 enabled:hover:opacity-80 enabled:hover:text-white transition py-2 px-4 rounded enabled:focus:outline-none enabled:focus:shadow-outline cursor-pointer"
+            class="text-sm xl:text-base font-bold w-full text-red-600 enabled:hover:opacity-80 enabled:hover:text-white transition py-2 px-4 rounded enabled:focus:outline-none enabled:focus:shadow-outline cursor-pointer"
           >
             Delete Account
           </button>

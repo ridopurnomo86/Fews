@@ -11,12 +11,12 @@
           size="24px"
           class="text-gray-600"
         />
-        <p v-else class="text-md text-black font-semibold">
+        <p v-else class="text-base text-black font-semibold">
           {{ displayName(fullName) }}
         </p>
       </div>
       <div>
-        <p class="text-sm sm:text-md text-black font-semibold">
+        <p class="text-sm sm:text-base text-black font-semibold">
           {{ hasAuthenticated ? fullName : 'Sign In' }}
         </p>
         <p class="text-xs sm:text-sm text-gray-600 font-medium">

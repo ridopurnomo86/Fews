@@ -17,6 +17,18 @@
         :is-primary-address="true"
       />
     </div>
+    <div
+      v-if="addresses?.data.length === 0 || !addresses?.data"
+      class="flex flex-col items-center justify-center min-h-[40vh]"
+    >
+      <div class="border rounded inline p-2 items-center">
+        <Icon :name="'heroicons:map-pin'" size="32px" class="text-neutral-600" />
+      </div>
+      <h1 class="font-semibold mt-2 text-lg antialiased">No Address Added Yet</h1>
+      <p class="font-medium text-sm antialiased text-neutral-600">
+        Let us pack something special for you.
+      </p>
+    </div>
   </ProfileLayout>
 </template>
 

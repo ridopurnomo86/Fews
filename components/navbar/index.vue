@@ -10,7 +10,7 @@
           </li>
           <li>
             <NuxtLink to="/shop">
-              <p class="text-md font-medium mr-4">Shop</p>
+              <p class="text-base font-medium mr-4">Shop</p>
             </NuxtLink>
           </li>
         </ul>
@@ -37,7 +37,7 @@
             </NuxtLink>
           </li>
           <li class="hidden md:block cursor-pointer">
-            <NuxtLink :to="'/search'">
+            <NuxtLink :to="'#'">
               <Icon :name="'octicon:search-16'" size="20px" class="cursor-pointer" />
             </NuxtLink>
           </li>

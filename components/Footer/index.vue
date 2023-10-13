@@ -19,7 +19,7 @@
         <div>
           <p class="font-semibold text-black text-base mb-2">Main Page</p>
           <div v-for="item in MAIN_PAGE" :key="item.id">
-            <NuxtLink to="{{ item.link }}" class="block text-gray-600 text-sm font-medium mb-2">{{
+            <NuxtLink :to="item.link" class="block text-gray-600 text-sm font-medium mb-2">{{
               item.title
             }}</NuxtLink>
           </div>

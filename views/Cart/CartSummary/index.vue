@@ -2,7 +2,7 @@
   <div class="p-4 rounded border bg-white overflow-hidden h-full lg:h-[400px]">
     <h1 class="text-lg font-semibold text-black mb-2">Order Summary</h1>
     <div>
-      <p class="text-md font-semibold text-black border-b-[1px] py-2 mb-2">Details</p>
+      <p class="text-base font-semibold text-black border-b-[1px] py-2 mb-2">Details</p>
       <div class="flex items-center justify-between py-2">
         <p class="text-sm font-medium text-gray-600">Deliver Charge</p>
         <p class="text-sm font-medium text-gray-800">
@@ -18,8 +18,8 @@
     </div>
     <div class="border-y-[1px] bg-white overflow-hidden my-2">
       <div class="flex items-center justify-between py-4">
-        <p class="text-md font-semibold text-black">Amount To Pay</p>
-        <p class="text-md font-semibold text-black">
+        <p class="text-base font-semibold text-black">Amount To Pay</p>
+        <p class="text-base font-semibold text-black">
           {{ formatter.format(Number(cartStore.countTotalPrice)) }}
         </p>
       </div>
