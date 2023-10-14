@@ -12,7 +12,8 @@
         :state="address.state"
         :zip-code="address.zip_code"
         :on-selected-address="() => handleSelectedAddress(address)"
-        :on-edit-address="(e) => handleEditAddress(e)"
+        :on-delete-address="() => handleDeleteAddress(e, address)"
+        :on-edit-address="() => handleEditAddress(e)"
         :is-active="selectedAddress?.id === address.id"
         :is-primary-address="true"
       />
@@ -39,11 +40,13 @@ import AddressCard from '~~/components/cards/AddressCard.vue';
 import ProfileLayout from '../layout/ProfileLayout/index.vue';
 import AddAddress from './AddAddress/index.vue';
 
-const { data: addresses } = await useFetch<{ data: ProfileAddressDataType[] }>(
-  '/api/profile/address'
-);
+const snackbar = useSnackbar();
 
 const selectedAddress = ref<ProfileAddressDataType>();
+
+const { data: addresses, execute } = await useFetch<{ data: ProfileAddressDataType[] }>(
+  '/api/profile/address'
+);
 
 const getAddressName = (code: string) =>
   country.find((item: { country: string; code: string }) => item.code === code)?.country;
@@ -54,5 +57,35 @@ const handleSelectedAddress = (item: ProfileAddressDataType) => {
 
 const handleEditAddress = (e: Event) => {
   e.stopPropagation();
+};
+
+const handleDeleteAddress = async (e: Event, item: ProfileAddressDataType) => {
+  const { data } = await useFetch('/api/profile/remove-address', {
+    method: 'POST',
+    lazy: true,
+    query: {
+      id: item.id,
+    },
+    redirect: 'follow',
+  });
+
+  const { type, message } = data.value || {};
+
+  if (data.value?.type === 'error') {
+    return snackbar.add({
+      type,
+      text: message,
+    });
+  }
+
+  if (type === 'success') {
+    execute();
+    return snackbar.add({
+      type,
+      text: message,
+    });
+  }
+
+  return null;
 };
 </script>

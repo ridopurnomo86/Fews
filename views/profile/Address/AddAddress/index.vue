@@ -237,7 +237,6 @@ const handleSubmit = async () => {
       onRequest: ({ request }) => {
         if (request) isLoading.value = true;
       },
-      redirect: 'follow',
     });
 
     const { type, message } = data.value || {};

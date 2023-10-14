@@ -38,8 +38,14 @@
         </div>
       </div>
     </div>
-    <div @click="(e:Event) => onEditAddress(e)">
-      <p class="font-medium text-sm text-indigo-700 cursor-pointer">Edit</p>
+    <div>
+      <button type="button" @click="(e:Event) => onEditAddress(e)">
+        <p class="font-medium text-sm text-indigo-700 cursor-pointer">Edit</p>
+      </button>
+      <span> | </span>
+      <button type="button" @click="onDeleteAddress">
+        <p class="font-medium text-sm text-red-700 cursor-pointer">Delete</p>
+      </button>
     </div>
   </div>
 </template>
@@ -56,6 +62,7 @@ defineProps<{
   country: string;
   isActive: boolean;
   onEditAddress: (e: Event) => void;
+  onDeleteAddress: () => void;
   onSelectedAddress: () => void;
 }>();
 </script>

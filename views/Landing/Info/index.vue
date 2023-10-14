@@ -11,7 +11,7 @@
     </div>
     <div>
       <div class="flex items-center justify-center my-5 md:my-20">
-        <div class="max-w-[100%]">
+        <div class="w-full">
           <nuxt-img
             class="h-full w-full object-cover rounded object-right"
             src="https://source.unsplash.com/ioTLGAzArg0"
