@@ -114,4 +114,7 @@ export default defineNuxtConfig({
     refreshOnResize: true,
   },
   ssr: true,
+  nitro: {
+    compressPublicAssets: true,
+  },
 });

@@ -21,7 +21,7 @@ const SIDEBAR_LINK = [
     id: 4,
     icon: 'material-symbols:history',
     title: 'Orders',
-    link: '/order',
+    link: '/profile/orders',
   },
   {
     id: 5,

@@ -4,10 +4,10 @@
       class="h-full w-full object-cover rounded"
       :src="`${imageUrl}`"
       :alt="`product ${nameProduct}`"
-      format="webp"
+      :fit="'cover'"
+      :format="'webp'"
+      :loading="'lazy'"
       quality="80"
-      loading="lazy"
-      preload
     />
   </div>
 </template>
