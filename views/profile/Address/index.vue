@@ -1,23 +1,26 @@
 <template>
   <ProfileLayout>
     <h1 class="font-semibold text-lg text-black mb-4">Shipping Address</h1>
-    <AddAddress />
-    <div v-for="address in addresses?.data" :key="address.id">
-      <AddressCard
-        :label="address.label"
-        :city="address.city"
-        :street-name="address.address_name"
-        :country="(getAddressName(address.country) as string)"
-        :name="address.recepient_name"
-        :state="address.state"
-        :zip-code="address.zip_code"
-        :on-selected-address="() => handleSelectedAddress(address)"
-        :on-delete-address="() => handleDeleteAddress(e, address)"
-        :on-edit-address="() => handleEditAddress(e)"
-        :is-active="selectedAddress?.id === address.id"
-        :is-primary-address="true"
-      />
-    </div>
+    <AddAddress :on-refetch="() => execute()" />
+    <ul v-auto-animate="{ duration: 100 }">
+      <li v-for="address in addresses?.data" :key="address.id">
+        <AddressCard
+          :label="address.label"
+          :city="address.city"
+          :street-name="address.address_name"
+          :country="(getAddressName(address.country) as string)"
+          :name="address.recepient_name"
+          :state="address.state"
+          :zip-code="address.zip_code"
+          :on-selected-address="() => handleSelectedAddress(address)"
+          :on-delete-address="() => handleDeleteAddress(e, address)"
+          :on-edit-address="() => handleEditAddress(e)"
+          :is-active="selectedAddress?.id === address.id"
+          :is-primary-address="true"
+        />
+      </li>
+    </ul>
+
     <div
       v-if="addresses?.data.length === 0 || !addresses?.data"
       class="flex flex-col items-center justify-center min-h-[40vh]"

@@ -73,12 +73,22 @@ export default defineNuxtConfig({
     'nuxt-security',
     'nuxt-snackbar',
     '@sidebase/nuxt-auth',
+    '@formkit/auto-animate/nuxt',
   ],
   piniaPersistedstate: {
     cookieOptions: {
       sameSite: 'strict',
     },
     storage: 'localStorage',
+  },
+  stripe: {
+    // Server
+    server: {
+      key: process.env.STRIPE_SECRET_KEY,
+    },
+    client: {
+      key: process.env.STRIPE_PUBLISHABLE_KEY,
+    },
   },
   build: {
     transpile: ['@vuepic/vue-datepicker'],
@@ -88,9 +98,14 @@ export default defineNuxtConfig({
     baseRedisUrl: process.env.REDIS_URL,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
     authSecret: process.env.NUXT_AUTH_SECRET,
+    jwtSecret: process.env.JWT_SECRET,
+    stripeSecret: process.env.STRIPE_SECRET_KEY,
+    stripePublishSecret: process.env.STRIPE_PUBLISHABLE_KEY,
     public: {
       googleSession: process.env.NUXT_CREDENTIAL_GOOGLE_AUTH,
       googleClientId: process.env.GOOGLE_CLIENT_ID,
+      stripeSecret: process.env.STRIPE_SECRET_KEY,
+      stripePublishSecret: process.env.STRIPE_PUBLISHABLE_KEY,
     },
   },
   googleSignIn: {

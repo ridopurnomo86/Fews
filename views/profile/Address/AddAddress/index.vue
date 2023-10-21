@@ -163,6 +163,8 @@ const isLoading = ref<boolean>(false);
 
 const isShowForm = ref<boolean>(false);
 
+const props = defineProps(['onRefetch']);
+
 const selectCountry: any = country.map((item: { country: string; code: string }) => ({
   id: item?.country,
   value: item?.code,
@@ -249,6 +251,9 @@ const handleSubmit = async () => {
     }
 
     if (type === 'success') {
+      props.onRefetch();
+      v$.value.$reset();
+      isShowForm.value = false;
       return snackbar.add({
         type,
         text: message,

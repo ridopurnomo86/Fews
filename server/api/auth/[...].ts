@@ -34,7 +34,7 @@ export default NuxtAuthHandler({
     },
   },
   session: {
-    maxAge: 1 * 24 * 60 * 60,
+    maxAge: 1 * 12 * 60 * 60,
   },
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point

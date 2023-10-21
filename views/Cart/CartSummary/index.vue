@@ -30,7 +30,7 @@
         class="w-full"
         :is-disable="Boolean(!cartStore.countCartItems)"
         :text="'Proceed To Pay'"
-        :on-click="async () => await navigateTo('/checkout')"
+        :on-click="async () => await navigateTo('/payment')"
       />
     </div>
     <div class="w-full mt-4">

@@ -19,6 +19,7 @@ model Product {
   slug             String?           @unique(map: "Product_slug_unique") @db.VarChar
   type_id          Int?
   category_id      Int?
+  Order_Item       Order_Item[]
   Category_Product Category_Product? @relation(fields: [category_id], references: [id], onUpdate: SetNull)
   Type_Product     Type_Product?     @relation(fields: [type_id], references: [id], onUpdate: SetNull)
 }
@@ -53,6 +54,8 @@ model User {
   created_at         DateTime       @default(now()) @db.Timestamptz(6)
   updated_at         DateTime       @default(now()) @db.Timestamptz(6)
   phone_number       String         @unique(map: "User_phone_number_unique")
+  Order              Order[]
+  Order_Item         Order_Item[]
   User_Address       User_Address[]
 }
 
@@ -71,6 +74,34 @@ model User_Address {
   longitude      String?   @db.VarChar
   langitude      String?   @db.VarChar
   created_at     DateTime? @default(now()) @db.Timestamptz(6)
-  updated_at     DateTime? @db.Timestamptz(6)
+  updated_at     DateTime? @default(now()) @db.Timestamptz(6)
+  Order          Order[]
   User           User?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id             Int          @id @default(autoincrement())
+  user_id        Int
+  address_id     Int
+  status         String       @default("PENDING") @db.VarChar
+  total_price    Int
+  shipping_price Int
+  created_at     DateTime?    @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime?    @default(now()) @db.Timestamptz(6)
+  User_Address   User_Address @relation(fields: [address_id], references: [id], onDelete: Cascade)
+  User           User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Order_Item     Order_Item[]
+}
+
+model Order_Item {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  product_id Int
+  order_id   Int
+  quantity   Int
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+  Order      Order    @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  Product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  User       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
