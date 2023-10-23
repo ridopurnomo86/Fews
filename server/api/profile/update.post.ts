@@ -26,5 +26,13 @@ export default eventHandler(async (event: any) => {
 
   if (user) return { status: 'success', type: 'success', message: 'Success Update Profile' };
 
-  return { status: 'error', type: 'error', message: 'Something Gone Wrong' };
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'Something gone wrong',
+    data: {
+      type: 'error',
+      status: 'error',
+      message: 'something gone wrong',
+    },
+  });
 });

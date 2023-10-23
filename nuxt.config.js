@@ -81,15 +81,6 @@ export default defineNuxtConfig({
     },
     storage: 'localStorage',
   },
-  stripe: {
-    // Server
-    server: {
-      key: process.env.STRIPE_SECRET_KEY,
-    },
-    client: {
-      key: process.env.STRIPE_PUBLISHABLE_KEY,
-    },
-  },
   build: {
     transpile: ['@vuepic/vue-datepicker'],
   },

@@ -28,15 +28,19 @@
       <Button
         type="button"
         class="w-full"
-        :is-disable="Boolean(!cartStore.countCartItems)"
+        :is-disable="Boolean(!cartStore.countCartItems) || isLoading"
         :text="'Proceed To Pay'"
-        :on-click="async () => await navigateTo('/payment')"
+        :on-click="handleSubmitCart"
       />
     </div>
     <div class="w-full mt-4">
-      <NuxtLink to="/shop">
-        <Button class="w-full" type="button" :text="'Continue Shopping'" />
-      </NuxtLink>
+      <Button
+        :on-click="async () => await navigateTo('/shop', { external: true })"
+        :is-disable="isLoading"
+        class="w-full"
+        type="button"
+        :text="'Continue Shopping'"
+      />
     </div>
   </div>
 </template>
@@ -44,6 +48,39 @@
 <script setup lang="ts">
 import { formatter } from '~~/modules/formatPrice';
 import { useCartStore } from '~~/stores/useCart';
+import { ProductDataType } from '~~/types/product';
 
 const cartStore = useCartStore();
+const snackbar = useSnackbar();
+
+const isLoading = ref(false);
+
+const handleSubmitCart = async () => {
+  const { data, error } = await useFetch('/api/cart', {
+    method: 'POST',
+    body: {
+      amount: cartStore.countTotalPrice,
+      items: cartStore.cartItems.map((item: ProductDataType) => ({
+        id: 1212,
+        name: item.name,
+        type_id: item.Type_Product.id,
+        category_id: item.Category_Product.id,
+      })),
+    },
+    onResponse: ({ response }) => {
+      if (response) isLoading.value = false;
+    },
+    onRequest: ({ request }) => {
+      if (request) isLoading.value = true;
+    },
+  });
+
+  if (!data || error.value?.data)
+    return snackbar.add({
+      type: 'error',
+      text: error.value?.data?.message,
+    });
+
+  return navigateTo('/order', { external: true });
+};
 </script>
