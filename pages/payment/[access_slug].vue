@@ -9,4 +9,13 @@ definePageMeta({
   middleware: 'auth',
   layout: 'payment',
 });
+
+useHead({
+  script: [
+    {
+      type: 'text/javascript',
+      src: 'https://js.stripe.com/v3/',
+    },
+  ],
+});
 </script>

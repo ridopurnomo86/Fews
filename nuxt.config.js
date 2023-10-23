@@ -132,4 +132,10 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
   },
+  security: {
+    headers: {
+      crossOriginEmbedderPolicy:
+        process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+    },
+  },
 });
