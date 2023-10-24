@@ -1,13 +1,13 @@
 <template>
-  <PaymentMethod />
+  <Payment />
 </template>
 
 <script setup lang="ts">
-import PaymentMethod from '~/views/Payment/PaymentMethod/index.vue';
+import Payment from '~/views/Order/Payment/index.vue';
 
 definePageMeta({
   middleware: 'auth',
-  layout: 'payment',
+  layout: 'order',
 });
 
 useHead({

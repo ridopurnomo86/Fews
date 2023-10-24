@@ -61,7 +61,7 @@ const handleSubmitCart = async () => {
     body: {
       amount: cartStore.countTotalPrice,
       items: cartStore.cartItems.map((item: ProductDataType) => ({
-        id: 1212,
+        id: item.id,
         name: item.name,
         type_id: item.Type_Product.id,
         category_id: item.Category_Product.id,
