@@ -110,7 +110,7 @@ const handlePlaceOrder = async () => {
       total_price: cartStore.countTotalPrice,
       address_id: 6,
       status: 'PENDING',
-      items: cartStore.cartItems.map((item) => ({
+      items: cartStore.cartItems.map((item: any) => ({
         id: item.id,
         name: item.name,
         price: item.price,
@@ -134,6 +134,6 @@ const handlePlaceOrder = async () => {
       text: data.value.message,
     });
 
-  await navigateTo('order/payment/', { external: true });
+  return navigateTo('order/payment/', { external: true });
 };
 </script>

@@ -3,7 +3,7 @@
     <Navigation :path="'/profile/my-details'" :title="'My Details'" />
     <Navigation :path="'/profile/password'" :title="'Password'" />
     <Navigation :path="'/profile/email'" :title="'Email'" />
-    <Navigation :path="'/profile/order'" :title="'Orders'" />
+    <Navigation :path="'/profile/orders'" :title="'Orders'" />
     <Navigation :path="'/profile/address'" :title="'Address'" />
     <button type="button" class="md:mt-8 block w-full" @click="handleLogout">
       <p
@@ -21,7 +21,7 @@
         { id: 'profile-my-details', name: 'My Details', value: '/profile/my-details' },
         { id: 'profile-password', name: 'Password', value: '/profile/password' },
         { id: 'profile-email', name: 'Email', value: '/profile/email' },
-        { id: 'profile-order', name: 'Orders', value: '/profile/order' },
+        { id: 'profile-order', name: 'Orders', value: '/profile/orders' },
         { id: 'profile-address', name: 'Address', value: '/profile/address' },
       ]"
       :label="''"
