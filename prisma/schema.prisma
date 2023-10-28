@@ -88,6 +88,7 @@ model Order {
   shipping_price Int
   created_at     DateTime?    @default(now()) @db.Timestamptz(6)
   updated_at     DateTime?    @default(now()) @db.Timestamptz(6)
+  order_id       String?      @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   User_Address   User_Address @relation(fields: [address_id], references: [id], onDelete: Cascade)
   User           User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
   Order_Item     Order_Item[]

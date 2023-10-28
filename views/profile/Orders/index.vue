@@ -6,7 +6,7 @@
     </p>
     <Tabs />
     <div
-      v-if="!orders?.data.length"
+      v-if="!orders?.data.length && !isLoading"
       class="flex flex-col items-center justify-center min-h-[30vh] lg:min-h-[100vh]"
     >
       <div class="max-w-[95px] lg:max-w-[150px]">
@@ -19,24 +19,42 @@
       <p class="text-sm lg:text-base font-semibold text-black">You have no Order</p>
       <p class="text-xs lg:text-sm font-regular text-gray-600">looks like you haven't order yet.</p>
     </div>
-    <div v-for="order in orders?.data" :key="order.id">
+    <div v-if="isLoading" class="flex items-center justify-center min-h-[60vh]">
+      <LazyCircularLoading />
+    </div>
+    <div v-for="order in orders?.data" v-else :key="order.id">
       <div class="w-full border rounded-md mb-4">
-        <div class="px-8 py-4 flex gap-8 border-b-[1px]">
+        <div class="px-8 py-4 flex border-b-[1px] flex justify-between w-full flex-col md:flex-row">
           <div>
             <p class="text-sm font-semibold text-neutral-800 antialiased mb-2">Order Number</p>
-            <p class="text-sm font-medium text-neutral-600 antialiased">{{ order.id }}</p>
-          </div>
-          <div>
-            <p class="text-sm font-semibold text-neutral-800 antialiased mb-2">Date Placed</p>
             <p class="text-sm font-medium text-neutral-600 antialiased">
-              {{ dayjs(order.created_at).format('MMM D, YYYY') }}
+              {{ order.order_id }}
             </p>
           </div>
-          <div>
-            <p class="text-sm font-semibold text-neutral-800 antialiased mb-2">Total Amount</p>
-            <p class="text-sm font-medium text-neutral-600 antialiased">
-              {{ formatter.format(order.total_price) }}
-            </p>
+          <div class="flex gap-8 mt-4 md:mt-0">
+            <div class="hidden md:block">
+              <p class="text-sm font-semibold text-neutral-800 antialiased mb-2">Date Placed</p>
+              <p class="text-sm font-medium text-neutral-600 antialiased">
+                {{ dayjs(order.created_at).format('MMM D, YYYY') }}
+              </p>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-neutral-800 antialiased mb-2">Total Amount</p>
+              <p class="text-sm font-medium text-neutral-600 antialiased">
+                {{ formatter.format(order.total_price) }}
+              </p>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-neutral-800 antialiased mb-2">Status</p>
+              <span
+                :class="{
+                  [`bg-red-100 text-red-800 border-red-400`]: order.status === 'PENDING',
+                  [`bg-green-100 text-green-800 border-green-400`]: order.status === 'SUCCESS',
+                }"
+                class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded border"
+                >{{ order.status }}</span
+              >
+            </div>
           </div>
         </div>
         <div v-for="item in order.items" :key="item.id">
@@ -64,16 +82,6 @@
                 </p>
               </div>
             </div>
-            <div class="mt-1">
-              <span
-                :class="{
-                  [`bg-red-100 text-red-800  border-red-400`]: order.status === 'PENDING',
-                  [`bg-green-100 text-green-800  border-green-400`]: order.status === 'SUCCESS',
-                }"
-                class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded border"
-                >{{ order.status }}</span
-              >
-            </div>
           </div>
         </div>
       </div>
@@ -89,12 +97,15 @@ import Tabs from './Tabs/index.vue';
 
 const route = useRoute();
 
+const isLoading = ref(false);
+
 const type = ref(route.query.type || '');
 
 watch(
   () => route.query,
   () => {
     if (route.query.type) type.value = route.query.type;
+    if (!route.query.type) type.value = '';
     return null;
   },
   { deep: true, immediate: true }
@@ -106,7 +117,14 @@ const { data: orders } = await useFetch('/api/profile/order', {
     type,
   },
   redirect: 'follow',
-
+  cache: 'default',
+  lazy: true,
+  onResponse: ({ response }) => {
+    if (response) isLoading.value = false;
+  },
+  onRequest: ({ request }) => {
+    if (request) isLoading.value = true;
+  },
   watch: [type],
 });
 </script>

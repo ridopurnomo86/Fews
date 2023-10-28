@@ -6,11 +6,7 @@
 import Order from '~/views/Order/MainOrder/index.vue';
 
 definePageMeta({
-  middleware: 'auth',
+  middleware: ['auth', 'order'],
   layout: 'order',
 });
-
-const cookieOrder = useCookie('nuxt.checkout-token');
-
-if (!cookieOrder.value) await navigateTo('/cart', { external: true });
 </script>
