@@ -83,7 +83,7 @@
         type="button"
         :disabled="isLoading"
         class="font-medium antialiased w-full bg-indigo-600 text-white rounded-full border px-8 py-2"
-        @click="handlePlaceOrder"
+        @click="onPlaceOrder"
       >
         Place Order
       </button>
@@ -97,43 +97,12 @@ import { useCartStore } from '~~/stores/useCart';
 
 const cartStore = useCartStore();
 
-const snackbar = useSnackbar();
+interface OrderListPropsType {
+  onPlaceOrder: () => void;
+  isLoading: boolean;
+}
 
-const isLoading = ref(false);
-
-const handlePlaceOrder = async () => {
-  const { data } = await useFetch('/api/order', {
-    method: 'POST',
-    lazy: true,
-    body: {
-      shipping_price: 0,
-      total_price: cartStore.countTotalPrice,
-      address_id: 6,
-      status: 'PENDING',
-      items: cartStore.cartItems.map((item: any) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-      })),
-    },
-    onResponse: ({ response }) => {
-      if (response) {
-        isLoading.value = false;
-        cartStore.deleteAllCart();
-      }
-    },
-    onRequest: ({ request }) => {
-      if (request) isLoading.value = true;
-    },
-  });
-
-  if (data.value?.type === 'error')
-    return snackbar.add({
-      type: 'error',
-      text: data.value.message,
-    });
-
-  return navigateTo('order/payment/', { external: true });
-};
+withDefaults(defineProps<OrderListPropsType>(), {
+  isLoading: false,
+});
 </script>

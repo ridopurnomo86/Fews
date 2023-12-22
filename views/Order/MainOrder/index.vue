@@ -15,8 +15,12 @@
           :is-error="v$.shipping_address.$error"
           :on-change="v$.shipping_address.$touch"
         />
+        <NuxtLink to="/profile/address" class="flex items-center mb-8 cursor-pointer">
+          <Icon :name="'material-symbols:add'" size="20px" class="mr-2 text-gray-600" />
+          <p class="text-sm text-neutral-600 font-medium">Add Address</p>
+        </NuxtLink>
       </div>
-      <OrderList />
+      <OrderList :is-loading="isLoading" :on-place-order="handlePlaceOrder" />
     </div>
   </TransitionFade>
 </template>
@@ -24,9 +28,16 @@
 <script setup lang="ts">
 import { ProfileAddressDataType } from '~~/types/profile/address';
 import { helpers, required } from '@vuelidate/validators';
+import { useCartStore } from '~~/stores/useCart';
 import useVuelidate from '@vuelidate/core';
 import Stepper from './Stepper/index.vue';
 import OrderList from './OrderList/index.vue';
+
+const cartStore = useCartStore();
+
+const snackbar = useSnackbar();
+
+const isLoading = ref(false);
 
 const formData = reactive({
   shipping_address: '',
@@ -51,4 +62,45 @@ const { data: addresses } = await useFetch<any>('/api/profile/address', {
     }));
   },
 });
+
+const handlePlaceOrder = async () => {
+  const isFormCorrect = await v$.value.$validate();
+
+  if (isFormCorrect) {
+    const { data } = await useFetch('/api/order', {
+      method: 'POST',
+      lazy: true,
+      body: {
+        shipping_price: 0,
+        total_price: cartStore.countTotalPrice,
+        address_id: 6,
+        status: 'PENDING',
+        items: cartStore.cartItems.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+      },
+      onResponse: async ({ response }) => {
+        if (response.type !== 'error') {
+          isLoading.value = false;
+          await navigateTo('order/payment', { external: true, replace: true });
+          cartStore.deleteAllCart();
+        }
+      },
+      onRequest: ({ request }) => {
+        if (request) isLoading.value = true;
+      },
+    });
+
+    if (data.value?.type === 'error')
+      return snackbar.add({
+        type: 'error',
+        text: data.value.message,
+      });
+  }
+
+  return null;
+};
 </script>

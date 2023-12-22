@@ -2,7 +2,6 @@
   <div class="hidden items-start md:block">
     <Navigation :path="'/profile/my-details'" :title="'My Details'" />
     <Navigation :path="'/profile/password'" :title="'Password'" />
-    <Navigation :path="'/profile/email'" :title="'Email'" />
     <Navigation :path="'/profile/orders'" :title="'Orders'" />
     <Navigation :path="'/profile/address'" :title="'Address'" />
     <button type="button" class="md:mt-8 block w-full" @click="handleLogout">

@@ -6,6 +6,9 @@ const findProduct = async (orderId: number) => {
     where: {
       order_id: orderId,
     },
+    orderBy: {
+      id: 'asc',
+    },
     include: {
       Product: {
         include: {

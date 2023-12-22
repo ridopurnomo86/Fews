@@ -14,7 +14,6 @@
           :zip-code="address.zip_code"
           :on-selected-address="() => handleSelectedAddress(address)"
           :on-delete-address="() => handleDeleteAddress(e, address)"
-          :on-edit-address="() => handleEditAddress(e)"
           :is-active="selectedAddress?.id === address.id"
           :is-primary-address="true"
         />
@@ -56,10 +55,6 @@ const getAddressName = (code: string) =>
 
 const handleSelectedAddress = (item: ProfileAddressDataType) => {
   selectedAddress.value = item;
-};
-
-const handleEditAddress = (e: Event) => {
-  e.stopPropagation();
 };
 
 const handleDeleteAddress = async (e: Event, item: ProfileAddressDataType) => {
