@@ -1,6 +1,6 @@
 import prisma from '~~/server/lib/prisma';
-import jwt from 'jsonwebtoken';
-import crypto from 'crypto-js';
+import { encryptHandler } from '~~/server/lib/encryption';
+import { tokenCreateHandler } from '~~/server/lib/token';
 import { getServerSession, getToken } from '#auth';
 
 interface BodyTypes {
@@ -12,8 +12,6 @@ interface BodyTypes {
     category_id: number;
   }[];
 }
-
-const CRYPTO_SECRET = process.env.CRYPTO_SECRET as string;
 
 const checkingProduct = async (productId: number) => {
   const findProduct = await prisma.product.findFirst({
@@ -28,7 +26,6 @@ const checkingProduct = async (productId: number) => {
 };
 
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig();
   const token = await getToken({ event });
   const session: any = await getServerSession(event as any);
 
@@ -44,9 +41,9 @@ export default defineEventHandler(async (event) => {
   );
 
   if (checkingAllItems && checkingAllItems.includes(true)) {
-    const paymentToken = jwt.sign({ id: session?.user.id, hasAccess: true }, config.jwtSecret);
+    const orderToken = tokenCreateHandler({ id: session?.user.id, hasAccess: true });
 
-    const encryptToken = crypto.HmacSHA256(paymentToken, CRYPTO_SECRET).toString();
+    const encryptToken = encryptHandler(orderToken);
 
     setCookie(event, 'nuxt.checkout-token', encryptToken);
 

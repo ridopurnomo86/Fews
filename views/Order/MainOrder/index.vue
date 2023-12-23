@@ -35,6 +35,8 @@ import OrderList from './OrderList/index.vue';
 
 const cartStore = useCartStore();
 
+const router = useRouter();
+
 const snackbar = useSnackbar();
 
 const isLoading = ref(false);
@@ -82,12 +84,16 @@ const handlePlaceOrder = async () => {
           quantity: item.quantity,
         })),
       },
-      onResponse: async ({ response }) => {
-        if (response.type !== 'error') {
-          isLoading.value = false;
-          await navigateTo('order/payment', { external: true, replace: true });
-          cartStore.deleteAllCart();
-        }
+      onResponse: async () => {
+        isLoading.value = false;
+        await router.push({
+          path: 'order/payment',
+          force: true,
+          replace: true,
+          state: {
+            totalAmount: cartStore.countTotalPrice,
+          },
+        });
       },
       onRequest: ({ request }) => {
         if (request) isLoading.value = true;

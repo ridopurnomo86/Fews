@@ -10,7 +10,6 @@
         </p>
         <form id="payment-form" @submit.prevent="handlePayment">
           <div id="link-authentication-element" />
-          <div class="border border-gray-500 p-2 rounded-sm" id="card-element" />
           <div id="payment-element" ref="paymentElementRef" />
           <button
             id="submit"
@@ -29,13 +28,15 @@
 
 <script setup lang="ts">
 import { loadStripe } from '@stripe/stripe-js';
+import { useCartStore } from '~~/stores/useCart';
 import Stepper from './Stepper/index.vue';
+
+const cartStore = useCartStore();
 
 const config = useRuntimeConfig();
 let stripe: any;
 let elements: any;
 let clientSecret: string;
-let card: any;
 
 const isLoading = ref(true);
 const paymentElementRef = ref(null);
@@ -43,32 +44,18 @@ const paymentElementRef = ref(null);
 const { data }: any = await useFetch('/api/stripe/payment-intent', {
   method: 'POST',
   body: {
-    amount: 500,
+    amount: Number(cartStore.countTotalPrice) * 100,
   },
 });
 
 onMounted(async () => {
-  stripe = await loadStripe(config.public.stripePublishSecret);
+  cartStore.deleteAllCart();
 
-  const style = {
-    base: {
-      fontSize: '18px',
-    },
-    invalid: {
-      fontFamily: 'Arial, sans-serif',
-      color: '#EE4B2B',
-      iconColor: '#EE4B2B',
-    },
-  };
+  stripe = await loadStripe(config.public.stripePublishSecret);
 
   if (stripe) {
     clientSecret = data.value?.client_secret;
     elements = stripe.elements({ clientSecret: data.value?.client_secret });
-
-    card = elements.create('card', {
-      hidePostalCode: true,
-      style,
-    });
 
     const paymentElement = elements.create('payment', {
       layout: 'tabs',
@@ -77,7 +64,6 @@ onMounted(async () => {
       },
     });
     paymentElement.mount('#payment-element');
-    card.mount('#card-element');
 
     isLoading.value = false;
   }

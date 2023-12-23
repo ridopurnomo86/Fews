@@ -1,6 +1,4 @@
 import prisma from '~~/server/lib/prisma';
-import { decryptHandler } from '~~/server/lib/encryption';
-import { tokenVerifyHandler } from '~~/server/lib/token';
 import { getServerSession, getToken } from '#auth';
 
 interface BodyType {
@@ -28,13 +26,9 @@ export default eventHandler(async (event: any) => {
       statusMessage: 'Unauthorized',
     });
 
-  const orderCookie = getCookie(event, 'nuxt.checkout-token') as string;
+  const orderCookie = getCookie(event, 'nuxt.checkout-token');
 
-  const encryptCookie = decryptHandler(orderCookie) as string;
-
-  const verifyCookie: any = tokenVerifyHandler(encryptCookie);
-
-  if (!body.items.length || !orderCookie || verifyCookie.hasAccess !== true)
+  if (!body.items.length || !orderCookie)
     return { status: 'error', type: 'error', message: 'Something gone wrong' };
 
   const order = await prisma.order.create({

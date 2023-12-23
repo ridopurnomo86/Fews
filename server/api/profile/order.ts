@@ -45,6 +45,9 @@ export default eventHandler(async (event) => {
       ...(query.type === 'success' && { status: 'SUCCESS' }),
     },
     take: 5,
+    orderBy: {
+      id: 'desc',
+    },
   });
 
   const data = await Promise.all(
