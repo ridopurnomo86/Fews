@@ -1,36 +1,8 @@
-<template>
-  <TransitionFade :delay="200" :duration="600" :appear="true">
-    <div class="relative mx-auto container overflow-x-auto rounded w-full">
-      <Stepper />
-      <div>
-        <BaseSelectInput
-          :id="'Shipping Address'"
-          v-model="formData.shipping_address"
-          :options="addresses"
-          :label="'Shipping Address'"
-          :name="'Shipping Address'"
-          :placeholder="''"
-          :error-message="`${v$.shipping_address.$errors[0]?.$message}`"
-          :is-disable="false"
-          :is-error="v$.shipping_address.$error"
-          :on-change="v$.shipping_address.$touch"
-        />
-        <NuxtLink to="/profile/address" class="flex items-center mb-8 cursor-pointer">
-          <Icon :name="'material-symbols:add'" size="20px" class="mr-2 text-gray-600" />
-          <p class="text-sm text-neutral-600 font-medium">Add Address</p>
-        </NuxtLink>
-      </div>
-      <OrderList :is-loading="isLoading" :on-place-order="handlePlaceOrder" />
-    </div>
-  </TransitionFade>
-</template>
-
 <script setup lang="ts">
 import { ProfileAddressDataType } from '~~/types/profile/address';
 import { helpers, required } from '@vuelidate/validators';
 import { useCartStore } from '~~/stores/useCart';
 import useVuelidate from '@vuelidate/core';
-import Stepper from './Stepper/index.vue';
 import OrderList from './OrderList/index.vue';
 
 const cartStore = useCartStore();
@@ -75,7 +47,7 @@ const handlePlaceOrder = async () => {
       body: {
         shipping_price: 0,
         total_price: cartStore.countTotalPrice,
-        address_id: 6,
+        address_id: Number(formData.shipping_address),
         status: 'PENDING',
         items: cartStore.cartItems.map((item: any) => ({
           id: item.id,
@@ -84,16 +56,20 @@ const handlePlaceOrder = async () => {
           quantity: item.quantity,
         })),
       },
-      onResponse: async () => {
-        isLoading.value = false;
-        await router.push({
-          path: 'order/payment',
-          force: true,
-          replace: true,
-          state: {
-            totalAmount: cartStore.countTotalPrice,
-          },
-        });
+      onResponse: async ({ response }) => {
+        // eslint-disable-next-line no-underscore-dangle
+        if (response._data.type === 'success') {
+          isLoading.value = false;
+          await router.push({
+            path: 'order/payment',
+            force: true,
+            state: {
+              totalAmount: cartStore.countTotalPrice,
+              // eslint-disable-next-line no-underscore-dangle
+              orderId: response._data.order_id,
+            },
+          });
+        }
       },
       onRequest: ({ request }) => {
         if (request) isLoading.value = true;
@@ -109,4 +85,36 @@ const handlePlaceOrder = async () => {
 
   return null;
 };
+
+// onBeforeRouteLeave((to, from, next) => {
+//   const answer = window.confirm('Do you really want to leave? you have unsaved changes!');
+//   if (answer) {
+//     const orderCookie = useCookie('nuxt.checkout-token');
+//     orderCookie.value = null;
+//     return next();
+//   }
+//   return next(false);
+// });
 </script>
+
+<template>
+  <main class="relative mx-auto container overflow-x-auto rounded w-full mb-8">
+    <BaseSelectInput
+      :id="'Shipping Address'"
+      v-model="formData.shipping_address"
+      :options="addresses"
+      :label="'Shipping Address'"
+      :name="'Shipping Address'"
+      :placeholder="''"
+      :error-message="`${v$.shipping_address.$errors[0]?.$message}`"
+      :is-disable="false"
+      :is-error="v$.shipping_address.$error"
+      :on-change="v$.shipping_address.$touch"
+    />
+    <NuxtLink to="/profile/address" class="flex items-center mb-8 cursor-pointer">
+      <Icon :name="'material-symbols:add'" size="20px" class="mr-2 text-gray-600" />
+      <p class="text-sm text-neutral-600 font-medium">Add Address</p>
+    </NuxtLink>
+    <OrderList :is-loading="isLoading" :on-place-order="handlePlaceOrder" />
+  </main>
+</template>

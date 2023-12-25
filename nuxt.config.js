@@ -27,6 +27,8 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { prerender: true, ssr: true },
+    '/order': { prerender: true, ssr: true },
+    '/order/payment': { prerender: true, ssr: false },
     '/api/**': { cors: true },
     '/signin': {
       cors: true,

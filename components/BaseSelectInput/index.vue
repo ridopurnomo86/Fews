@@ -1,3 +1,25 @@
+<script setup lang="ts">
+interface BaseSelectInputPropsType {
+  id: string;
+  name: string;
+  label: string;
+  placeholder: string;
+  isDisable: boolean;
+  isError: boolean;
+  errorMessage: string;
+  onChange: (e: Event) => void;
+  modelValue: string;
+  options: Array<{ id: string; value: string; name: string }>;
+}
+
+withDefaults(defineProps<BaseSelectInputPropsType>(), {
+  isDisable: false,
+  isError: false,
+  placeholder: '',
+  modelValue: '',
+});
+</script>
+
 <template>
   <div class="mb-4">
     <label v-if="label" class="block text-gray-700 text-sm font-medium mb-2" :for="name">{{
@@ -29,25 +51,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-interface BaseSelectInputPropsType {
-  id: string;
-  name: string;
-  label: string;
-  placeholder: string;
-  isDisable: boolean;
-  isError: boolean;
-  errorMessage: string;
-  onChange: (e: Event) => void;
-  modelValue: string;
-  options: Array<{ id: string; value: string; name: string }>;
-}
-
-withDefaults(defineProps<BaseSelectInputPropsType>(), {
-  isDisable: false,
-  isError: false,
-  placeholder: '',
-  modelValue: '',
-});
-</script>
