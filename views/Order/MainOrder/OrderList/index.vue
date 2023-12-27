@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { formatter } from '~~/modules/formatPrice';
+import { useCartStore } from '~~/stores/useCart';
+
+const cartStore = useCartStore();
+
+interface OrderListPropsType {
+  onPlaceOrder: () => void;
+  isLoading: boolean;
+}
+
+withDefaults(defineProps<OrderListPropsType>(), {
+  isLoading: false,
+});
+</script>
+
 <template>
   <div>
     <h1 class="font-semibold antialiased text-black text-lg mb-4">Your Order</h1>
@@ -72,19 +88,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { formatter } from '~~/modules/formatPrice';
-import { useCartStore } from '~~/stores/useCart';
-
-const cartStore = useCartStore();
-
-interface OrderListPropsType {
-  onPlaceOrder: () => void;
-  isLoading: boolean;
-}
-
-withDefaults(defineProps<OrderListPropsType>(), {
-  isLoading: false,
-});
-</script>

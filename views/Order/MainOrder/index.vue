@@ -6,11 +6,8 @@ import useVuelidate from '@vuelidate/core';
 import OrderList from './OrderList/index.vue';
 
 const cartStore = useCartStore();
-
 const router = useRouter();
-
 const snackbar = useSnackbar();
-
 const isLoading = ref(false);
 
 const formData = reactive({
@@ -60,6 +57,7 @@ const handlePlaceOrder = async () => {
         // eslint-disable-next-line no-underscore-dangle
         if (response._data.type === 'success') {
           isLoading.value = false;
+
           await router.push({
             path: 'order/payment',
             force: true,
@@ -72,29 +70,36 @@ const handlePlaceOrder = async () => {
         }
       },
       onRequest: ({ request }) => {
-        if (request) isLoading.value = true;
+        if (request) {
+          isLoading.value = true;
+        }
       },
     });
 
-    if (data.value?.type === 'error')
+    if (data.value?.type === 'error') {
+      isLoading.value = false;
       return snackbar.add({
         type: 'error',
         text: data.value.message,
       });
+    }
   }
 
   return null;
 };
 
-// onBeforeRouteLeave((to, from, next) => {
-//   const answer = window.confirm('Do you really want to leave? you have unsaved changes!');
-//   if (answer) {
-//     const orderCookie = useCookie('nuxt.checkout-token');
-//     orderCookie.value = null;
-//     return next();
-//   }
-//   return next(false);
-// });
+onBeforeRouteLeave((to, from, next) => {
+  if (to.fullPath !== '/order/payment') {
+    const answer = window.confirm('Do you really want to leave? you have unsaved changes!');
+    if (answer) {
+      const orderCookie = useCookie('nuxt.checkout-token');
+      orderCookie.value = null;
+      return next();
+    }
+    return next(false);
+  }
+  return next();
+});
 </script>
 
 <template>

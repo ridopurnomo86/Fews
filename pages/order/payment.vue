@@ -6,7 +6,7 @@
 import Payment from '~/views/Order/Payment/index.vue';
 
 definePageMeta({
-  middleware: 'auth',
+  middleware: ['auth', 'order'],
   layout: 'order',
 });
 
