@@ -1,7 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
     "dev": "nuxt dev --p 9000",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -10,7 +9,8 @@
     "lint": "eslint . -c ./.eslintrc.js",
     "lint:fix": "eslint . -c ./.eslintrc.js --fix",
     "format": "prettier --write . --config ./.prettierrc",
-    "check-code": "yarn lint:fix && yarn tsc"
+    "check-code": "yarn lint:fix && yarn tsc",
+    "build": "prisma db pull && prisma generate && nuxt build"
   },
   "devDependencies": {
     "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
