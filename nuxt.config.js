@@ -26,10 +26,10 @@ export default defineNuxtConfig({
     addDefaultCallbackUrl: false,
   },
   routeRules: {
-    '/': { prerender: true, ssr: true },
-    '/products/**': { prerender: true, swr: 3600 },
+    '/': { ssr: true },
+    '/products/**': { swr: 3600 },
     '/order': { ssr: false },
-    '/order/payment': { prerender: true, ssr: false },
+    '/order/payment': { ssr: false },
     '/order/success': { ssr: false },
     '/api/**': { cors: true },
     '/signin': {
