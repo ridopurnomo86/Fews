@@ -24,10 +24,12 @@ const DATA = [
         <NuxtLink to="/">
           <p class="text-xl font-bold antialiased">Fews</p>
         </NuxtLink>
-        <button type="button" class="flex items-center" @click="$router.back()">
-          <Icon :name="'mdi:keyboard-backspace'" size="20px" class="text-neutral-600" />
-          <p class="text-md font-medium antialiased ml-2 text-neutral-600">Back</p>
-        </button>
+        <div v-if="route.fullPath === '/order'">
+          <button type="button" class="flex items-center" @click="$router.back()">
+            <Icon :name="'mdi:keyboard-backspace'" size="20px" class="text-neutral-600" />
+            <p class="text-md font-medium antialiased ml-2 text-neutral-600">Back</p>
+          </button>
+        </div>
       </nav>
       <ol class="items-center py-10 w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0">
         <li

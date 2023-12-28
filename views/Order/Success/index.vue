@@ -32,7 +32,7 @@ watch(second, (after) => {
 onBeforeRouteLeave((to, from, next) => {
   const orderCookie = useCookie('nuxt.checkout-token');
   orderCookie.value = null;
-  return next();
+  return next({ path: '/', replace: true, force: true });
 });
 </script>
 
