@@ -17,7 +17,7 @@ export default eventHandler(async (event: any) => {
 
   const userEmail = await prisma.user.findFirst({
     where: {
-      email: session.user?.id,
+      email: session.user?.email,
     },
   });
 

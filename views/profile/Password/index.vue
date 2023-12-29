@@ -155,6 +155,10 @@ const handleSubmit = async () => {
     }
 
     if (type === 'success') {
+      formData.confirm_password = '';
+      formData.new_password = '';
+      formData.password = '';
+      v$.value.$reset();
       return snackbar.add({
         type,
         text: message,

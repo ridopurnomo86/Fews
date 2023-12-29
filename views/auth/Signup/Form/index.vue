@@ -166,15 +166,17 @@ export default defineComponent({
           lazy: true,
         });
 
+        const { type, message } = data.value || {};
+
         if (data.value?.type === 'error')
           return snackbar.add({
-            type: 'error',
-            text: data.value.message,
+            type,
+            text: message,
           });
 
         snackbar.add({
-          type: 'success',
-          text: data.value?.message,
+          type,
+          text: message,
         });
 
         return navigateTo('/signin', { external: true });
