@@ -2,11 +2,11 @@
 import { formatter } from '~~/modules/formatPrice';
 
 const { getSession } = useAuth();
-
 const { user } = await getSession();
 const { totalAmount, orderId, paymentType, transactionId } = window.history.state;
 
 const second = ref(30);
+const orderCookie = useCookie('nuxt.checkout-token');
 
 const interval: any = setInterval(() => {
   if (second.value === 0) return clearInterval(interval);
@@ -14,25 +14,16 @@ const interval: any = setInterval(() => {
   return (second.value -= 1);
 }, 1000);
 
-const handleNavigate = () => {
-  const orderCookie = useCookie('nuxt.checkout-token');
+const handleNavigate = async () => {
   orderCookie.value = null;
   return navigateTo('/', { external: true, replace: true });
 };
 
 watch(second, (after) => {
   if (after === 0) {
-    const orderCookie = useCookie('nuxt.checkout-token');
-    orderCookie.value = null;
-    return navigateTo('/', { external: true, replace: true });
+    navigateTo('/', { external: true, replace: true });
   }
-  return null;
-});
-
-onBeforeRouteLeave((to, from, next) => {
-  const orderCookie = useCookie('nuxt.checkout-token');
   orderCookie.value = null;
-  return next({ path: '/', replace: true, force: true });
 });
 </script>
 
@@ -79,7 +70,13 @@ onBeforeRouteLeave((to, from, next) => {
             </div>
           </div>
         </div>
-        <Button type="button" class="w-full" :text="'Back to store'" :on-click="handleNavigate" />
+        <Button
+          type="button"
+          class="w-full"
+          :is-disable="false"
+          :text="'Back to store'"
+          :on-click="() => handleNavigate()"
+        />
         <p class="text-md font-medium text-neutral-600 mt-4">
           Automatically redirecting in
           <span class="font-bold text-neutral-800">{{ second }}</span> sec
