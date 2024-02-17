@@ -5,7 +5,6 @@
     "dev": "nuxt dev --p 9000",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
     "type-check": "nuxi typecheck",
     "lint": "eslint . -c ./.eslintrc.js",
     "lint:fix": "eslint . -c ./.eslintrc.js --fix",
