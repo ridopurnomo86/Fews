@@ -11,7 +11,10 @@
     "lint:fix": "eslint . -c ./.eslintrc.js --fix",
     "format": "prettier --write . --config ./.prettierrc",
     "check-code": "yarn lint:fix && yarn tsc",
-    "build": "prisma db pull && prisma generate && nuxt build"
+    "build": "prisma db pull && prisma generate && nuxt build",
+    "build:cloudflare": "node_modules/nuxt/bin/nuxt.js build -c ./nuxt.config.js",
+    "start:cloudflare": "node_modules/nuxt/bin/nuxt.js start -c ./nuxt.config.js",
+    "postbuild:cloudflare": "yarn build"
   },
   "devDependencies": {
     "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
