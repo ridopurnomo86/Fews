@@ -2,8 +2,8 @@
   <div class="background-container h-full w-6/12 hidden lg:block">
     <div class="relative mix-blend-overlay">
       <nuxt-img
-        src="https://source.unsplash.com/fnxSOW_ZPkk"
-        alt="BannerImage"
+        src="/images/signup-banner.jpg"
+        alt="signup-banner"
         class="absolute h-[100vh] w-full object-cover object-top opacity-70"
       />
       <div class="absolute flex items-end p-12 h-[100vh] w-full">

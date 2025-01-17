@@ -53,7 +53,7 @@
             </div>
           </span>
         </BaseInput>
-        <NuxtLink to="/forgot-password">
+        <NuxtLink to="#">
           <p class="text-black underline text-xs md:text-sm font-medium mb-4 right">
             Forgot Password
           </p>

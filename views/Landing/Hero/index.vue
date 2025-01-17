@@ -24,7 +24,7 @@
     <div class="h-full w-full hidden md:block flex-1">
       <nuxt-img
         class="h-full w-full object-cover object-right rounded"
-        src="https://source.unsplash.com/D4jRahaUaIc"
+        src="/images/hero.jpg"
         alt="banner-image"
       />
     </div>

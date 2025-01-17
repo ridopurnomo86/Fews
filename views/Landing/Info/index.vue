@@ -14,8 +14,8 @@
         <div class="w-full">
           <nuxt-img
             class="h-full w-full object-cover rounded object-right"
-            src="https://source.unsplash.com/ioTLGAzArg0"
-            alt="https://source.unsplash.com/ioTLGAzArg0"
+            src="/images/info-banner.jpg"
+            alt="info-banner"
           />
         </div>
       </div>
